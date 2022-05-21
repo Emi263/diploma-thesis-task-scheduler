@@ -1,11 +1,12 @@
-import React from "react";
+import React,{useContext} from "react";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Image, StyleSheet, Text, View, Alert } from "react-native";
 import CustomButton from "../../common/Button";
-import { AntDesign } from "@expo/vector-icons";
+import  AntDesign  from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParams } from "../../ScreenIndex";
 import {styles} from './styles'
+import { AuthContext } from "../../context/AuthContext";
 
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Intro1">;
@@ -14,6 +15,7 @@ const IntroOne = () => {
   const handleOnPressButton = () => {
     nav.navigate("Intro2");
   };
+
 
 
 
