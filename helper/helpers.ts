@@ -1,9 +1,9 @@
 import jwtDecode from "jwt-decode";
 import { getAuthToken } from "../utils/tokenMgmt";
 
-export const getUserPayload = (): any => {
+export const getUserPayload = async (): Promise<any> => {
   try {
-    const token = getAuthToken();
+    const token = await getAuthToken();
     if (token) {
       const user = jwtDecode(token);
       return user;
@@ -11,10 +11,7 @@ export const getUserPayload = (): any => {
   } catch (error) {}
 };
 
-export const isSessionActive = () => {
-  const decoded = getUserPayload();
-  return decoded?.exp * 1000 > new Date().getTime();
-
-
-  
+export const isSessionActive = async () => {
+  const decoded = await getUserPayload();
+  return await decoded?.exp * 1000 > new Date().getTime();
 };

@@ -1,22 +1,25 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwtDecode from "jwt-decode";
 
-export const setAuthToken =  (token: string) => {
-   localStorage.setItem("token", token);
+export const setAuthToken = async (token: string): Promise<any> => {
+
+   
+  try {
+    await AsyncStorage.setItem("token", token);
+  } catch (e) {
+    console.log(e);
+  }
 };
-export const getAuthToken =  () => {
-  const token =  localStorage.getItem("token");
+export const getAuthToken = async () => {
+  const token = await AsyncStorage.getItem("token");
   return token;
 };
 
-export const clearAuthData =  () => {
-   localStorage.removeItem("token");
+export const clearAuthData = async() => {
+ await AsyncStorage.removeItem("token");
 };
 
-
-
-export const decode=(token:string)=>{
- const t= jwtDecode(token)
- console.log(t);
- 
-}
+export const decode = (token: string) => {
+  const t = jwtDecode(token);
+  console.log(t);
+};

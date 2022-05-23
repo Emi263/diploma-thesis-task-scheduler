@@ -9,21 +9,35 @@ import { useRoute } from "@react-navigation/native";
 
 const HomeScreen = () => {
   const { setUser, user } = useContext(AuthContext);
-
-  const isLoggedIn = isSessionActive();
-
   const route = useRoute();
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      clearAuthData();
-      setUser(null);
-    }
+    let isMounted = true;
+    const checkUserLoggedIn = async () => {
+      const isLoggedIn = await isSessionActive();
+      if (!isLoggedIn) {
+        await clearAuthData();
+        if (isMounted) setUser(null);
+      }
+    };
+    checkUserLoggedIn();
+
+    return () => {
+      isMounted = false;
+    };
   }, [route.name]);
 
+  useEffect(() => {
+    let isMounted = true;
+    const userData = async () => {
+      const currentUser = await getUser(user?.sub);
+    };
+
+    userData();
+  }, []);
   return (
     <>
-      <Text>{user?.email}</Text>
+      <Text style={{ marginTop: 400 }}>{user?.email}</Text>
       <Button
         onPress={() => {
           setUser(null);
