@@ -3,33 +3,20 @@ import { getUserPayload, isSessionActive } from "../../helper/helpers";
 import { Text, TextInput, SafeAreaView, Button, Alert } from "react-native";
 import { login } from "../../api/auth";
 import { styles } from "./styles";
-import { useMutation, useQuery } from "react-query";
-import { useFormik } from "formik";
-import {
-  setAuthToken,
-  clearAuthData,
-  decode,
-  getAuthToken,
-} from "../../utils/tokenMgmt";
+import { setAuthToken } from "../../utils/tokenMgmt";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParams } from "../../ScreenIndex";
 import { AuthContext } from "../../context/AuthContext";
-
-import { AxiosError } from "axios";
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-
   const [error, setError] = useState<null | string>(null);
 
-  useEffect(() => {}, []);
-
   const nav = useNavigation<introScreenProp>();
-  const sessionActive = isSessionActive();
   const { user, setUser } = useContext(AuthContext);
 
   return (
@@ -37,9 +24,8 @@ const Login = () => {
       <>
         {/**Needs some logo here */}
         <Text style={styles.title}>Log in</Text>
-
         <TextInput
-        autoComplete="email"
+          autoComplete="email"
           value={email}
           onChangeText={setEmail}
           placeholder="Enter email"

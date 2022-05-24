@@ -18,27 +18,26 @@ export type RootStackParams = {
   Login: undefined;
   Splash: undefined;
   Home: undefined;
-  Signup:undefined;
+  Signup: undefined;
 };
 
 const Screens = () => {
   const RootStack = createNativeStackNavigator<RootStackParams>();
-  const { user } = useContext(AuthContext);
+  const { decodedUser } = useContext(AuthContext);
 
 
-  console.log(user);
-  
+
   return (
     <NavigationContainer>
       <RootStack.Navigator
-        initialRouteName={user?.sub ? `Home` : "Intro1"}
+        initialRouteName={decodedUser?.sub ? `Home` : "Intro1"}
         screenOptions={{
           gestureEnabled: true,
           customAnimationOnGesture: true,
           headerShown: false,
         }}
       >
-        {!user?.sub ? (
+        {!decodedUser?.sub ? (
           <>
             <RootStack.Screen name="Intro1" component={Intro1} />
             <RootStack.Screen name="Intro2" component={Intro2} />
@@ -46,11 +45,9 @@ const Screens = () => {
             <RootStack.Screen name="Login" component={Login} />
             <RootStack.Screen name="Splash" component={SplashScreen} />
             <RootStack.Screen name="Signup" component={Signup} />
-
           </>
         ) : (
           <>
-
             <RootStack.Screen name="Home" component={HomeScreen} />
           </>
         )}

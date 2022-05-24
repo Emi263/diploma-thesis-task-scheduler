@@ -7,8 +7,12 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { AuthContext } from "./context/AuthContext";
 import { useEffect, useState } from "react";
 import { getUserPayload } from "./helper/helpers";
+import { DecodedUser, User } from "./models/user";
+
+
 export default function App() {
-  const [user, setUser] = useState() as any;
+  const [user, setUser] = useState<User|undefined>();
+  const [decodedUser,setDecodedUser]=useState<DecodedUser|undefined>()
 
   useEffect(() => {
     let isMounted = true;
@@ -28,6 +32,8 @@ export default function App() {
   const context = {
     user,
     setUser,
+    decodedUser,
+    setDecodedUser
   };
 
   const client = new QueryClient();

@@ -3,9 +3,9 @@ import { Text, Button } from "react-native";
 import { clearAuthData } from "../../utils/tokenMgmt";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { getUser } from "../../api/user";
 import { isSessionActive } from "../../helper/helpers";
 import { useRoute } from "@react-navigation/native";
+
 
 const HomeScreen = () => {
   const { setUser, user } = useContext(AuthContext);
@@ -17,7 +17,7 @@ const HomeScreen = () => {
       const isLoggedIn = await isSessionActive();
       if (!isLoggedIn) {
         await clearAuthData();
-        if (isMounted) setUser(null);
+        if (isMounted) setUser(undefined);
       }
     };
     checkUserLoggedIn();
@@ -27,24 +27,27 @@ const HomeScreen = () => {
     };
   }, [route.name]);
 
-  useEffect(() => {
-    let isMounted = true;
-    const userData = async () => {
-      const currentUser = await getUser(user?.sub);
-    };
+  // useEffect(() => {
+  //   let isMounted = true;
+  //   const userData = async () => {
+  //     const currentUser = await getUser(user?.sub);
+  //   };
 
-    userData();
-  }, []);
+  //   userData();
+  // }, []);
+
+
   return (
     <>
       <Text style={{ marginTop: 400 }}>{user?.email}</Text>
       <Button
         onPress={() => {
-          setUser(null);
+          setUser(undefined);
           clearAuthData();
         }}
         title="Logout"
       />
+    
     </>
   );
 };
