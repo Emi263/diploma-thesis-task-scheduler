@@ -1,16 +1,9 @@
 export interface User {
+
+  sub: number;
   email: string;
-  name: string;
-  surname: string;
-  age: number;
+  exp: number;
+  iat: number;
 }
 
 
-export interface DecodedUser {
-
-sub: number;
-email: string;
-exp: number;
-iat: number;
-
-}

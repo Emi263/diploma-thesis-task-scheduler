@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParams } from "../../ScreenIndex";
 import { AuthContext } from "../../context/AuthContext";
+import { AxiosResponse } from "axios";
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
@@ -18,6 +19,14 @@ const Login = () => {
 
   const nav = useNavigation<introScreenProp>();
   const { user, setUser } = useContext(AuthContext);
+
+  const handleLogin = async (res: AxiosResponse) => {
+    setError(null);
+    await setAuthToken(res.data.token).then(async () => {
+      const userData = await getUserPayload();
+      setUser(userData);
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -45,13 +54,7 @@ const Login = () => {
         <Button
           onPress={(e) => {
             login(email, pass)
-              .then(async (res) => {
-                setError(null);
-                await setAuthToken(res.data.token).then(async () => {
-                  const userData = await getUserPayload();
-                  setUser(await userData);
-                });
-              })
+              .then(async (res) => handleLogin(res))
               .catch((e) => {
                 console.log(e);
               });

@@ -23,21 +23,19 @@ export type RootStackParams = {
 
 const Screens = () => {
   const RootStack = createNativeStackNavigator<RootStackParams>();
-  const { decodedUser } = useContext(AuthContext);
-
-
+  const { user } = useContext(AuthContext);
 
   return (
     <NavigationContainer>
       <RootStack.Navigator
-        initialRouteName={decodedUser?.sub ? `Home` : "Intro1"}
+        initialRouteName={user?.sub ? `Home` : "Intro1"}
         screenOptions={{
           gestureEnabled: true,
           customAnimationOnGesture: true,
           headerShown: false,
         }}
       >
-        {!decodedUser?.sub ? (
+        {!user?.sub ? (
           <>
             <RootStack.Screen name="Intro1" component={Intro1} />
             <RootStack.Screen name="Intro2" component={Intro2} />
