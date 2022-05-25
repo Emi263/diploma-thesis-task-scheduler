@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import Intro1 from "./screens/intro/IntroOne";
 import Intro2 from "./screens/intro/IntroTwo";
 import Intro3 from "./screens/intro/IntroThree";
@@ -37,11 +37,31 @@ const Screens = () => {
       >
         {!user?.sub ? (
           <>
-            <RootStack.Screen name="Intro1" component={Intro1} />
-            <RootStack.Screen name="Intro2" component={Intro2} />
-            <RootStack.Screen name="Intro3" component={Intro3} />
-            <RootStack.Screen name="Login" component={Login} />
-            <RootStack.Screen name="Splash" component={SplashScreen} />
+            <RootStack.Screen
+              name="Intro1"
+              component={Intro1}
+              options={{ animation: "fade" }}
+            />
+            <RootStack.Screen
+              name="Intro2"
+              component={Intro2}
+              options={{ animation: "slide_from_right" }}
+            />
+            <RootStack.Screen
+              name="Intro3"
+              component={Intro3}
+              options={{ animation: "slide_from_right" }}
+            />
+            <RootStack.Screen
+              name="Login"
+              component={Login}
+              options={{ animation: "simple_push" }}
+            />
+            <RootStack.Screen
+              name="Splash"
+              component={SplashScreen}
+              options={{ animation: "slide_from_right" }}
+            />
             <RootStack.Screen name="Signup" component={Signup} />
           </>
         ) : (
@@ -62,3 +82,15 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 });
+
+const config = {
+  animation: "spring",
+  config: {
+    stiffness: 1000,
+    damping: 500,
+    mass: 3,
+    overshootClamping: true,
+    restDisplacementThreshold: 0.01,
+    restSpeedThreshold: 0.01,
+  },
+};

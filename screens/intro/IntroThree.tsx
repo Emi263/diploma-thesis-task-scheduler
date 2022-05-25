@@ -1,6 +1,6 @@
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React from "react";
 import { TouchableOpacity, View, Image, Text } from "react-native";
 import { RootStackParams } from "../../ScreenIndex";
 import { styles } from "./styles";
@@ -12,7 +12,7 @@ type introScreenProp = StackNavigationProp<RootStackParams, "Intro3">;
 const IntroThree = () => {
   const nav = useNavigation<introScreenProp>();
   const handleOnPressButton = () => {
-    nav.navigate('Login')
+    nav.navigate("Login");
   };
 
   const handleGoBack = () => {

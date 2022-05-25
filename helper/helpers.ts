@@ -13,5 +13,5 @@ export const getUserPayload = async (): Promise<any> => {
 
 export const isSessionActive = async () => {
   const decoded = await getUserPayload();
-  return await decoded?.exp * 1000 > new Date().getTime();
+  return (await decoded?.exp) * 1000 > new Date().getTime();
 };

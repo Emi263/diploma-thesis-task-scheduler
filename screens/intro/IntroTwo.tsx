@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  TouchableHighlight,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, Image, TouchableOpacity } from "react-native";
 import { styles } from "./styles";
 import CustomButton from "../../common/Button";
 import { AntDesign } from "@expo/vector-icons";

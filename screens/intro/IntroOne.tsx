@@ -1,13 +1,11 @@
-import React,{useContext} from "react";
+import React from "react";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Image, StyleSheet, Text, View, Alert } from "react-native";
+import { Image, Text, View } from "react-native";
 import CustomButton from "../../common/Button";
-import  AntDesign  from "@expo/vector-icons/AntDesign";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParams } from "../../ScreenIndex";
-import {styles} from './styles'
-import { AuthContext } from "../../context/AuthContext";
-
+import { styles } from "./styles";
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Intro1">;
 const IntroOne = () => {
@@ -15,9 +13,6 @@ const IntroOne = () => {
   const handleOnPressButton = () => {
     nav.navigate("Intro2");
   };
-
-
-
 
   return (
     <View style={styles.container}>
@@ -41,6 +36,5 @@ const IntroOne = () => {
     </View>
   );
 };
-
 
 export default IntroOne;
