@@ -19,9 +19,21 @@ export const styles = StyleSheet.create({
     fontWeight: "500",
     fontSize: 20,
   },
+  inputWrapper: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  inputContainer: {
+    width: "100%",
+    margin: "auto",
+    display: "flex",
+    justifyContent: "center",
+  },
   input: {
     height: 50,
-    width: "80%",
+    width: "70%",
     borderWidth: 1,
     padding: 6,
     paddingHorizontal: 20,

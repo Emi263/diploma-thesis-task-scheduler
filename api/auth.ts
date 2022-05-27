@@ -10,10 +10,9 @@ export const login = (
 
 export const signup = (
   email: string,
-  password: string
-  ,
+  password: string,
   name: string,
-  surname: string
+  age: string
 ): Promise<AxiosResponse<any, any>> => {
-  return post(apiUrl + "/auth/signup", { email, password,name,surname });
+  return post(apiUrl + "/auth/signup", { email, password, name, age });
 };

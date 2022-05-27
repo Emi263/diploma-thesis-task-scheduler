@@ -7,6 +7,7 @@ import {
   Button,
   Alert,
   View,
+  TouchableOpacity,
 } from "react-native";
 import { login } from "../../api/auth";
 import { styles } from "./styles";
@@ -18,7 +19,6 @@ import { AuthContext } from "../../context/AuthContext";
 import { AxiosResponse } from "axios";
 import { Formik } from "formik";
 import { LoginSchema } from "./validation";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
@@ -27,10 +27,14 @@ const Login = () => {
   const { user, setUser } = useContext(AuthContext);
 
   const handleLogin = async (res: AxiosResponse) => {
-    await setAuthToken(res.data.token).then(async () => {
-      const userData = await getUserPayload();
-      setUser(userData);
-    });
+    try {
+      await setAuthToken(res.data.token).then(async () => {
+        const userData = await getUserPayload();
+        setUser(userData);
+      });
+    } catch (error) {
+      console.log("here");
+    }
   };
 
   return (
@@ -62,40 +66,59 @@ const Login = () => {
           }) => (
             <View style={styles.view}>
               <>
-                <Text style={styles.title}>Log in</Text>
-                <TextInput
-                  autoComplete="email"
-                  value={values.email}
-                  onChangeText={handleChange("email")}
-                  placeholder="Enter email"
-                  style={styles.input}
-                  onBlur={handleBlur("email")}
-                />
-                <Text style={styles.error}>
-                  {touched.email && errors.email}
+                <Text
+                  style={[styles.title, { fontFamily: "Inter_400Regular" }]}
+                >
+                  Log in
                 </Text>
+                <View style={styles.inputWrapper}>
+                  <>
+                    <View style={styles.inputContainer}>
+                      <>
+                        <TextInput
+                          autoComplete="email"
+                          value={values.email}
+                          onChangeText={handleChange("email")}
+                          placeholder="Enter email"
+                          style={styles.input}
+                          onBlur={handleBlur("email")}
+                        />
+                        <Text style={styles.error}>
+                          {touched.email && errors.email}xw
+                        </Text>
+                      </>
+                    </View>
+                    <View style={styles.inputContainer}>
+                      <>
+                        <TextInput
+                          value={values.password}
+                          onChangeText={handleChange("password")}
+                          placeholder="Enter password"
+                          secureTextEntry
+                          style={styles.input}
+                          onBlur={handleBlur("password")}
+                        />
 
-                <TextInput
-                  value={values.password}
-                  onChangeText={handleChange("password")}
-                  placeholder="Enter password"
-                  secureTextEntry
-                  style={styles.input}
-                  onBlur={handleBlur("password")}
-                />
-
-                <Text style={styles.error}>
-                  {touched.password && errors.password}
-                </Text>
+                        <Text style={styles.error}>
+                          {touched.password && errors.password}
+                        </Text>
+                      </>
+                    </View>
+                  </>
+                </View>
 
                 {/**Sign in button */}
                 <Button onPress={() => handleSubmit()} title="Login" />
-                {/* 
-                <TouchableOpacity onPress={() => nav.navigate("Signup")}>
-                  <React.Fragment>
-                    <Text style={{ color: "blue" }}>Register</Text>
-                  </React.Fragment>
-                </TouchableOpacity> */}
+                <>
+                  <TouchableOpacity
+                    style={{ marginTop: 300 }}
+                    onPress={() => {
+                      nav.navigate("Signup");
+                    }}
+                  >
+                    <Text style={{ color: "blue" }}>Registers</Text>
+                  </TouchableOpacity>
+                </>
               </>
             </View>
           )}
