@@ -7,23 +7,35 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { AuthContext } from "./context/AuthContext";
 import { useCallback, useEffect, useState } from "react";
 import { getUserPayload } from "./helper/helpers";
-import { User } from "./models/user";
+import { User, UserToken } from "./models/user";
 import AppLoading from "expo-app-loading";
 import { useFonts, Inter_400Regular } from "@expo-google-fonts/inter";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import Entypo from "@expo/vector-icons/Entypo";
+import { getUser } from "./api/user";
+import * as Localization from "expo-localization";
+import i18n from "i18n-js";
 
 export default function App() {
+  const [userToken, setUserToken] = useState<UserToken | undefined>();
   const [user, setUser] = useState<User | undefined>();
+  console.log(user);
+
+  const getUserData = async () => {
+    const userDt = await getUser(userToken?.sub || 1);
+    return userDt;
+  };
 
   useEffect(() => {
     let isMounted = true;
-
     const userData = async () => {
       const user = await getUserPayload();
       if (isMounted) {
-        setUser(user);
+        try {
+          setUserToken(userToken);
+          setUser(await getUserData());
+        } catch (e) {}
       }
     };
     userData();
@@ -33,6 +45,8 @@ export default function App() {
   }, []);
 
   const context = {
+    userToken,
+    setUserToken,
     user,
     setUser,
   };

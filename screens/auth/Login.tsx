@@ -19,6 +19,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { AxiosResponse } from "axios";
 import { Formik } from "formik";
 import { LoginSchema } from "./validation";
+import { getUser } from "../../api/user";
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
@@ -30,7 +31,8 @@ const Login = () => {
     try {
       await setAuthToken(res.data.token).then(async () => {
         const userData = await getUserPayload();
-        setUser(userData);
+        const userDt = await getUser(userData?.sub || 1);
+        setUser(userDt);
       });
     } catch (error) {
       console.log("here");

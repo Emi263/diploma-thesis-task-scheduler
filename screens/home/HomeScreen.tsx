@@ -9,9 +9,21 @@ import EventCalendar from "react-native-events-calendar";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import { AgendaProps } from "react-native-calendars";
 import Tasks from "../tasks/Tasks";
+import HomeHeader from "./HomeHeader";
+import { homeStyles } from "./styles";
+import { getUser } from "../../api/user";
+import AllTasks from "../tasks/AllTasks";
+import CreateTask from "../tasks/CreateTask";
+import ModalComponent from "../../common/Modal";
+
 const HomeScreen = () => {
-  const { setUser, user } = useContext(AuthContext);
+  const { setUserToken, userToken } = useContext(AuthContext);
   const route = useRoute();
+
+  //local state
+  const [showModal, setShowModal] = useState(false);
+
+  console.log(showModal);
 
   useEffect(() => {
     let isMounted = true;
@@ -20,7 +32,7 @@ const HomeScreen = () => {
       const isLoggedIn = await isSessionActive();
       if (!isLoggedIn) {
         await clearAuthData();
-        if (isMounted) setUser(undefined);
+        if (isMounted) setUserToken(undefined);
       }
     };
 
@@ -33,16 +45,21 @@ const HomeScreen = () => {
   }, [route.name]);
 
   return (
-    <View style={{ flex: 1 }}>
-      <Text style={{ marginTop: 400 }}>{user?.email}</Text>
-      <Button
-        onPress={() => {
-          setUser(undefined);
-          clearAuthData();
+    <View style={homeStyles.container}>
+      <HomeHeader />
+      <AllTasks />
+
+      <TouchableOpacity
+        onPress={(e) => {
+          setShowModal(true);
         }}
-        title="Logout"
-      />
-      <Tasks />
+      >
+        <Text>Open Modal</Text>
+      </TouchableOpacity>
+
+      <ModalComponent visible={showModal} animationType="slide">
+        <CreateTask setShowModal={setShowModal} />
+      </ModalComponent>
     </View>
   );
 };
