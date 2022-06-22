@@ -29,8 +29,6 @@ const HomeScreen = () => {
     const checkUserLoggedIn = async () => {
       const isLoggedIn = await isSessionActive();
 
-      console.log(isLoggedIn);
-
       if (!isLoggedIn) {
         await clearAuthData();
         if (isMounted) setUserToken(undefined);

@@ -1,5 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
-import { getUserPayload, isSessionActive } from "../../helper/helpers";
+import {
+  errorCodes,
+  getUserPayload,
+  isSessionActive,
+} from "../../helper/helpers";
 import {
   SafeAreaView,
   Alert,
@@ -8,6 +12,8 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import Toast from "react-native-toast-message";
+
 import { login } from "../../api/auth";
 import { styles } from "./styles";
 import { setAuthToken } from "../../utils/tokenMgmt";
@@ -44,9 +50,14 @@ const Login = () => {
       });
     } catch (error) {}
   };
+  const containerStyle = { backgroundColor: "white", padding: 20 };
+  const [visible, setVisible] = React.useState(false);
 
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
+      <Toast position="top" topOffset={60} />
       <>
         {/**Needs some logo here */}
 
@@ -60,7 +71,10 @@ const Login = () => {
             login(values.email, values.password)
               .then(async (res) => handleLogin(res))
               .catch((e: AxiosError) => {
-                console.log(e.response?.status);
+                Toast.show({
+                  type: "error",
+                  text1: errorCodes(e.response?.status || 400),
+                });
               });
           }}
         >
@@ -131,14 +145,7 @@ const Login = () => {
             </View>
           )}
         </Formik>
-        <Provider>
-          <Portal>
-            <Modal visible={true}>
-              <Text>Example Modal. Click outside this area to dismiss.</Text>
-            </Modal>
-          </Portal>
-          <Button style={{ marginTop: 30 }}>Show</Button>
-        </Provider>
+
         {/* <>
           <TouchableOpacity
             style={{ marginTop: 300 }}
@@ -154,7 +161,7 @@ const Login = () => {
         {/* <Button onPress={() => clearAuthData()} title="Logout" /> */}
         {/**Signin with google */}
       </>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { Image, StyleSheet, Text, View } from "react-native";
 import HomePage from "./screens/intro/IntroOne";
 import Screens from "./ScreenIndex";
@@ -16,6 +15,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { getUser } from "./api/user";
 import * as Localization from "expo-localization";
 import i18n from "i18n-js";
+import { getAuthToken } from "./utils/tokenMgmt";
 
 export default function App() {
   const [userToken, setUserToken] = useState<UserToken | undefined>();
@@ -24,6 +24,7 @@ export default function App() {
   const getUserData = async () => {
     if (userToken?.sub) {
       const userDt = await getUser(userToken?.sub);
+
       return userDt;
     }
 
@@ -34,9 +35,10 @@ export default function App() {
     let isMounted = true;
     const userData = async () => {
       const user = await getUserPayload();
+
       if (isMounted) {
         try {
-          setUserToken(userToken);
+          setUserToken(user);
           setUser(await getUserData());
         } catch (e) {}
       }

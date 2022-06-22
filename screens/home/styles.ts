@@ -8,20 +8,26 @@ export const homeStyles = StyleSheet.create({
 });
 export const headerStyles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 10,
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "flex-start",
   },
   header: {
+    width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
   },
   button: {
-    flex: 1,
-    padding: 10,
+    flex: 0.5,
     justifyContent: "center",
-    alignItems: "flex-end",
+  },
+  logout: {
+    fontSize: 12,
+  },
+  name: {
+    color: "red",
+    fontWeight: "500",
   },
 });

@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, FlatList } from "react-native";
 import { Task } from "../../models/task";
 import SingleTask from "./SingleTask";
+import { styles } from "./styles";
 
 const AllTasks = () => {
   const mockData: Task[] = [
@@ -25,7 +26,7 @@ const AllTasks = () => {
 
   return (
     <View>
-      <Text>Upcoming tasks</Text>
+      <Text style={styles.title}>Upcoming tasks</Text>
       <View>
         {/**Should be ranked properly */}
         <FlatList

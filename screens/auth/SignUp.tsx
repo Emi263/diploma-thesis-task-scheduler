@@ -30,8 +30,6 @@ const Signup = () => {
   const { user, setUser } = useContext(AuthContext);
 
   const handleSignup = async (res: AxiosResponse) => {
-    console.log(res);
-
     try {
       await setAuthToken(res.data.token).then(async () => {
         const userData = await getUserPayload();

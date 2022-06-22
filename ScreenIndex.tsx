@@ -26,8 +26,6 @@ const Screens = () => {
   const RootStack = createNativeStackNavigator<RootStackParams>();
   const { userToken, user } = useContext(AuthContext);
 
-  console.log(user);
-
   return (
     <NavigationContainer>
       <RootStack.Navigator
