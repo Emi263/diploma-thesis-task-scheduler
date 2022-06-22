@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import { getUserPayload, isSessionActive } from "../../helper/helpers";
 import {
-  Text,
-  TextInput,
   SafeAreaView,
-  Button,
   Alert,
   View,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { login } from "../../api/auth";
 import { styles } from "./styles";
@@ -16,10 +15,19 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParams } from "../../ScreenIndex";
 import { AuthContext } from "../../context/AuthContext";
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { Formik } from "formik";
 import { LoginSchema } from "./validation";
 import { getUser } from "../../api/user";
+import {
+  TextInput,
+  HelperText,
+  Text,
+  Button,
+  Modal,
+  Portal,
+  Provider,
+} from "react-native-paper";
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
@@ -34,9 +42,7 @@ const Login = () => {
         const userDt = await getUser(userData?.sub || 1);
         setUser(userDt);
       });
-    } catch (error) {
-      console.log("here");
-    }
+    } catch (error) {}
   };
 
   return (
@@ -53,8 +59,8 @@ const Login = () => {
           onSubmit={(values) => {
             login(values.email, values.password)
               .then(async (res) => handleLogin(res))
-              .catch((e) => {
-                console.log(e);
+              .catch((e: AxiosError) => {
+                console.log(e.response?.status);
               });
           }}
         >
@@ -68,26 +74,26 @@ const Login = () => {
           }) => (
             <View style={styles.view}>
               <>
-                <Text
-                  style={[styles.title, { fontFamily: "Inter_400Regular" }]}
-                >
-                  Log in
-                </Text>
+                <Text style={[styles.title]}>Log in</Text>
                 <View style={styles.inputWrapper}>
                   <>
                     <View style={styles.inputContainer}>
                       <>
                         <TextInput
+                          label="Email"
                           autoComplete="email"
                           value={values.email}
                           onChangeText={handleChange("email")}
                           placeholder="Enter email"
-                          style={styles.input}
                           onBlur={handleBlur("email")}
+                          style={styles.input}
                         />
-                        <Text style={styles.error}>
-                          {touched.email && errors.email}xw
-                        </Text>
+                        <HelperText
+                          type="error"
+                          visible={!!touched.email && !!errors.email}
+                        >
+                          Email address is invalid!
+                        </HelperText>
                       </>
                     </View>
                     <View style={styles.inputContainer}>
@@ -99,32 +105,50 @@ const Login = () => {
                           secureTextEntry
                           style={styles.input}
                           onBlur={handleBlur("password")}
+                          label="Password"
                         />
 
-                        <Text style={styles.error}>
-                          {touched.password && errors.password}
-                        </Text>
+                        <HelperText
+                          type="error"
+                          visible={!!touched.password && !!errors.password}
+                        >
+                          Password is required!
+                        </HelperText>
                       </>
                     </View>
                   </>
                 </View>
 
                 {/**Sign in button */}
-                <Button onPress={() => handleSubmit()} title="Login" />
-                <>
-                  <TouchableOpacity
-                    style={{ marginTop: 300 }}
-                    onPress={() => {
-                      nav.navigate("Signup");
-                    }}
-                  >
-                    <Text style={{ color: "blue" }}>Registers</Text>
-                  </TouchableOpacity>
-                </>
+                <Button
+                  style={{ marginTop: 20 }}
+                  mode="contained"
+                  onPress={() => handleSubmit()}
+                >
+                  Login
+                </Button>
               </>
             </View>
           )}
         </Formik>
+        <Provider>
+          <Portal>
+            <Modal visible={true}>
+              <Text>Example Modal. Click outside this area to dismiss.</Text>
+            </Modal>
+          </Portal>
+          <Button style={{ marginTop: 30 }}>Show</Button>
+        </Provider>
+        {/* <>
+          <TouchableOpacity
+            style={{ marginTop: 300 }}
+            onPress={() => {
+              nav.navigate("Signup");
+            }}
+          >
+            <Text style={{ color: "blue" }}>Register</Text>
+          </TouchableOpacity>
+        </> */}
 
         {/**Do not have an acc link */}
         {/* <Button onPress={() => clearAuthData()} title="Logout" /> */}

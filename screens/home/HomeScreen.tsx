@@ -23,8 +23,6 @@ const HomeScreen = () => {
   //local state
   const [showModal, setShowModal] = useState(false);
 
-  console.log("user Token", userToken);
-
   useEffect(() => {
     let isMounted = true;
 

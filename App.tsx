@@ -20,11 +20,14 @@ import i18n from "i18n-js";
 export default function App() {
   const [userToken, setUserToken] = useState<UserToken | undefined>();
   const [user, setUser] = useState<User | undefined>();
-  console.log(user);
 
   const getUserData = async () => {
-    const userDt = await getUser(userToken?.sub || 1);
-    return userDt;
+    if (userToken?.sub) {
+      const userDt = await getUser(userToken?.sub);
+      return userDt;
+    }
+
+    return null;
   };
 
   useEffect(() => {
@@ -59,8 +62,8 @@ export default function App() {
         // Keep the splash screen visible while we fetch resources
         await SplashScreen.preventAutoHideAsync();
         // Pre-load fonts, make any API calls you need to do here
-        await Font.loadAsync(Entypo.font);
-        await Font.loadAsync("Inter_400Regular");
+        // await Font.loadAsync(Entypo.font);
+        // await Font.loadAsync("Inter_400Regular");
         // Artificially delay for two seconds to simulate a slow loading
         // experience. Please remove this if you copy and paste the code!
         await new Promise((resolve) => setTimeout(resolve, 2000));

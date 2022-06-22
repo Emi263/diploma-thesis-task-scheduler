@@ -24,9 +24,9 @@ export type RootStackParams = {
 
 const Screens = () => {
   const RootStack = createNativeStackNavigator<RootStackParams>();
-  const { userToken } = useContext(AuthContext);
+  const { userToken, user } = useContext(AuthContext);
 
-  console.log(getAuthToken().then((Dt) => console.log(Dt)));
+  console.log(user);
 
   return (
     <NavigationContainer>
@@ -38,7 +38,7 @@ const Screens = () => {
           headerShown: false,
         }}
       >
-        {!userToken?.subn ? (
+        {!user?.id ? (
           <>
             <RootStack.Screen
               name="Intro1"
