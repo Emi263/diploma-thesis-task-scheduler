@@ -23,13 +23,16 @@ const HomeScreen = () => {
   //local state
   const [showModal, setShowModal] = useState(false);
 
-  console.log(showModal);
+  console.log("user Token", userToken);
 
   useEffect(() => {
     let isMounted = true;
 
     const checkUserLoggedIn = async () => {
       const isLoggedIn = await isSessionActive();
+
+      console.log(isLoggedIn);
+
       if (!isLoggedIn) {
         await clearAuthData();
         if (isMounted) setUserToken(undefined);

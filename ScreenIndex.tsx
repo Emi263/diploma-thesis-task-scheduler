@@ -10,6 +10,7 @@ import SplashScreen from "./screens/SplashScreen";
 import HomeScreen from "./screens/home/HomeScreen";
 import { AuthContext } from "./context/AuthContext";
 import Signup from "./screens/auth/SignUp";
+import { getAuthToken } from "./utils/tokenMgmt";
 
 export type RootStackParams = {
   Intro1: undefined;
@@ -23,21 +24,21 @@ export type RootStackParams = {
 
 const Screens = () => {
   const RootStack = createNativeStackNavigator<RootStackParams>();
-  const { user } = useContext(AuthContext);
-  console.log(user);
-  console.log("here");
+  const { userToken } = useContext(AuthContext);
+
+  console.log(getAuthToken().then((Dt) => console.log(Dt)));
 
   return (
     <NavigationContainer>
       <RootStack.Navigator
-        initialRouteName={user?.id ? `Home` : "Intro1"}
+        initialRouteName={userToken?.sub ? `Home` : "Intro1"}
         screenOptions={{
           gestureEnabled: true,
           customAnimationOnGesture: true,
           headerShown: false,
         }}
       >
-        {!user?.id ? (
+        {!userToken?.subn ? (
           <>
             <RootStack.Screen
               name="Intro1"
