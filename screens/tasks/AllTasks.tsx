@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, FlatList } from "react-native";
+import { Text, View, FlatList, TouchableWithoutFeedback } from "react-native";
 import { Task } from "../../models/task";
 import SingleTask from "./SingleTask";
 import { styles } from "./styles";
@@ -12,7 +12,7 @@ const AllTasks = () => {
       description: "Go to school",
       shouldNotify: false,
       author: "Emi",
-      date: "",
+      date: new Date("2022-06-22"),
     },
     {
       id: 2,
@@ -20,28 +20,69 @@ const AllTasks = () => {
       description: "Go to school",
       shouldNotify: false,
       author: "Emi",
-      date: "",
+      date: new Date("2022-06-02"),
+    },
+    {
+      id: 3,
+      title: "First task",
+      description: "Go to school",
+      shouldNotify: false,
+      author: "Emi",
+      date: new Date("2022-06-02"),
+    },
+    {
+      id: 4,
+      title: "First task",
+      description: "Go to school",
+      shouldNotify: false,
+      author: "Emi",
+      date: new Date("2022-06-02"),
+    },
+    {
+      id: 5,
+      title: "First task",
+      description: "Go to school",
+      shouldNotify: false,
+      author: "Emi",
+      date: new Date("2022-06-02"),
+    },
+    {
+      id: 6,
+      title: "First task",
+      description: "Go to school",
+      shouldNotify: false,
+      author: "Emi",
+      date: new Date("2022-06-02"),
+    },
+    {
+      id: 7,
+      title: "First task",
+      description: "Go to school",
+      shouldNotify: false,
+      author: "Emi",
+      date: new Date("2022-06-02"),
     },
   ];
 
   return (
     <View>
       <Text style={styles.title}>Upcoming tasks</Text>
-      <View>
-        {/**Should be ranked properly */}
+      <View style={{}}>
         <FlatList
-          data={mockData}
+          data={mockData.slice(0, 3)}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({
             item: { date, shouldNotify, title, author, description },
           }) => (
-            <SingleTask
-              date={date}
-              title={title}
-              description={description}
-              author={author}
-              shouldNotify={shouldNotify}
-            />
+            <TouchableWithoutFeedback>
+              <SingleTask
+                date={date}
+                title={title}
+                description={description}
+                author={author}
+                shouldNotify={shouldNotify}
+              />
+            </TouchableWithoutFeedback>
           )}
         />
       </View>

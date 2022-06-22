@@ -21,29 +21,19 @@ export default function App() {
   const [userToken, setUserToken] = useState<UserToken | undefined>();
   const [user, setUser] = useState<User | undefined>();
 
-  const getUserData = async () => {
-    if (userToken?.sub) {
-      const userDt = await getUser(userToken?.sub);
-
-      return userDt;
-    }
-
-    return null;
-  };
-
   useEffect(() => {
     let isMounted = true;
-    const userData = async () => {
-      const user = await getUserPayload();
 
-      if (isMounted) {
-        try {
-          setUserToken(user);
-          setUser(await getUserData());
-        } catch (e) {}
-      }
-    };
-    userData();
+    getUserPayload()
+      .then((payload) => {
+        getUser(payload.sub).then((user) => {
+          setUser(user);
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
     return () => {
       isMounted = false;
     };

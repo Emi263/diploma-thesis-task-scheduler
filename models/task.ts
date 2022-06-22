@@ -3,6 +3,6 @@ export interface Task {
   author: string;
   description: string;
   shouldNotify: boolean;
-  date: string;
+  date: Date;
   title: string;
 }

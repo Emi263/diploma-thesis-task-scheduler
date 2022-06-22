@@ -94,7 +94,7 @@ const Login = () => {
                     <View style={styles.inputContainer}>
                       <>
                         <TextInput
-                          label="Email"
+                          // label="Email"
                           autoComplete="email"
                           value={values.email}
                           onChangeText={handleChange("email")}
@@ -119,7 +119,7 @@ const Login = () => {
                           secureTextEntry
                           style={styles.input}
                           onBlur={handleBlur("password")}
-                          label="Password"
+                          // label="Password"
                         />
 
                         <HelperText

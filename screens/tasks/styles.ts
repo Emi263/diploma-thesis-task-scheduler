@@ -5,10 +5,18 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     textAlign: "center",
+    marginBottom: 20,
   },
 
   singleTask: {
-    backgroundColor: "red",
+    marginBottom: 20,
+    backgroundColor: "white",
     display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    padding: 20,
+    borderRadius: 20,
+    marginHorizontal: 16,
   },
 });

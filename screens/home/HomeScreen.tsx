@@ -15,6 +15,7 @@ import { getUser } from "../../api/user";
 import AllTasks from "../tasks/AllTasks";
 import CreateTask from "../tasks/CreateTask";
 import ModalComponent from "../../common/Modal";
+import BottomNavigation from "./BottomNavigation";
 
 const HomeScreen = () => {
   const { setUserToken, userToken } = useContext(AuthContext);
@@ -34,9 +35,7 @@ const HomeScreen = () => {
         if (isMounted) setUserToken(undefined);
       }
     };
-
     checkUserLoggedIn();
-
     //cleanup
     return () => {
       isMounted = false;
@@ -47,15 +46,26 @@ const HomeScreen = () => {
     <View style={homeStyles.container}>
       <HomeHeader />
       <AllTasks />
+      <TouchableOpacity activeOpacity={0.7}>
+        <Text
+          style={{
+            fontWeight: "600",
+            textAlign: "right",
+            paddingHorizontal: 26,
+          }}
+        >
+          View all Tasks
+        </Text>
+      </TouchableOpacity>
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={(e) => {
           setShowModal(true);
         }}
       >
         <Text>Open Modal</Text>
-      </TouchableOpacity>
-
+      </TouchableOpacity> */}
+      <BottomNavigation />
       <ModalComponent visible={showModal} animationType="slide">
         <CreateTask setShowModal={setShowModal} />
       </ModalComponent>
