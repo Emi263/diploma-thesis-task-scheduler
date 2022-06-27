@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useContext } from "react";
 import { getUserPayload, isSessionActive } from "../../helper/helpers";
+import { SafeAreaView, Alert, View, TouchableOpacity } from "react-native";
 import {
-  Text,
   TextInput,
-  SafeAreaView,
+  HelperText,
+  Text,
   Button,
-  Alert,
-  View,
-  TouchableOpacity,
-} from "react-native";
+  Modal,
+  Portal,
+  Provider,
+} from "react-native-paper";
 import { signup } from "../../api/auth";
 import { styles } from "./styles";
 import { useMutation, useQuery } from "react-query";
@@ -21,6 +22,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 import { AxiosError, AxiosResponse } from "axios";
 import { SignupSchema } from "./validation";
+import { getUser } from "../../api/user";
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
@@ -33,9 +35,12 @@ const Signup = () => {
     try {
       await setAuthToken(res.data.token).then(async () => {
         const userData = await getUserPayload();
-        setUser(userData);
+        const userDt = await getUser(userData?.sub || 1);
+        setUser(userDt);
       });
     } catch (error) {
+      console.log(error);
+
       Alert.alert("Something went wrong");
     }
   };
@@ -43,8 +48,6 @@ const Signup = () => {
   return (
     <SafeAreaView style={styles.container}>
       <>
-        <Text style={styles.title}>Signup</Text>
-
         <Formik
           validationSchema={SignupSchema}
           initialValues={{
@@ -72,7 +75,7 @@ const Signup = () => {
           }) => (
             <View style={styles.view}>
               <>
-                <Text style={styles.title}>Log in</Text>
+                <Text style={styles.title}>Fill in the form</Text>
                 <View style={styles.inputWrapper}>
                   <>
                     <View style={styles.inputContainer}>
@@ -85,9 +88,12 @@ const Signup = () => {
                           style={styles.input}
                           onBlur={handleBlur("email")}
                         />
-                        <Text style={styles.error}>
-                          {touched.email && errors.email}
-                        </Text>
+                        <HelperText
+                          type="error"
+                          visible={!!touched.email && !!errors.email}
+                        >
+                          Email address is invalid!
+                        </HelperText>
                       </>
                     </View>
                     <View style={styles.inputContainer}>
@@ -101,9 +107,12 @@ const Signup = () => {
                           onBlur={handleBlur("password")}
                         />
 
-                        <Text style={styles.error}>
-                          {touched.password && errors.password}
-                        </Text>
+                        <HelperText
+                          type="error"
+                          visible={!!touched.password && !!errors.password}
+                        >
+                          {errors.password}
+                        </HelperText>
                       </>
                     </View>
                     <View style={styles.inputContainer}>
@@ -115,10 +124,12 @@ const Signup = () => {
                           style={styles.input}
                           onBlur={handleBlur("name")}
                         />
-
-                        <Text style={styles.error}>
-                          {touched.name && errors.name}
-                        </Text>
+                        <HelperText
+                          type="error"
+                          visible={!!touched.name && !!errors.name}
+                        >
+                          {errors.name}
+                        </HelperText>
                       </>
                     </View>
                     <View style={styles.inputContainer}>
@@ -131,16 +142,28 @@ const Signup = () => {
                           onBlur={handleBlur("age")}
                         />
 
-                        <Text style={styles.error}>
-                          {touched.age && errors.age}
-                        </Text>
+                        <HelperText
+                          type="error"
+                          visible={!!touched.age && !!errors.age}
+                        >
+                          {errors.age}
+                        </HelperText>
                       </>
                     </View>
                   </>
                 </View>
 
                 {/**Sign in button */}
-                <Button onPress={() => handleSubmit()} title="Signup" />
+                <Button
+                  mode="contained"
+                  icon="login"
+                  onPress={() => handleSubmit()}
+                >
+                  Sign up
+                </Button>
+                <Button onPress={() => nav.navigate("Login")}>
+                  <Text style={{ fontSize: 10 }}> Go to Login</Text>
+                </Button>
               </>
             </View>
           )}

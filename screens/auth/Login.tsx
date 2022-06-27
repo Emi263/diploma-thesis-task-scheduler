@@ -55,12 +55,14 @@ const Login = () => {
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+
+  const showAlert = (e) =>
+    Alert.alert("Info", e, [
+      { text: "OK", onPress: () => console.log("OK Pressed") },
+    ]);
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <Toast position="top" topOffset={60} />
       <>
-        {/**Needs some logo here */}
-
         <Formik
           validationSchema={LoginSchema}
           initialValues={{
@@ -71,10 +73,7 @@ const Login = () => {
             login(values.email, values.password)
               .then(async (res) => handleLogin(res))
               .catch((e: AxiosError) => {
-                Toast.show({
-                  type: "error",
-                  text1: errorCodes(e.response?.status || 400),
-                });
+                showAlert(errorCodes(e.response?.status || 400));
               });
           }}
         >
@@ -145,6 +144,11 @@ const Login = () => {
             </View>
           )}
         </Formik>
+        <View style={{ padding: 30 }}>
+          <Button icon="account" onPress={() => nav.navigate("Signup")}>
+            Register
+          </Button>
+        </View>
 
         {/* <>
           <TouchableOpacity

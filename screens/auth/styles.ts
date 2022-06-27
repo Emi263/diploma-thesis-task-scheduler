@@ -11,14 +11,14 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-
     padding: 5,
+    paddingTop: 50,
     justifyContent: "center",
     alignItems: "center",
   },
   title: {
     fontWeight: "500",
-    fontSize: 20,
+    fontSize: 16,
   },
   inputWrapper: {
     width: "100%",
@@ -38,9 +38,8 @@ export const styles = StyleSheet.create({
     display: "flex",
     height: 50,
     width: "100%",
-    padding: 6,
+    padding: 2,
     paddingHorizontal: 20,
-    marginBottom: 10,
     fontSize: 14,
     marginTop: 20,
   },
