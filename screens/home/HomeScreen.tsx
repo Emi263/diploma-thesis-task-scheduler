@@ -46,17 +46,28 @@ const HomeScreen = () => {
     <View style={homeStyles.container}>
       <HomeHeader />
       <AllTasks />
-      <TouchableOpacity activeOpacity={0.7}>
-        <Text
-          style={{
-            fontWeight: "600",
-            textAlign: "right",
-            paddingHorizontal: 26,
-          }}
-        >
-          View all Tasks
-        </Text>
-      </TouchableOpacity>
+
+      <View
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-end",
+        }}
+      >
+        <TouchableOpacity style={{ width: "50%" }} activeOpacity={0.6}>
+          <Text
+            style={{
+              backgroundColor: "white",
+              fontWeight: "600",
+              textAlign: "right",
+              paddingHorizontal: 40,
+            }}
+          >
+            View all Tasks
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       {/* <TouchableOpacity
         onPress={(e) => {

@@ -87,7 +87,10 @@ export default function App() {
   const client = new QueryClient();
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+    <View
+      style={{ flex: 1, backgroundColor: "white" }}
+      onLayout={onLayoutRootView}
+    >
       <AuthContext.Provider value={context}>
         <QueryClientProvider client={client}>
           <Screens />

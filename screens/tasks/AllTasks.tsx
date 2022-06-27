@@ -1,5 +1,11 @@
 import React from "react";
-import { Text, View, FlatList, TouchableWithoutFeedback } from "react-native";
+import {
+  Text,
+  View,
+  FlatList,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+} from "react-native";
 import { Task } from "../../models/task";
 import SingleTask from "./SingleTask";
 import { styles } from "./styles";
@@ -65,24 +71,23 @@ const AllTasks = () => {
   ];
 
   return (
-    <View>
-      <Text style={styles.title}>Upcoming tasks</Text>
+    <View style={{ backgroundColor: "white" }}>
+      <Text style={styles.title}>These are your upcoming tasks!</Text>
       <View style={{}}>
         <FlatList
-          data={mockData.slice(0, 3)}
+          numColumns={2}
+          data={mockData.slice(0, 4)}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({
             item: { date, shouldNotify, title, author, description },
           }) => (
-            <TouchableWithoutFeedback>
-              <SingleTask
-                date={date}
-                title={title}
-                description={description}
-                author={author}
-                shouldNotify={shouldNotify}
-              />
-            </TouchableWithoutFeedback>
+            <SingleTask
+              date={date}
+              title={title}
+              description={description}
+              author={author}
+              shouldNotify={shouldNotify}
+            />
           )}
         />
       </View>
