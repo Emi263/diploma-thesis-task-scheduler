@@ -76,7 +76,7 @@ const HomeScreen = () => {
       >
         <Text>Open Modal</Text>
       </TouchableOpacity> */}
-      <BottomNavigation />
+
       <ModalComponent visible={showModal} animationType="slide">
         <CreateTask setShowModal={setShowModal} />
       </ModalComponent>

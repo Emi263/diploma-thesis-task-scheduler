@@ -11,6 +11,9 @@ import HomeScreen from "./screens/home/HomeScreen";
 import { AuthContext } from "./context/AuthContext";
 import Signup from "./screens/auth/SignUp";
 import { getAuthToken } from "./utils/tokenMgmt";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { TabNavigator } from "./navigation/TabNavigator";
+import SingleTaskScreen from "./screens/tasks/SingleTaskScreen";
 
 export type RootStackParams = {
   Intro1: undefined;
@@ -20,10 +23,12 @@ export type RootStackParams = {
   Splash: undefined;
   Home: undefined;
   Signup: undefined;
+  SingleTask: undefined;
 };
 
 const Screens = () => {
   const RootStack = createNativeStackNavigator<RootStackParams>();
+
   const { userToken, user } = useContext(AuthContext);
 
   return (
@@ -63,11 +68,19 @@ const Screens = () => {
               component={SplashScreen}
               options={{ animation: "slide_from_right" }}
             />
+
             <RootStack.Screen name="Signup" component={Signup} />
           </>
         ) : (
           <>
-            <RootStack.Screen name="Home" component={HomeScreen} />
+            <RootStack.Screen name="Home" component={TabNavigator} />
+            <RootStack.Screen
+              name="SingleTask"
+              component={SingleTaskScreen}
+              options={{
+                headerShown: true,
+              }}
+            />
           </>
         )}
       </RootStack.Navigator>
