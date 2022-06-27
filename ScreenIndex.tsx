@@ -14,6 +14,7 @@ import { getAuthToken } from "./utils/tokenMgmt";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { TabNavigator } from "./navigation/TabNavigator";
 import SingleTaskScreen from "./screens/tasks/SingleTaskScreen";
+import AllTasks from "./screens/tasks/AllTasks";
 
 export type RootStackParams = {
   Intro1: undefined;
@@ -24,6 +25,7 @@ export type RootStackParams = {
   Home: undefined;
   Signup: undefined;
   SingleTask: undefined;
+  Tasks: undefined;
 };
 
 const Screens = () => {
@@ -77,6 +79,13 @@ const Screens = () => {
             <RootStack.Screen
               name="SingleTask"
               component={SingleTaskScreen}
+              options={{
+                headerShown: true,
+              }}
+            />
+            <RootStack.Screen
+              name="Tasks"
+              component={AllTasks}
               options={{
                 headerShown: true,
               }}

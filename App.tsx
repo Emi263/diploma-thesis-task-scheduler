@@ -13,9 +13,6 @@ import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import Entypo from "@expo/vector-icons/Entypo";
 import { getUser } from "./api/user";
-import * as Localization from "expo-localization";
-import i18n from "i18n-js";
-import { getAuthToken } from "./utils/tokenMgmt";
 
 export default function App() {
   const [userToken, setUserToken] = useState<UserToken | undefined>();

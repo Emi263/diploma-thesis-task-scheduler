@@ -54,7 +54,7 @@ const Signup = () => {
             email: "",
             password: "",
             name: "",
-            age: 0,
+            age: "",
           }}
           onSubmit={(values) => {
             const { email, password, name, age } = values;
@@ -87,6 +87,7 @@ const Signup = () => {
                           placeholder="Enter email"
                           style={styles.input}
                           onBlur={handleBlur("email")}
+                          keyboardType="email-address"
                         />
                         <HelperText
                           type="error"
@@ -140,6 +141,7 @@ const Signup = () => {
                           placeholder="Enter age"
                           style={styles.input}
                           onBlur={handleBlur("age")}
+                          keyboardType="number-pad"
                         />
 
                         <HelperText

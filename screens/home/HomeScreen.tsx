@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Text, Button, View, TouchableOpacity } from "react-native";
+import { Text, Button, View, TouchableOpacity, Image } from "react-native";
 import { clearAuthData } from "../../utils/tokenMgmt";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { isSessionActive } from "../../helper/helpers";
-import { useRoute } from "@react-navigation/native";
-import EventCalendar from "react-native-events-calendar";
-import { Calendar, CalendarList, Agenda } from "react-native-calendars";
-import { AgendaProps } from "react-native-calendars";
-import Tasks from "../tasks/Tasks";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import HomeHeader from "./HomeHeader";
 import { homeStyles } from "./styles";
-import { getUser } from "../../api/user";
-import AllTasks from "../tasks/AllTasks";
+import AllTasks from "../tasks/MainTasks";
 import CreateTask from "../tasks/CreateTask";
 import ModalComponent from "../../common/Modal";
-import BottomNavigation from "./BottomNavigation";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParams } from "../../ScreenIndex";
+
+import { AntDesign } from "@expo/vector-icons";
 
 const HomeScreen = () => {
+  type introScreenProp = StackNavigationProp<RootStackParams>;
+
   const { setUserToken, userToken } = useContext(AuthContext);
   const route = useRoute();
 
@@ -42,11 +42,12 @@ const HomeScreen = () => {
     };
   }, [route.name]);
 
+  const nav = useNavigation<introScreenProp>();
+
   return (
     <View style={homeStyles.container}>
       <HomeHeader />
       <AllTasks />
-
       <View
         style={{
           width: "100%",
@@ -55,7 +56,11 @@ const HomeScreen = () => {
           justifyContent: "flex-end",
         }}
       >
-        <TouchableOpacity style={{ width: "50%" }} activeOpacity={0.6}>
+        <TouchableOpacity
+          style={{ width: "50%" }}
+          activeOpacity={0.6}
+          onPress={() => nav.navigate("Tasks")}
+        >
           <Text
             style={{
               backgroundColor: "white",
@@ -68,7 +73,24 @@ const HomeScreen = () => {
           </Text>
         </TouchableOpacity>
       </View>
-
+      <View
+        style={{
+          width: "100%",
+          paddingVertical: 20,
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <AntDesign
+          onPress={() => {
+            setShowModal(true);
+          }}
+          name="pluscircleo"
+          size={40}
+          color="purple"
+        />
+        <Text>Create a new task</Text>
+      </View>
       {/* <TouchableOpacity
         onPress={(e) => {
           setShowModal(true);
@@ -76,8 +98,7 @@ const HomeScreen = () => {
       >
         <Text>Open Modal</Text>
       </TouchableOpacity> */}
-
-      <ModalComponent visible={showModal} animationType="slide">
+      <ModalComponent visible={showModal} animationType="fade">
         <CreateTask setShowModal={setShowModal} />
       </ModalComponent>
     </View>
