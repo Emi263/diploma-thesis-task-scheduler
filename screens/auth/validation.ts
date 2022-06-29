@@ -11,3 +11,9 @@ export const SignupSchema = yup.object({
   name: yup.string().required().min(5),
   age: yup.number().required().min(16),
 });
+
+export const PasswordSchema = yup.object({
+  currentPassword: yup.string().required(),
+  newPassword: yup.string().required(),
+  confirmNewPassword: yup.string(),
+});

@@ -1,17 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Collapsible from "../../common/Collapsible";
+import ChangePassword from "./ChangePassword";
 import DisplaySettings from "./DisplaySettings";
 const Index = () => {
   return (
     <View style={styles.container}>
       <DisplaySettings />
       <Collapsible headerLabel="Change Password">
-        <Text>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt,
-          temporibus accusantium illo id consequuntur quam quas aut ratione
-          perspiciatis tempore.
-        </Text>
+        <ChangePassword />
       </Collapsible>
     </View>
   );
