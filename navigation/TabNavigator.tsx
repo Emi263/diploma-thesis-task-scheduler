@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import HomeScreen from "../screens/home/HomeScreen";
 import { View, Text, TouchableOpacity } from "react-native";
+import Settings from "../screens/settings/index";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,18 +34,19 @@ export const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Test"
-        component={Test}
+        name="Settings"
+        component={Settings}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Feather name="settings" color={color} size={30} />
           ),
+          headerShown: true,
         }}
       />
 
       <Tab.Screen
         name="Test2"
-        component={Test}
+        component={Settings}
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="tasks" color={color} size={30} />

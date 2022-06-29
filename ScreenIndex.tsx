@@ -26,6 +26,7 @@ export type RootStackParams = {
   Signup: undefined;
   SingleTask: undefined;
   Tasks: undefined;
+  Settings: undefined;
 };
 
 const Screens = () => {
