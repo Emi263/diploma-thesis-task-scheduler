@@ -13,7 +13,7 @@ import Signup from "./screens/auth/SignUp";
 import { getAuthToken } from "./utils/tokenMgmt";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { TabNavigator } from "./navigation/TabNavigator";
-import SingleTaskScreen from "./screens/tasks/SingleTaskScreen";
+import SingleTaskScreen from "./screens/tasks/screens/SingleTaskScreen";
 import AllTasks from "./screens/tasks/AllTasks";
 
 export type RootStackParams = {

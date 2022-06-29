@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Task } from "../../models/task";
-import SingleTask from "./SingleTask";
+import SingleTask from "./components/SingleTaskComponent";
 import { styles } from "./styles";
 
 const AllTasks = () => {

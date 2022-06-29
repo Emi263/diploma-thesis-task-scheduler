@@ -1,7 +1,10 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  view: {},
+  view: {
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+  },
   title: {
     paddingVertical: 20,
     fontSize: 18,
@@ -20,5 +23,20 @@ export const styles = StyleSheet.create({
   },
   textContent: {
     paddingVertical: 10,
+  },
+  checkbox: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  input: {
+    backgroundColor: "white",
+  },
+
+  photoPicker: {
+    backgroundColor: "purple",
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    flexDirection: "row",
+    alignItems: "center",
   },
 });

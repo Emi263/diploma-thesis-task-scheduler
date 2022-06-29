@@ -1,13 +1,13 @@
 import React from "react";
 import { Text, View, Image, TouchableOpacity } from "react-native";
-import { styles } from "./styles";
+import { styles } from "../styles";
 import moment from "moment";
-import { formatDate } from "../../helper/helpers";
-import { generateRandomColor } from "../../helper/generateRandomColor";
+import { formatDate } from "../../../helper/helpers";
+import { generateRandomColor } from "../../../helper/generateRandomColor";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParams } from "../../ScreenIndex";
+import { RootStackParams } from "../../../ScreenIndex";
 
 interface SingleTaskProps {
   title: string;
@@ -39,7 +39,7 @@ const SingleTask: React.FunctionComponent<SingleTaskProps> = (props) => {
           }}
         >
           <Image
-            source={require("../../assets/logoTest.png")}
+            source={require("../../../assets/logoTest.png")}
             style={{ width: 36, height: 36 }}
           />
           <Text style={{ fontSize: 12 }}>{formatDate(date)}</Text>
