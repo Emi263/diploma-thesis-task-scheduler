@@ -10,6 +10,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { styles } from "./styles";
 import { MaterialIcons } from "@expo/vector-icons";
+import { createTask } from "../../api/task";
 
 interface CreateTaskProps {
   setShowModal: React.Dispatch<SetStateAction<boolean>>;
@@ -19,7 +20,7 @@ interface InititalValues {
   title: string;
   description: string;
   date: Date;
-  time: Date;
+
   image?: string;
   shouldNotify: boolean;
 }
@@ -34,7 +35,6 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({
     description: "",
     date: new Date(),
     shouldNotify: false,
-    time: new Date(),
   };
 
   const [checked, setChecked] = React.useState(false);
@@ -63,6 +63,8 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({
     setSelectedImage({ localUri: pickerResult.uri });
   };
 
+  const handleCreateTask = (values: InititalValues) => {};
+
   //let the user change the calendar mode? probably
   return (
     <View>
@@ -73,8 +75,11 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({
       <Formik
         validationSchema={TaskSchema}
         initialValues={initialValues}
-        onSubmit={(values) => {
+        onSubmit={(values: any) => {
           console.log(values);
+          createTask(values)
+            .then((dt) => console.log(dt))
+            .catch((e) => console.log(e));
         }}
       >
         {({

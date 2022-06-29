@@ -20,16 +20,16 @@ export default function ChangePassword() {
     } else setShowConfirmPass((prev) => !prev);
   };
 
-  const handlePasswordChange = async (currentPass: string, newPass: string) => {
+  const handlePasswordChange = async (
+    currentPassword: string,
+    password: string
+  ) => {
     try {
-      const result = changePassword(currentPass, newPass)
-        .then((res) => {
-          console.log(res);
-        })
+      changePassword(currentPassword, password)
+        .then((res) => {})
         .catch((e) => {
-          console.log(e?.message);
+          console.log(e);
         });
-      console.log(result);
     } catch (error) {}
   };
 
