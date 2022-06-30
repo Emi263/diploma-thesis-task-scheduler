@@ -3,4 +3,5 @@ export interface Task {
   shouldNotify: boolean;
   date: Date;
   title: string;
+  image: string;
 }

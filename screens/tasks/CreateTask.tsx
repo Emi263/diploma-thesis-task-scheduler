@@ -11,6 +11,8 @@ import * as ImagePicker from "expo-image-picker";
 import { styles } from "./styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { createTask } from "../../api/task";
+import { Snackbar } from "react-native-paper";
+import moment from "moment";
 
 interface CreateTaskProps {
   setShowModal: React.Dispatch<SetStateAction<boolean>>;
@@ -63,6 +65,7 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({
     setSelectedImage({ localUri: pickerResult.uri });
   };
 
+  const [snackBarVisible, setSnackbarVisible] = useState(false);
   const handleCreateTask = (values: InititalValues) => {};
 
   //let the user change the calendar mode? probably
@@ -76,9 +79,20 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({
         validationSchema={TaskSchema}
         initialValues={initialValues}
         onSubmit={(values: any) => {
-          console.log(values);
-          createTask(values)
-            .then((dt) => console.log(dt))
+          const valuesToPost = {
+            ...values,
+            date: selectedDate ? new Date(selectedDate) : new Date(),
+            shouldNotify: checked,
+          };
+
+          console.log(valuesToPost);
+
+          createTask(valuesToPost)
+            .then((dt) => {
+              if (dt.status === 201) {
+                setSnackbarVisible(true);
+              }
+            })
             .catch((e) => console.log(e));
         }}
       >
@@ -91,6 +105,23 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({
           touched,
         }) => (
           <View style={styles.view}>
+            <Snackbar
+              duration={1000}
+              style={{ zIndex: 2, marginBottom: 20 }}
+              visible={snackBarVisible}
+              onDismiss={() => {
+                setSnackbarVisible(false);
+              }}
+              action={{
+                label: "Success",
+                onPress: () => {
+                  setSnackbarVisible(false);
+                  2;
+                },
+              }}
+            >
+              Task created successfully
+            </Snackbar>
             <>
               <Text style={styles.title}>Fill in the form</Text>
               <View>
@@ -280,6 +311,8 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({
                     }}
                   /> */}
                 </>
+
+                <Text>{JSON.stringify(new Date(selectedDate!))}</Text>
               </View>
             </>
             <Button onPress={() => handleSubmit()}>Create task</Button>
