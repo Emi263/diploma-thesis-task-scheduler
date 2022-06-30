@@ -1,7 +1,6 @@
 import React from "react";
 import { Ionicons, Feather, FontAwesome5 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
 import HomeScreen from "../screens/home/HomeScreen";
 import { View, Text, TouchableOpacity } from "react-native";
 import Settings from "../screens/settings/index";
@@ -57,7 +56,7 @@ export const TabNavigator = () => {
       />
       <Tab.Screen
         name="Test3"
-        component={Test}
+        component={AllTasks}
         options={{
           tabBarBadge: 3,
           tabBarBadgeStyle: {
@@ -71,11 +70,3 @@ export const TabNavigator = () => {
     </Tab.Navigator>
   );
 };
-
-function Test() {
-  return (
-    <View>
-      <Text>This is a test</Text>
-    </View>
-  );
-}

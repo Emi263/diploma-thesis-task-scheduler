@@ -7,14 +7,13 @@ import Login from "./screens/auth/Login";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SplashScreen from "./screens/SplashScreen";
-import HomeScreen from "./screens/home/HomeScreen";
 import { AuthContext } from "./context/AuthContext";
 import Signup from "./screens/auth/SignUp";
-import { getAuthToken } from "./utils/tokenMgmt";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { TabNavigator } from "./navigation/TabNavigator";
+import { TabNavigator } from "./navigation/BottomNavigator";
 import SingleTaskScreen from "./screens/tasks/screens/SingleTaskScreen";
 import AllTasks from "./screens/tasks/AllTasks";
+import AuthStack from "./navigation/AuthStack";
+import AppStack from "./navigation/AppStack";
 
 export type RootStackParams = {
   Intro1: undefined;
@@ -44,77 +43,10 @@ const Screens = () => {
           headerShown: false,
         }}
       >
-        {!user?.id ? (
-          <>
-            <RootStack.Screen
-              name="Intro1"
-              component={Intro1}
-              options={{ animation: "fade" }}
-            />
-            <RootStack.Screen
-              name="Intro2"
-              component={Intro2}
-              options={{ animation: "slide_from_right" }}
-            />
-            <RootStack.Screen
-              name="Intro3"
-              component={Intro3}
-              options={{ animation: "slide_from_right" }}
-            />
-            <RootStack.Screen
-              name="Login"
-              component={Login}
-              options={{ animation: "simple_push" }}
-            />
-            <RootStack.Screen
-              name="Splash"
-              component={SplashScreen}
-              options={{ animation: "slide_from_right" }}
-            />
-
-            <RootStack.Screen name="Signup" component={Signup} />
-          </>
-        ) : (
-          <>
-            <RootStack.Screen name="Home" component={TabNavigator} />
-            <RootStack.Screen
-              name="SingleTask"
-              component={SingleTaskScreen}
-              options={{
-                headerShown: true,
-              }}
-            />
-            <RootStack.Screen
-              name="Tasks"
-              component={AllTasks}
-              options={{
-                headerShown: true,
-              }}
-            />
-          </>
-        )}
+        {!user?.id ? <AuthStack /> : <AppStack />}
       </RootStack.Navigator>
     </NavigationContainer>
   );
 };
 
 export default Screens;
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 100,
-    width: "100%",
-  },
-});
-
-const config = {
-  animation: "spring",
-  config: {
-    stiffness: 1000,
-    damping: 500,
-    mass: 3,
-    overshootClamping: true,
-    restDisplacementThreshold: 0.01,
-    restSpeedThreshold: 0.01,
-  },
-};
