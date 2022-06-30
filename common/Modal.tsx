@@ -4,7 +4,7 @@ import { Modal } from "react-native";
 interface ModalProps {
   children: React.ReactNode;
   visible: boolean;
-  animationType: "slide" | "none" | "fade";
+  animationType?: "slide" | "none" | "fade";
 }
 
 const ModalComponent: React.FunctionComponent<ModalProps> = ({

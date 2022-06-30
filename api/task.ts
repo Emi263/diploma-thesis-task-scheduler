@@ -1,8 +1,15 @@
 import { Task } from "../models/task";
-import { post, apiUrl, get } from "../utils/apiMgmt";
+import { post, apiUrl, get, put } from "../utils/apiMgmt";
 
 export const createTask = (data: Task) => {
   return post(apiUrl + "/tasks", data);
+};
+
+export const updateTask = async ({ id, ...rest }: Task) => {
+  console.log(id);
+
+  const { data } = await put(apiUrl + "/tasks/" + id, rest);
+  return data;
 };
 
 export const getAllTaks = async (): Promise<Task[]> => {
