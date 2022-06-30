@@ -24,9 +24,14 @@ export default function ChangePassword() {
     currentPassword: string,
     password: string
   ) => {
+    console.log("Current  " + currentPassword);
+    console.log("Pass  " + password);
+
     try {
       changePassword(currentPassword, password)
-        .then((res) => {})
+        .then((res) => {
+          console.log(res.status);
+        })
         .catch((e) => {
           console.log(e);
         });

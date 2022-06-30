@@ -85,8 +85,6 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({
             shouldNotify: checked,
           };
 
-          console.log(valuesToPost);
-
           createTask(valuesToPost)
             .then((dt) => {
               if (dt.status === 201) {

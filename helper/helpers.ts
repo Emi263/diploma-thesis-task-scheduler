@@ -5,7 +5,6 @@ import moment from "moment";
 export const getUserPayload = async (): Promise<any> => {
   try {
     const token = await getAuthToken();
-    console.log(token);
 
     if (token) {
       const user = jwtDecode(token);

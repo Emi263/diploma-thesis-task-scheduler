@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import HomeScreen from "../screens/home/HomeScreen";
 import { View, Text, TouchableOpacity } from "react-native";
 import Settings from "../screens/settings/index";
+import AllTasks from "../screens/tasks/AllTasks";
 
 const Tab = createBottomTabNavigator();
 
@@ -46,8 +47,9 @@ export const TabNavigator = () => {
 
       <Tab.Screen
         name="Test2"
-        component={Settings}
+        component={AllTasks}
         options={{
+          headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="tasks" color={color} size={30} />
           ),

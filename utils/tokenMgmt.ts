@@ -19,5 +19,4 @@ export const clearAuthData = async () => {
 
 export const decode = (token: string) => {
   const t = jwtDecode(token);
-  console.log(t);
 };
