@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Text,
-  View,
-  FlatList,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, FlatList } from "react-native";
 import { Task } from "../../models/task";
 import SingleTask from "./components/SingleTaskComponent";
 import { styles } from "./styles";
@@ -17,7 +11,7 @@ const AllTasks = () => {
       title: "First task",
       description: "Go to school",
       shouldNotify: false,
-      author: "Emi",
+
       date: new Date("2022-06-22"),
     },
     {
@@ -25,7 +19,7 @@ const AllTasks = () => {
       title: "First task",
       description: "Go to school",
       shouldNotify: false,
-      author: "Emi",
+
       date: new Date("2022-06-02"),
     },
     {
@@ -33,7 +27,7 @@ const AllTasks = () => {
       title: "First task",
       description: "Go to school",
       shouldNotify: false,
-      author: "Emi",
+
       date: new Date("2022-06-02"),
     },
     {
@@ -41,7 +35,7 @@ const AllTasks = () => {
       title: "First task",
       description: "Go to school",
       shouldNotify: false,
-      author: "Emi",
+
       date: new Date("2022-06-02"),
     },
     {
@@ -49,7 +43,7 @@ const AllTasks = () => {
       title: "First task",
       description: "Go to school",
       shouldNotify: false,
-      author: "Emi",
+
       date: new Date("2022-06-02"),
     },
     {
@@ -57,7 +51,7 @@ const AllTasks = () => {
       title: "First task",
       description: "Go to school",
       shouldNotify: false,
-      author: "Emi",
+
       date: new Date("2022-06-02"),
     },
     {
@@ -65,7 +59,7 @@ const AllTasks = () => {
       title: "First task",
       description: "Go to school",
       shouldNotify: false,
-      author: "Emi",
+
       date: new Date("2022-06-02"),
     },
   ];
@@ -79,13 +73,12 @@ const AllTasks = () => {
           data={mockData.slice(0, 4)}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({
-            item: { date, shouldNotify, title, author, description },
+            item: { date, shouldNotify, title, description },
           }) => (
             <SingleTask
               date={date}
               title={title}
               description={description}
-              author={author}
               shouldNotify={shouldNotify}
             />
           )}

@@ -2,7 +2,6 @@ import React from "react";
 import { Ionicons, Feather, FontAwesome5 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/home/HomeScreen";
-import { View, Text, TouchableOpacity } from "react-native";
 import Settings from "../screens/settings/index";
 import AllTasks from "../screens/tasks/AllTasks";
 

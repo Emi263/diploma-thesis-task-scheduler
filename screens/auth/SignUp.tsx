@@ -1,26 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
 import { getUserPayload, isSessionActive } from "../../helper/helpers";
 import { SafeAreaView, Alert, View, TouchableOpacity } from "react-native";
-import {
-  TextInput,
-  HelperText,
-  Text,
-  Button,
-  Modal,
-  Portal,
-  Provider,
-} from "react-native-paper";
+import { TextInput, HelperText, Text, Button } from "react-native-paper";
 import { signup } from "../../api/auth";
 import { styles } from "./styles";
-import { useMutation, useQuery } from "react-query";
-import { Formik, useFormik } from "formik";
-import { setAuthToken, clearAuthData, decode } from "../../utils/tokenMgmt";
+import { Formik } from "formik";
+import { setAuthToken } from "../../utils/tokenMgmt";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParams } from "../../ScreenIndex";
 import { AuthContext } from "../../context/AuthContext";
 
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { SignupSchema } from "./validation";
 import { getUser } from "../../api/user";
 
@@ -176,13 +167,3 @@ const Signup = () => {
 };
 
 export default Signup;
-
-// // signup(email, pass, name, surname)
-// .then(async (res) => {
-//   setError(null);
-//   setAuthToken(res.data.token);
-//   setUser(getUserPayload());
-// })
-// .catch((e) => {
-//   setError(e.response?.data.message!);
-// });

@@ -5,8 +5,8 @@ export const styles = StyleSheet.create({
     paddingTop: 100,
     width: "100%",
     backgroundColor: "white",
-    position:'relative',
-    flex:1
+    position: "relative",
+    flex: 1,
   },
   image: {
     position: "relative",
@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     padding: 2,
     paddingLeft: 30,
-    paddingTop:20
+    paddingTop: 20,
   },
   description: {
     padding: 2,
@@ -43,13 +43,13 @@ export const styles = StyleSheet.create({
     padding: 1,
     marginLeft: 5,
   },
-  back : {
-    position:'absolute',
-    top:50,
+  back: {
+    position: "absolute",
+    top: 50,
     left: 10,
-    zIndex:123,
-    paddingHorizontal:20,
-    width:150,
-    paddingVertical:10
-  }
+    zIndex: 123,
+    paddingHorizontal: 20,
+    width: 150,
+    paddingVertical: 10,
+  },
 });

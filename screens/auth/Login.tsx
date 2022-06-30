@@ -1,19 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
-import {
-  errorCodes,
-  getUserPayload,
-  isSessionActive,
-} from "../../helper/helpers";
-import {
-  SafeAreaView,
-  Alert,
-  View,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
-import Toast from "react-native-toast-message";
-
+import { errorCodes, getUserPayload } from "../../helper/helpers";
+import { Alert, View, KeyboardAvoidingView, Platform } from "react-native";
 import { login } from "../../api/auth";
 import { styles } from "./styles";
 import { setAuthToken } from "../../utils/tokenMgmt";
@@ -25,15 +12,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { Formik } from "formik";
 import { LoginSchema } from "./validation";
 import { getUser } from "../../api/user";
-import {
-  TextInput,
-  HelperText,
-  Text,
-  Button,
-  Modal,
-  Portal,
-  Provider,
-} from "react-native-paper";
+import { TextInput, HelperText, Text, Button } from "react-native-paper";
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
@@ -50,11 +29,6 @@ const Login = () => {
       });
     } catch (error) {}
   };
-  const containerStyle = { backgroundColor: "white", padding: 20 };
-  const [visible, setVisible] = React.useState(false);
-
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
 
   const showAlert = (e) =>
     Alert.alert("Info", e, [
@@ -149,21 +123,6 @@ const Login = () => {
             Register
           </Button>
         </View>
-
-        {/* <>
-          <TouchableOpacity
-            style={{ marginTop: 300 }}
-            onPress={() => {
-              nav.navigate("Signup");
-            }}
-          >
-            <Text style={{ color: "blue" }}>Register</Text>
-          </TouchableOpacity>
-        </> */}
-
-        {/**Do not have an acc link */}
-        {/* <Button onPress={() => clearAuthData()} title="Logout" /> */}
-        {/**Signin with google */}
       </>
     </KeyboardAvoidingView>
   );

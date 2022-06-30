@@ -12,9 +12,9 @@ export default function ChangePassword() {
   const [showNewPass, setShowNewPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
 
-  type str = "newpass" | "confirmpass";
+  type Input = "newpass" | "confirmpass";
 
-  const handleShowPassword = (input: str) => {
+  const handleShowPassword = (input: Input) => {
     if (input === "newpass") {
       setShowNewPass((prev) => !prev);
     } else setShowConfirmPass((prev) => !prev);

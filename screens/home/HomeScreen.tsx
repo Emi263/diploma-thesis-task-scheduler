@@ -91,13 +91,7 @@ const HomeScreen = () => {
         />
         <Text>Create a new task</Text>
       </View>
-      {/* <TouchableOpacity
-        onPress={(e) => {
-          setShowModal(true);
-        }}
-      >
-        <Text>Open Modal</Text>
-      </TouchableOpacity> */}
+
       <ModalComponent visible={showModal} animationType="fade">
         <CreateTask setShowModal={setShowModal} />
       </ModalComponent>

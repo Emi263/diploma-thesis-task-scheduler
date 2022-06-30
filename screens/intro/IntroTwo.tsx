@@ -7,10 +7,10 @@ import { RootStackParams } from "../../ScreenIndex";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 
-type introScreenProp = StackNavigationProp<RootStackParams, "Intro2">;
+type IntroScreenProp = StackNavigationProp<RootStackParams, "Intro2">;
 
 const IntroTwo = () => {
-  const nav = useNavigation<introScreenProp>();
+  const nav = useNavigation<IntroScreenProp>();
 
   const handleOnPressButton = () => {
     nav.navigate("Intro3");

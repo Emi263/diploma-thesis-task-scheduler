@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Collapsible from "../../common/Collapsible";
 import ChangePassword from "./ChangePassword";
 import DisplaySettings from "./DisplaySettings";
+
 const Index = () => {
   return (
     <View style={styles.container}>

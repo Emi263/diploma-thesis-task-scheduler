@@ -7,10 +7,10 @@ import { styles } from "./styles";
 import { AntDesign } from "@expo/vector-icons";
 import CustomButton from "../../common/Button";
 
-type introScreenProp = StackNavigationProp<RootStackParams, "Intro3">;
+type IntroScreenProp = StackNavigationProp<RootStackParams, "Intro3">;
 
 const IntroThree = () => {
-  const nav = useNavigation<introScreenProp>();
+  const nav = useNavigation<IntroScreenProp>();
   const handleOnPressButton = () => {
     nav.navigate("Login");
   };
