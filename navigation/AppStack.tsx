@@ -9,7 +9,7 @@ const AppStack = () => {
   const RootStack = createNativeStackNavigator<RootStackParams>();
 
   return (
-    <>
+    <RootStack.Group>
       <RootStack.Screen name="Home" component={TabNavigator} />
       <RootStack.Screen
         name="SingleTask"
@@ -25,7 +25,7 @@ const AppStack = () => {
           headerShown: true,
         }}
       />
-    </>
+    </RootStack.Group>
   );
 };
 

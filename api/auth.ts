@@ -17,7 +17,7 @@ export const signup = (
   return post(apiUrl + "/auth/signup", { email, password, name, age });
 };
 
-export const changePassword = (
+export const changePassword = async (
   currentPassword: string,
   password: string
 ): Promise<AxiosResponse<any, any>> => {

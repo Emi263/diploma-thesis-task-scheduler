@@ -73,9 +73,10 @@ const AllTasks = () => {
           data={mockData.slice(0, 4)}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({
-            item: { date, shouldNotify, title, description },
+            item: { date, shouldNotify, title, description, id },
           }) => (
             <SingleTask
+              id={id}
               date={date}
               title={title}
               description={description}

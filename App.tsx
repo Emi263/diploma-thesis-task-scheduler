@@ -15,6 +15,7 @@ export default function App() {
 
   useEffect(() => {
     let isMounted = true;
+
     getUserPayload()
       .then((payload) => {
         getUser(payload.sub).then((user) => {

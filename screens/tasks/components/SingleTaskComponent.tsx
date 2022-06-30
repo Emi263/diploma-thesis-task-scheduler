@@ -1,5 +1,11 @@
 import React from "react";
-import { Text, View, Image, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  useColorScheme,
+} from "react-native";
 import { styles } from "../styles";
 import { formatDate } from "../../../helper/helpers";
 import { generateRandomColor } from "../../../helper/generateRandomColor";
@@ -9,14 +15,14 @@ import { RootStackParams } from "../../../ScreenIndex";
 
 interface SingleTaskProps {
   title: string;
-
+  id: number;
   description: string;
   shouldNotify: boolean;
   date: Date;
 }
 
 const SingleTask: React.FunctionComponent<SingleTaskProps> = (props) => {
-  const { title, description, date, shouldNotify = false } = props;
+  const { title, description, date, shouldNotify = false, id } = props;
   type introScreenProp = StackNavigationProp<RootStackParams>;
   const { background, color } = generateRandomColor();
   const nav = useNavigation<introScreenProp>();
@@ -24,7 +30,9 @@ const SingleTask: React.FunctionComponent<SingleTaskProps> = (props) => {
     <View style={[styles.singleTask, { backgroundColor: background }]}>
       <TouchableOpacity
         onPress={() => {
-          nav.navigate("SingleTask");
+          nav.navigate("SingleTask", {
+            id: id,
+          });
         }}
       >
         <View

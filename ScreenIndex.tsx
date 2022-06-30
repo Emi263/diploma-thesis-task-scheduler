@@ -16,6 +16,8 @@ import AuthStack from "./navigation/AuthStack";
 import AppStack from "./navigation/AppStack";
 
 export type RootStackParams = {
+  App: undefined;
+  Auth: undefined;
   Intro1: undefined;
   Intro2: undefined;
   Intro3: undefined;
@@ -23,7 +25,9 @@ export type RootStackParams = {
   Splash: undefined;
   Home: undefined;
   Signup: undefined;
-  SingleTask: undefined;
+  SingleTask: {
+    id: number;
+  };
   Tasks: undefined;
   Settings: undefined;
 };
@@ -36,14 +40,57 @@ const Screens = () => {
   return (
     <NavigationContainer>
       <RootStack.Navigator
-        initialRouteName={userToken?.sub ? `Home` : "Intro1"}
         screenOptions={{
           gestureEnabled: true,
           customAnimationOnGesture: true,
           headerShown: false,
         }}
       >
-        {!user?.id ? <AuthStack /> : <AppStack />}
+        {user?.id ? (
+          <>
+            <RootStack.Screen name="Home" component={TabNavigator} />
+            <RootStack.Screen
+              name="SingleTask"
+              component={SingleTaskScreen}
+              options={{
+                headerShown: true,
+              }}
+            />
+            <RootStack.Screen
+              name="Tasks"
+              component={AllTasks}
+              options={{
+                headerShown: true,
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <RootStack.Group>
+              <RootStack.Screen
+                name="Intro1"
+                component={Intro1}
+                options={{ animation: "fade" }}
+              />
+              <RootStack.Screen
+                name="Intro2"
+                component={Intro2}
+                options={{ animation: "slide_from_right" }}
+              />
+              <RootStack.Screen
+                name="Intro3"
+                component={Intro3}
+                options={{ animation: "slide_from_right" }}
+              />
+              <RootStack.Screen
+                name="Login"
+                component={Login}
+                options={{ animation: "simple_push" }}
+              />
+              <RootStack.Screen name="Signup" component={Signup} />
+            </RootStack.Group>
+          </>
+        )}
       </RootStack.Navigator>
     </NavigationContainer>
   );

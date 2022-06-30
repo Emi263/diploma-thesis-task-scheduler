@@ -9,9 +9,8 @@ import Signup from "../screens/auth/SignUp";
 
 const AuthStack = () => {
   const RootStack = createNativeStackNavigator<RootStackParams>();
-
   return (
-    <>
+    <RootStack.Group>
       <RootStack.Screen
         name="Intro1"
         component={Intro1}
@@ -32,9 +31,8 @@ const AuthStack = () => {
         component={Login}
         options={{ animation: "simple_push" }}
       />
-
       <RootStack.Screen name="Signup" component={Signup} />
-    </>
+    </RootStack.Group>
   );
 };
 
