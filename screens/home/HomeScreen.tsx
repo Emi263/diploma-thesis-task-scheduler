@@ -19,6 +19,7 @@ import CreateTask from "../tasks/CreateTask";
 import ModalComponent from "../../common/Modal";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParams } from "../../ScreenIndex";
+import Notifications from "../../common/Notifications";
 
 import { AntDesign } from "@expo/vector-icons";
 
@@ -80,6 +81,7 @@ const HomeScreen = () => {
           </Text>
         </TouchableOpacity>
       </View>
+
       <View
         style={{
           width: "100%",
