@@ -21,3 +21,8 @@ export const getTask = async (id: number): Promise<Task> => {
   const { data } = await get(`/tasks/${id}`);
   return data;
 };
+
+export const getTopTasks = async (): Promise<Task[]> => {
+  const { data } = await get("/tasks/top-tasks");
+  return data;
+};

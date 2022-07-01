@@ -1,76 +1,38 @@
 import React from "react";
 import { Text, View, FlatList } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
+import { useQuery } from "react-query";
+import { getTopTasks } from "../../api/task";
 import { Task } from "../../models/task";
 import SingleTask from "./components/SingleTaskComponent";
 import { styles } from "./styles";
 
 const AllTasks = () => {
-  const mockData: Task[] = [
-    {
-      id: 1,
-      title: "First task",
-      description: "Go to school",
-      shouldNotify: false,
-
-      date: new Date("2022-06-22"),
-    },
-    {
-      id: 2,
-      title: "First task",
-      description: "Go to school",
-      shouldNotify: false,
-
-      date: new Date("2022-06-02"),
-    },
-    {
-      id: 3,
-      title: "First task",
-      description: "Go to school",
-      shouldNotify: false,
-
-      date: new Date("2022-06-02"),
-    },
-    {
-      id: 4,
-      title: "First task",
-      description: "Go to school",
-      shouldNotify: false,
-
-      date: new Date("2022-06-02"),
-    },
-    {
-      id: 5,
-      title: "First task",
-      description: "Go to school",
-      shouldNotify: false,
-
-      date: new Date("2022-06-02"),
-    },
-    {
-      id: 6,
-      title: "First task",
-      description: "Go to school",
-      shouldNotify: false,
-
-      date: new Date("2022-06-02"),
-    },
-    {
-      id: 7,
-      title: "First task",
-      description: "Go to school",
-      shouldNotify: false,
-
-      date: new Date("2022-06-02"),
-    },
-  ];
+  const {
+    data: topTasks,
+    isLoading,
+    isError,
+  } = useQuery("topTasks", getTopTasks);
 
   return (
     <View style={{ backgroundColor: "white" }}>
       <Text style={styles.title}>These are your upcoming tasks!</Text>
       <View style={{}}>
+        {isLoading && (
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingVertical: 30,
+            }}
+          >
+            <ActivityIndicator size="large" />
+          </View>
+        )}
         <FlatList
           numColumns={2}
-          data={mockData.slice(0, 4)}
+          data={topTasks}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({
             item: { date, shouldNotify, title, description, id },

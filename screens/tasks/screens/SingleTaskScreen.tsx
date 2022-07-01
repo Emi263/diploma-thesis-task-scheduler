@@ -8,6 +8,7 @@ import {
   Pressable,
   StyleSheet,
 } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import { useQuery } from "react-query";
 import { getTask } from "../../../api/task";
 import ModalComponent from "../../../common/Modal";
@@ -21,7 +22,11 @@ const SingleTaskScreen: React.FC<Props> = ({
     params: { id },
   },
 }) => {
-  const { data: task } = useQuery(["singleTask", id], () => getTask(id), {
+  const {
+    data: task,
+    isLoading,
+    isError,
+  } = useQuery(["singleTask", id], () => getTask(id), {
     enabled: !!id,
   });
 
@@ -34,6 +39,20 @@ const SingleTaskScreen: React.FC<Props> = ({
   const handleCloseModal = () => {
     setOpenModal(false);
   };
+
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          paddingVertical: 30,
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <View>

@@ -40,7 +40,6 @@ interface IFormInitialValues {
 
 const TaskForm: React.FC<IFormTask> = (props) => {
   const queryClient = useQueryClient();
-
   const taskId = props?.task?.id;
 
   const { mutateAsync, isLoading } = taskId
@@ -125,7 +124,12 @@ const TaskForm: React.FC<IFormTask> = (props) => {
         initialValues={InitialValues}
         validationSchema={TaskSchema}
         onSubmit={(values: Task, form: FormikHelpers<IFormInitialValues>) => {
-          handleSubmit(values, form.resetForm);
+          const finalValues: Task = {
+            ...values,
+            date: new Date(selectedDate || ""),
+          };
+
+          handleSubmit(finalValues, form.resetForm);
         }}
       >
         {({
@@ -277,6 +281,8 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                             }
 
                             if (d) {
+                              console.log(d);
+
                               setSelectedDate(d.toDateString());
                             }
 
@@ -338,6 +344,8 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                       resizeMode: "contain",
                     }}
                   /> */}
+                    {console.log(new Date(selectedDate!))}
+                    <Text>{JSON.stringify(new Date(selectedDate!))}</Text>
                   </>
                 </View>
               </>

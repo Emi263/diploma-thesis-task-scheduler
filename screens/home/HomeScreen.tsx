@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Text, Button, View, TouchableOpacity, Image } from "react-native";
+import {
+  Text,
+  Button,
+  View,
+  TouchableOpacity,
+  Image,
+  Pressable,
+} from "react-native";
 import { clearAuthData } from "../../utils/tokenMgmt";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -81,18 +88,18 @@ const HomeScreen = () => {
           alignItems: "center",
         }}
       >
-        <AntDesign
+        <Pressable
+          style={{ justifyContent: "center", alignItems: "center" }}
           onPress={() => {
             setShowModal(true);
           }}
-          name="pluscircleo"
-          size={40}
-          color="purple"
-        />
-        <Text>Create a new task</Text>
+        >
+          <AntDesign name="pluscircleo" size={40} color="purple" />
+          <Text>Create a new task</Text>
+        </Pressable>
       </View>
 
-      <ModalComponent visible={showModal} animationType="fade">
+      <ModalComponent visible={showModal} animationType="slide">
         <CreateTask setShowModal={setShowModal} />
       </ModalComponent>
     </View>
