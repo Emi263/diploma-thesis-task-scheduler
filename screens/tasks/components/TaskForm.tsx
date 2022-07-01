@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Alert,
+  Pressable,
+} from "react-native";
 import { Task } from "../../../models/task";
 import { Formik, FormikHelpers } from "formik";
 import { TaskSchema } from "../validation";
@@ -63,8 +70,11 @@ const TaskForm: React.FC<IFormTask> = (props) => {
   const [selectedTime, setSelectedTime] = useState<null | string>();
   //end of story
 
-  //image picker
+  //format selected Date and Time
+  const selectedDateAndTime =
+    selectedDate && selectedTime ? `${selectedDate} at ${selectedTime}` : "";
 
+  //image picker
   let openImagePickerAsync = async () => {
     let permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -84,24 +94,27 @@ const TaskForm: React.FC<IFormTask> = (props) => {
   const handleSubmit = async (values: Task, resetForm: any) => {
     if (taskId) {
       //update the task
-
       await mutateAsync(
         { ...values, id: taskId },
         {
           onSuccess: () => {
             queryClient.invalidateQueries("allTasks");
+            Alert.alert("Task updated successfully");
           },
         }
       );
-      Alert.alert("Task updated successfully");
       resetForm();
       return;
     }
 
     //create a new task
 
-    await mutateAsync(values);
-    Alert.alert("A new task was successfully created");
+    await mutateAsync(values, {
+      onSuccess: () => {
+        queryClient.invalidateQueries("allTasks");
+        Alert.alert("A new task was successfully created");
+      },
+    });
     resetForm();
     return;
   };
@@ -194,7 +207,11 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                           setCheckboxChecked((prev) => !prev);
                         }}
                       />
-                      <Text>Should notify</Text>
+                      <Pressable
+                        onPress={() => setCheckboxChecked((prev) => !prev)}
+                      >
+                        <Text>Should notify</Text>
+                      </Pressable>
                     </View>
                   </>
 
@@ -210,9 +227,8 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         <TouchableOpacity
                           style={{
                             flexDirection: "row",
-                            backgroundColor: "gray",
+                            backgroundColor: "#e3e2e1",
                             borderRadius: 20,
-
                             padding: 10,
                           }}
                           onPress={() => setShowDatePicker(true)}
@@ -220,16 +236,16 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                           <FontAwesome
                             name="calendar"
                             size={30}
-                            color="white"
+                            color="black"
                           />
                           <Text
                             style={{
                               paddingHorizontal: 20,
                               paddingBottom: 5,
-                              color: "white",
+                              color: "black",
                             }}
                           >
-                            Select Date and Time
+                            Select Date
                           </Text>
                         </TouchableOpacity>
                       </View>
@@ -239,26 +255,12 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                           alignItems: "center",
                         }}
                       >
-                        <Text>Date:</Text>
+                        <Text>Selected Date:</Text>
                         <Chip style={{ marginLeft: 10 }} icon="calendar">
-                          {selectedDate}
+                          {selectedDateAndTime}
                         </Chip>
                       </View>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-                          paddingVertical: 10,
-                        }}
-                      >
-                        <Text>Time:</Text>
-                        <Chip
-                          style={{ marginLeft: 10 }}
-                          icon="clock-time-nine-outline"
-                        >
-                          {selectedTime}
-                        </Chip>
-                      </View>
+
                       {showDatePicker && (
                         <DateTimePicker
                           mode="date"
@@ -337,8 +339,6 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                     }}
                   /> */}
                   </>
-
-                  <Text>{JSON.stringify(new Date(selectedDate!))}</Text>
                 </View>
               </>
               <Button onPress={() => handleSubmit()} loading={isLoading}>

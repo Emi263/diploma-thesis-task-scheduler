@@ -23,6 +23,7 @@ interface SingleTaskProps {
 
 const SingleTask: React.FunctionComponent<SingleTaskProps> = (props) => {
   const { title, description, date, shouldNotify = false, id } = props;
+
   type introScreenProp = StackNavigationProp<RootStackParams>;
   const { background, color } = generateRandomColor();
   const nav = useNavigation<introScreenProp>();
