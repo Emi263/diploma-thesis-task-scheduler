@@ -15,5 +15,7 @@ export const SignupSchema = yup.object({
 export const PasswordSchema = yup.object({
   currentPassword: yup.string().required(),
   newPassword: yup.string().required(),
-  confirmNewPassword: yup.string(),
+  confirmNewPassword: yup
+    .string()
+    .oneOf([yup.ref("newPassword"), null], "Passwords must match"),
 });

@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/home/HomeScreen";
 import Settings from "../screens/settings/index";
 import AllTasks from "../screens/tasks/AllTasks";
+import { View, Text } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -44,7 +45,7 @@ export const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name="Test2"
+        name="All tasks"
         component={AllTasks}
         options={{
           headerShown: true,
@@ -54,9 +55,10 @@ export const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Test3"
-        component={AllTasks}
+        name="Notifications"
+        component={TestComponent}
         options={{
+          headerShown: true,
           tabBarBadge: 3,
           tabBarBadgeStyle: {
             backgroundColor: "orange",
@@ -69,3 +71,11 @@ export const TabNavigator = () => {
     </Tab.Navigator>
   );
 };
+
+function TestComponent() {
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text>Coming soon</Text>
+    </View>
+  );
+}

@@ -4,7 +4,6 @@ export const homeStyles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 60,
-    backgroundColor: "white",
   },
 });
 
@@ -15,7 +14,6 @@ export const headerStyles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    backgroundColor: "white",
   },
   header: {
     width: "100%",
@@ -33,7 +31,6 @@ export const headerStyles = StyleSheet.create({
     fontSize: 12,
   },
   name: {
-    color: "red",
     fontWeight: "500",
   },
 });

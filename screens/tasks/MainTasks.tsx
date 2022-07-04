@@ -1,11 +1,16 @@
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import { Text, View, FlatList } from "react-native";
+import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { useQuery } from "react-query";
 import { getTopTasks } from "../../api/task";
 import { Task } from "../../models/task";
+import { RootStackParams } from "../../ScreenIndex";
 import SingleTask from "./components/SingleTaskComponent";
 import { styles } from "./styles";
+
+type introScreenProp = StackNavigationProp<RootStackParams>;
 
 const AllTasks = () => {
   const {
@@ -14,40 +19,82 @@ const AllTasks = () => {
     isError,
   } = useQuery("topTasks", getTopTasks);
 
+  const nav = useNavigation<introScreenProp>();
+
   return (
-    <View style={{ backgroundColor: "white" }}>
-      <Text style={styles.title}>These are your upcoming tasks!</Text>
-      <View style={{}}>
-        {isLoading && (
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              paddingVertical: 30,
-            }}
-          >
-            <ActivityIndicator size="large" />
-          </View>
-        )}
-        <FlatList
-          numColumns={2}
-          data={topTasks}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({
-            item: { date, shouldNotify, title, description, id },
-          }) => (
-            <SingleTask
-              id={id}
-              date={date}
-              title={title}
-              description={description}
-              shouldNotify={shouldNotify}
-            />
+    <>
+      <View>
+        <Text style={styles.title}>These are your upcoming tasks!</Text>
+        <View style={{}}>
+          {isLoading && (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingVertical: 30,
+              }}
+            >
+              <ActivityIndicator size="large" />
+            </View>
           )}
-        />
+          {topTasks?.length === 0 && (
+            <View
+              style={{
+                paddingVertical: 50,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text>No tasks to show</Text>
+            </View>
+          )}
+          <FlatList
+            numColumns={2}
+            data={topTasks}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({
+              item: { date, shouldNotify, title, description, id },
+            }) => (
+              <SingleTask
+                id={id}
+                date={date}
+                title={title}
+                description={description}
+                shouldNotify={shouldNotify}
+              />
+            )}
+          />
+        </View>
       </View>
-    </View>
+
+      {topTasks?.length !== 0 && (
+        <View
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+          }}
+        >
+          <TouchableOpacity
+            style={{ width: "50%" }}
+            activeOpacity={0.6}
+            onPress={() => nav.navigate("Tasks")}
+          >
+            <Text
+              style={{
+                fontWeight: "600",
+                textAlign: "right",
+                paddingHorizontal: 40,
+              }}
+            >
+              View all Tasks
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </>
   );
 };
 

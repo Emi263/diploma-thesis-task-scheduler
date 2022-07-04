@@ -22,11 +22,13 @@ import { RootStackParams } from "../../ScreenIndex";
 import Notifications from "../../common/Notifications";
 
 import { AntDesign } from "@expo/vector-icons";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const HomeScreen = () => {
   type introScreenProp = StackNavigationProp<RootStackParams>;
 
   const { setUserToken, userToken } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
   const route = useRoute();
 
   //local state
@@ -50,38 +52,10 @@ const HomeScreen = () => {
     };
   }, [route.name]);
 
-  const nav = useNavigation<introScreenProp>();
-
   return (
     <View style={homeStyles.container}>
       <HomeHeader />
       <AllTasks />
-      <View
-        style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-end",
-        }}
-      >
-        <TouchableOpacity
-          style={{ width: "50%" }}
-          activeOpacity={0.6}
-          onPress={() => nav.navigate("Tasks")}
-        >
-          <Text
-            style={{
-              backgroundColor: "white",
-              fontWeight: "600",
-              textAlign: "right",
-              paddingHorizontal: 40,
-            }}
-          >
-            View all Tasks
-          </Text>
-        </TouchableOpacity>
-      </View>
-
       <View
         style={{
           width: "100%",

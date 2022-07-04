@@ -97,7 +97,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
         { ...values, id: taskId },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries("allTasks");
+            queryClient.invalidateQueries();
             Alert.alert("Task updated successfully");
           },
         }
@@ -110,7 +110,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
 
     await mutateAsync(values, {
       onSuccess: () => {
-        queryClient.invalidateQueries("allTasks");
+        queryClient.invalidateQueries();
         Alert.alert("A new task was successfully created");
       },
     });
@@ -163,7 +163,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                 <Text style={styles.title}>Fill in the form</Text>
                 <View>
                   <>
-                    <View>
+                    <View style={styles.inputContainer}>
                       <Text>Task Title</Text>
                       <>
                         <TextInput
@@ -181,7 +181,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         </HelperText>
                       </>
                     </View>
-                    <View>
+                    <View style={styles.inputContainer}>
                       <Text>Task description</Text>
                       <>
                         <TextInput
@@ -314,7 +314,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                       )}
                     </View>
 
-                    <View
+                    {/* <View
                       style={{
                         justifyContent: "flex-start",
                         flexDirection: "row",
@@ -335,7 +335,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                           color="white"
                         />
                       </TouchableOpacity>
-                    </View>
+                    </View> */}
                     {/* <Image
                     source={{ uri: selectedImage?.localUri }}
                     style={{
@@ -344,14 +344,14 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                       resizeMode: "contain",
                     }}
                   /> */}
-                    {console.log(new Date(selectedDate!))}
-                    <Text>{JSON.stringify(new Date(selectedDate!))}</Text>
                   </>
                 </View>
               </>
-              <Button onPress={() => handleSubmit()} loading={isLoading}>
-                {taskId ? "Update" : "Create"}
-              </Button>
+              <View style={{ marginTop: 50 }}>
+                <Button onPress={() => handleSubmit()} loading={isLoading}>
+                  {taskId ? "Update" : "Create"}
+                </Button>
+              </View>
             </View>
           </>
         )}
@@ -400,5 +400,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
+  },
+  inputContainer: {
+    paddingVertical: 20,
   },
 });

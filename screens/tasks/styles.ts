@@ -8,13 +8,13 @@ export const styles = StyleSheet.create({
   title: {
     paddingVertical: 20,
     fontSize: 18,
-    textAlign: "center",
+    paddingHorizontal: 20,
   },
 
   singleTask: {
     width: "40%",
     marginBottom: 20,
-    backgroundColor: "white",
+
     paddingHorizontal: 10,
     padding: 20,
     borderRadius: 20,
@@ -28,9 +28,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  input: {
-    backgroundColor: "white",
-  },
+  input: {},
 
   photoPicker: {
     backgroundColor: "purple",

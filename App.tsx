@@ -8,10 +8,16 @@ import { getUserPayload } from "./helper/helpers";
 import { User, UserToken } from "./models/user";
 import * as SplashScreen from "expo-splash-screen";
 import { getUser } from "./api/user";
+import { ThemeContext } from "./context/ThemeContext";
+import { ColorsLight, ColorsDark } from "./theme/globals";
+import { getThemeFromLocalStorage } from "./utils/themeMgmt";
 
 export default function App() {
   const [userToken, setUserToken] = useState<UserToken | undefined>();
   const [user, setUser] = useState<User | undefined>();
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+
+  // getThemeFromLocalStorage().then((theme) => setTheme(theme || "light"));
 
   useEffect(() => {
     let isMounted = true;
@@ -36,6 +42,11 @@ export default function App() {
     setUserToken,
     user,
     setUser,
+  };
+
+  const themeContext = {
+    theme,
+    setTheme,
   };
 
   const [appIsReady, setAppIsReady] = useState(false);
@@ -66,16 +77,19 @@ export default function App() {
   }
   const client = new QueryClient();
 
+  const styles = theme === "light" ? ColorsLight : ColorsDark;
   return (
-    <View
-      style={{ flex: 1, backgroundColor: "white" }}
-      onLayout={onLayoutRootView}
-    >
-      <AuthContext.Provider value={context}>
-        <QueryClientProvider client={client}>
-          <Screens />
-        </QueryClientProvider>
-      </AuthContext.Provider>
-    </View>
+    <ThemeContext.Provider value={themeContext}>
+      <View
+        style={{ flex: 1, backgroundColor: styles.primaryBg }}
+        onLayout={onLayoutRootView}
+      >
+        <AuthContext.Provider value={context}>
+          <QueryClientProvider client={client}>
+            <Screens />
+          </QueryClientProvider>
+        </AuthContext.Provider>
+      </View>
+    </ThemeContext.Provider>
   );
 }

@@ -4,7 +4,11 @@ import Intro1 from "./screens/intro/IntroOne";
 import Intro2 from "./screens/intro/IntroTwo";
 import Intro3 from "./screens/intro/IntroThree";
 import Login from "./screens/auth/Login";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SplashScreen from "./screens/SplashScreen";
 import { AuthContext } from "./context/AuthContext";
@@ -36,6 +40,8 @@ const Screens = () => {
   const RootStack = createNativeStackNavigator<RootStackParams>();
 
   const { userToken, user } = useContext(AuthContext);
+
+  const scheme = "dark";
 
   return (
     <NavigationContainer>

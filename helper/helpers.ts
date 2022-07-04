@@ -5,12 +5,13 @@ import moment from "moment";
 export const getUserPayload = async (): Promise<any> => {
   try {
     const token = await getAuthToken();
-
     if (token) {
       const user = jwtDecode(token);
       return user;
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const isSessionActive = async () => {
