@@ -13,12 +13,15 @@ import { Formik } from "formik";
 import { LoginSchema } from "./validation";
 import { getUser } from "../../api/user";
 import { TextInput, HelperText, Text, Button } from "react-native-paper";
+import useTheme from "../../common/hooks/useTheme";
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
 const Login = () => {
   const nav = useNavigation<introScreenProp>();
   const { user, setUser } = useContext(AuthContext);
+
+  const { colors } = useTheme();
 
   const handleLogin = async (res: AxiosResponse) => {
     try {
@@ -61,7 +64,9 @@ const Login = () => {
           }) => (
             <View style={styles.view}>
               <>
-                <Text style={[styles.title]}>Log in</Text>
+                <Text style={[styles.title, { color: colors.primaryColor }]}>
+                  Log in
+                </Text>
                 <View style={styles.inputWrapper}>
                   <>
                     <View style={styles.inputContainer}>
@@ -119,7 +124,11 @@ const Login = () => {
           )}
         </Formik>
         <View style={{ padding: 30 }}>
-          <Button icon="account" onPress={() => nav.navigate("Signup")}>
+          <Button
+            mode="contained"
+            icon="account"
+            onPress={() => nav.navigate("Signup")}
+          >
             Register
           </Button>
         </View>

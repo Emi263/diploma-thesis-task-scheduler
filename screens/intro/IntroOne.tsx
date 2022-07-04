@@ -6,20 +6,25 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParams } from "../../ScreenIndex";
 import { styles } from "./styles";
+import useTheme from "../../common/hooks/useTheme";
 
 type IntroScreenProp = StackNavigationProp<RootStackParams, "Intro1">;
 
 const IntroOne = () => {
+  const { colors } = useTheme();
+
   const nav = useNavigation<IntroScreenProp>();
   const handleOnPressButton = () => {
     nav.navigate("Intro2");
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
       <Image style={styles.image} source={require("../../assets/todo.png")} />
-      <Text style={styles.title}>Create your task</Text>
-      <Text style={styles.description}>
+      <Text style={[styles.title, { color: colors.primaryColor }]}>
+        Create your task
+      </Text>
+      <Text style={[styles.description, { color: colors.primaryColor }]}>
         Register. Schedule a task. Attach a photo to it. Get notified 10 minutes
         before. Easy and simple.
       </Text>

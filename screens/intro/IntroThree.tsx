@@ -6,6 +6,7 @@ import { RootStackParams } from "../../ScreenIndex";
 import { styles } from "./styles";
 import { AntDesign } from "@expo/vector-icons";
 import CustomButton from "../../common/Button";
+import useTheme from "../../common/hooks/useTheme";
 
 type IntroScreenProp = StackNavigationProp<RootStackParams, "Intro3">;
 
@@ -19,18 +20,22 @@ const IntroThree = () => {
     nav.goBack();
   };
 
+  const { colors } = useTheme();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
       <TouchableOpacity
         style={styles.back}
         activeOpacity={0.8}
         onPress={handleGoBack}
       >
-        <AntDesign name="back" size={24} color="black" />
+        <AntDesign name="back" size={24} color={colors.primaryColor} />
       </TouchableOpacity>
       <Image style={styles.image} source={require("../../assets/todo3.png")} />
-      <Text style={styles.title}>Get notified in real time</Text>
-      <Text style={styles.description}>
+      <Text style={[styles.title, { color: colors.primaryColor }]}>
+        Get notified in real time
+      </Text>
+      <Text style={[styles.description, { color: colors.primaryColor }]}>
         Register. Schedule a task. Attach a photo to it. Get notified 10 minutes
         before. Easy and simple.
       </Text>

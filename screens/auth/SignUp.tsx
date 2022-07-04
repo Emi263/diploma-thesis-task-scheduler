@@ -20,6 +20,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { AxiosResponse } from "axios";
 import { SignupSchema } from "./validation";
 import { getUser } from "../../api/user";
+import useTheme from "../../common/hooks/useTheme";
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
@@ -45,6 +46,8 @@ const Signup = () => {
       Alert.alert("Something went wrong");
     }
   };
+
+  const { colors } = useTheme();
 
   return (
     <>
@@ -94,7 +97,9 @@ const Signup = () => {
             }) => (
               <View style={styles.view}>
                 <>
-                  <Text style={styles.title}>Fill in the form</Text>
+                  <Text style={[styles.title, { color: colors.primaryColor }]}>
+                    Fill in the form
+                  </Text>
                   <View style={styles.inputWrapper}>
                     <>
                       <View style={styles.inputContainer}>
@@ -183,7 +188,9 @@ const Signup = () => {
                     Sign up
                   </Button>
                   <Button onPress={() => nav.navigate("Login")}>
-                    <Text style={{ fontSize: 10 }}> Go to Login</Text>
+                    <Text style={{ fontSize: 10, color: colors.primaryColor }}>
+                      Go to Login
+                    </Text>
                   </Button>
                 </>
               </View>

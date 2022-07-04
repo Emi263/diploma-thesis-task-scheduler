@@ -60,6 +60,7 @@ export default function App() {
     theme,
     changeTheme,
   };
+  console.log(theme);
 
   const [appIsReady, setAppIsReady] = useState(false);
 
@@ -82,14 +83,14 @@ export default function App() {
     if (appIsReady) {
       await SplashScreen.hideAsync();
     }
+
+    console.log(appIsReady);
   }, [appIsReady]);
 
   if (!appIsReady) {
     return null;
   }
   const client = new QueryClient();
-
-  console.log(theme);
 
   const styles = theme === "light" ? ColorsLight : ColorsDark;
   return (
