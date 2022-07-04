@@ -4,12 +4,14 @@ import { useQuery } from "react-query";
 import { getAllTaks } from "../../api/task";
 import { ActivityIndicator } from "react-native-paper";
 import SingleTask from "./components/SingleTaskComponent";
+import useTheme from "../../common/hooks/useTheme";
 
 const AllTasks = () => {
+  const { colors } = useTheme();
   const { data: tasks, isLoading, isError } = useQuery("allTasks", getAllTaks);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
       {isLoading && (
         <View style={styles.loaderContainer}>
           <ActivityIndicator style={styles.loader} animating size="large" />

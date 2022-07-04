@@ -5,6 +5,7 @@ import HomeScreen from "../screens/home/HomeScreen";
 import Settings from "../screens/settings/index";
 import AllTasks from "../screens/tasks/AllTasks";
 import { View, Text } from "react-native";
+import useTheme from "../common/hooks/useTheme";
 
 const Tab = createBottomTabNavigator();
 
@@ -73,9 +74,17 @@ export const TabNavigator = () => {
 };
 
 function TestComponent() {
+  const { colors } = useTheme();
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Coming soon</Text>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: colors.primaryBg,
+      }}
+    >
+      <Text style={{ color: colors.primaryColor }}>Coming soon</Text>
     </View>
   );
 }

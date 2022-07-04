@@ -3,10 +3,10 @@ import { theme } from "../models/theme";
 
 interface themeContext {
   theme: "dark" | "light";
-  setTheme: React.Dispatch<React.SetStateAction<"dark" | "light">>;
+  changeTheme: any;
 }
 
 export const ThemeContext = createContext<themeContext>({
   theme: "light",
-  setTheme: () => {},
+  changeTheme: () => {},
 });

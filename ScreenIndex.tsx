@@ -18,6 +18,7 @@ import SingleTaskScreen from "./screens/tasks/screens/SingleTaskScreen";
 import AllTasks from "./screens/tasks/AllTasks";
 import AuthStack from "./navigation/AuthStack";
 import AppStack from "./navigation/AppStack";
+import { ThemeContext } from "./context/ThemeContext";
 
 export type RootStackParams = {
   App: undefined;
@@ -41,10 +42,10 @@ const Screens = () => {
 
   const { userToken, user } = useContext(AuthContext);
 
-  const scheme = "dark";
+  const { theme } = useContext(ThemeContext);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={theme === "dark" ? DarkTheme : DefaultTheme}>
       <RootStack.Navigator
         screenOptions={{
           gestureEnabled: true,

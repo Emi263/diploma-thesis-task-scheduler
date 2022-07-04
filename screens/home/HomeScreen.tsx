@@ -23,8 +23,12 @@ import Notifications from "../../common/Notifications";
 
 import { AntDesign } from "@expo/vector-icons";
 import { ThemeContext } from "../../context/ThemeContext";
+import { TouchableRipple } from "react-native-paper";
+import useTheme from "../../common/hooks/useTheme";
 
 const HomeScreen = () => {
+  const { colors } = useTheme();
+
   type introScreenProp = StackNavigationProp<RootStackParams>;
 
   const { setUserToken, userToken } = useContext(AuthContext);
@@ -53,7 +57,7 @@ const HomeScreen = () => {
   }, [route.name]);
 
   return (
-    <View style={homeStyles.container}>
+    <View style={[homeStyles.container, { backgroundColor: colors.primaryBg }]}>
       <HomeHeader />
       <AllTasks />
       <View
@@ -64,15 +68,29 @@ const HomeScreen = () => {
           alignItems: "center",
         }}
       >
-        <Pressable
-          style={{ justifyContent: "center", alignItems: "center" }}
+        <TouchableRipple
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+            borderRadius: 15,
+          }}
           onPress={() => {
             setShowModal(true);
           }}
         >
-          <AntDesign name="pluscircleo" size={40} color="purple" />
-          <Text>Create a new task</Text>
-        </Pressable>
+          <>
+            <AntDesign
+              name="pluscircleo"
+              size={40}
+              color={colors.primaryColor}
+            />
+            <Text style={{ color: colors.primaryColor }}>
+              Create a new task
+            </Text>
+          </>
+        </TouchableRipple>
       </View>
 
       <ModalComponent visible={showModal} animationType="slide">

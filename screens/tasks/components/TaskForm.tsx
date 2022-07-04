@@ -57,7 +57,9 @@ const TaskForm: React.FC<IFormTask> = (props) => {
   //local state
 
   const [snackbarVisible, setSnackbarVisible] = useState(false);
-  const [checkboxChecked, setCheckboxChecked] = useState(false);
+  const [checkboxChecked, setCheckboxChecked] = useState(
+    InitialValues.shouldNotify
+  );
   const [selectedImage, setSelectedImage] = useState<null | {
     localUri: string;
   }>();
@@ -65,7 +67,9 @@ const TaskForm: React.FC<IFormTask> = (props) => {
   //date and time
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<null | string>();
+  const [selectedDate, setSelectedDate] = useState<null | string>(
+    InitialValues.date.toString()
+  );
   const [selectedTime, setSelectedTime] = useState<null | string>();
   //end of story
 
@@ -94,7 +98,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     if (taskId) {
       //update the task
       await mutateAsync(
-        { ...values, id: taskId },
+        { ...values, id: taskId, shouldNotify: checkboxChecked },
         {
           onSuccess: () => {
             queryClient.invalidateQueries();
@@ -281,8 +285,6 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                             }
 
                             if (d) {
-                              console.log(d);
-
                               setSelectedDate(d.toDateString());
                             }
 

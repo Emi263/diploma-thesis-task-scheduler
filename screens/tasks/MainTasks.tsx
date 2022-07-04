@@ -5,6 +5,7 @@ import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { useQuery } from "react-query";
 import { getTopTasks } from "../../api/task";
+import useTheme from "../../common/hooks/useTheme";
 import { Task } from "../../models/task";
 import { RootStackParams } from "../../ScreenIndex";
 import SingleTask from "./components/SingleTaskComponent";
@@ -20,11 +21,13 @@ const AllTasks = () => {
   } = useQuery("topTasks", getTopTasks);
 
   const nav = useNavigation<introScreenProp>();
-
+  const { colors } = useTheme();
   return (
     <>
       <View>
-        <Text style={styles.title}>These are your upcoming tasks!</Text>
+        <Text style={[styles.title, { color: colors.primaryColor }]}>
+          These are your upcoming tasks!
+        </Text>
         <View style={{}}>
           {isLoading && (
             <View

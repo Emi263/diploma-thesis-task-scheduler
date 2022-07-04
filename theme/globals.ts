@@ -4,5 +4,5 @@ export const ColorsLight = {
 };
 export const ColorsDark = {
   primaryColor: "white",
-  primaryBg: "dark",
+  primaryBg: "black",
 };

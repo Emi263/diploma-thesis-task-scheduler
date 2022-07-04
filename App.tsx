@@ -10,7 +10,10 @@ import * as SplashScreen from "expo-splash-screen";
 import { getUser } from "./api/user";
 import { ThemeContext } from "./context/ThemeContext";
 import { ColorsLight, ColorsDark } from "./theme/globals";
-import { getThemeFromLocalStorage } from "./utils/themeMgmt";
+import {
+  getThemeFromLocalStorage,
+  saveThemeToLocalStorage,
+} from "./utils/themeMgmt";
 
 export default function App() {
   const [userToken, setUserToken] = useState<UserToken | undefined>();
@@ -21,22 +24,31 @@ export default function App() {
 
   useEffect(() => {
     let isMounted = true;
-
-    getUserPayload()
-      .then((payload) => {
-        getUser(payload.sub).then((user) => {
-          setUser(user);
+    if (isMounted) {
+      getUserPayload()
+        .then((payload) => {
+          getUser(payload.sub).then((user) => {
+            setUser(user);
+          });
+        })
+        .catch((e) => {
+          console.log(e);
         });
-      })
-      .catch((e) => {
-        console.log(e);
+
+      getThemeFromLocalStorage().then((theme) => {
+        setTheme(theme || "light");
       });
+    }
 
     return () => {
       isMounted = false;
     };
   }, []);
 
+  const changeTheme = async (theme: "dark" | "light") => {
+    await saveThemeToLocalStorage(theme);
+    setTheme(theme);
+  };
   const context = {
     userToken,
     setUserToken,
@@ -46,7 +58,7 @@ export default function App() {
 
   const themeContext = {
     theme,
-    setTheme,
+    changeTheme,
   };
 
   const [appIsReady, setAppIsReady] = useState(false);
@@ -76,6 +88,8 @@ export default function App() {
     return null;
   }
   const client = new QueryClient();
+
+  console.log(theme);
 
   const styles = theme === "light" ? ColorsLight : ColorsDark;
   return (

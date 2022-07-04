@@ -4,10 +4,12 @@ import { AuthContext } from "../../context/AuthContext";
 import { headerStyles } from "./styles";
 import { clearAuthData } from "../../utils/tokenMgmt";
 import { Button } from "react-native-paper";
+import useTheme from "../../common/hooks/useTheme";
 
 const HomeHeader = () => {
   const { user, setUser } = useContext(AuthContext);
 
+  const { colors } = useTheme();
   return (
     <View style={headerStyles.container}>
       <View
@@ -16,6 +18,7 @@ const HomeHeader = () => {
           flexDirection: "row",
           width: "100%",
           justifyContent: "flex-end",
+          backgroundColor: colors.primaryBg,
         }}
       >
         <View
@@ -38,9 +41,10 @@ const HomeHeader = () => {
         </View>
       </View>
       <View style={headerStyles.header}></View>
-
       <View style={headerStyles.header}>
-        <Text style={{ fontSize: 24 }}> {`Hello, \n ${user?.name}`}</Text>
+        <Text style={{ fontSize: 24, color: colors.primaryColor }}>
+          {`Hello,\n${user?.name}`}
+        </Text>
         <Image
           source={require("../../assets/user-avatar.png")}
           style={{ width: 80, height: 80, borderRadius: 10 }}
