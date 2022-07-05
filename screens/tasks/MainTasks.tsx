@@ -47,9 +47,12 @@ const AllTasks = () => {
                 paddingVertical: 50,
                 justifyContent: "center",
                 alignItems: "center",
+                backgroundColor: colors.primaryBg,
               }}
             >
-              <Text>No tasks to show</Text>
+              <Text style={{ color: colors.primaryColor }}>
+                No tasks to show
+              </Text>
             </View>
           )}
           <FlatList

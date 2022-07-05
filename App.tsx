@@ -15,6 +15,8 @@ import {
   saveThemeToLocalStorage,
 } from "./utils/themeMgmt";
 
+import "react-native-gesture-handler";
+
 export default function App() {
   const [userToken, setUserToken] = useState<UserToken | undefined>();
   const [user, setUser] = useState<User | undefined>();
@@ -60,7 +62,6 @@ export default function App() {
     theme,
     changeTheme,
   };
-  console.log(theme);
 
   const [appIsReady, setAppIsReady] = useState(false);
 
@@ -83,8 +84,6 @@ export default function App() {
     if (appIsReady) {
       await SplashScreen.hideAsync();
     }
-
-    console.log(appIsReady);
   }, [appIsReady]);
 
   if (!appIsReady) {

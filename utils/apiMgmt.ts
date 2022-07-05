@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getAuthToken } from "./tokenMgmt";
 
-export const apiUrl = "http://192.168.1.3:3000";
+export const apiUrl = "http://192.168.1.5:3000";
 
 const getHeaders = async () => {
   const headers = {
@@ -14,6 +14,11 @@ const getHeaders = async () => {
 
 export const get = async (str: string) => {
   return axios.get(apiUrl + str, {
+    headers: await getHeaders(),
+  });
+};
+export const remove = async (str: string) => {
+  return axios.delete(apiUrl + str, {
     headers: await getHeaders(),
   });
 };

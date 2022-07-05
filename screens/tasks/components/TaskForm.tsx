@@ -18,12 +18,18 @@ import {
   HelperText,
   Snackbar,
   TextInput,
+  TouchableRipple,
 } from "react-native-paper";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
 import { useMutation, useQueryClient } from "react-query";
 import { createTask, updateTask } from "../../../api/task";
+import { storage } from "../../../helper/firebaseConfig";
+import { initializeApp } from "firebase/app";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import * as FileSystem from "expo-file-system";
+import * as firebase from "firebase/app";
 
 interface IFormTask {
   task?: Task;
@@ -87,11 +93,18 @@ const TaskForm: React.FC<IFormTask> = (props) => {
       return;
     }
 
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
     if (pickerResult.cancelled === true) {
       return;
     }
-    setSelectedImage({ localUri: pickerResult.uri });
+    const file = await FileSystem.readAsStringAsync(pickerResult.uri, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
   };
 
   const handleSubmit = async (values: Task, resetForm: any) => {
@@ -215,11 +228,12 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                           setCheckboxChecked((prev) => !prev);
                         }}
                       />
-                      <Pressable
+                      <TouchableRipple
+                        style={{ padding: 10 }}
                         onPress={() => setCheckboxChecked((prev) => !prev)}
                       >
                         <Text>Should notify</Text>
-                      </Pressable>
+                      </TouchableRipple>
                     </View>
                   </>
 
@@ -338,14 +352,6 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         />
                       </TouchableOpacity>
                     </View> */}
-                    {/* <Image
-                    source={{ uri: selectedImage?.localUri }}
-                    style={{
-                      width: 200,
-                      height: 300,
-                      resizeMode: "contain",
-                    }}
-                  /> */}
                   </>
                 </View>
               </>

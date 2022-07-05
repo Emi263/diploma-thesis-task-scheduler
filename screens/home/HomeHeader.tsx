@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, Image } from "react-native";
 import { AuthContext } from "../../context/AuthContext";
 import { headerStyles } from "./styles";
 import { clearAuthData } from "../../utils/tokenMgmt";
-import { Button } from "react-native-paper";
+import { Avatar, Button } from "react-native-paper";
 import useTheme from "../../common/hooks/useTheme";
 
 const HomeHeader = () => {
@@ -45,9 +45,9 @@ const HomeHeader = () => {
         <Text style={{ fontSize: 24, color: colors.primaryColor }}>
           {`Hello,\n${user?.name}`}
         </Text>
-        <Image
-          source={require("../../assets/user-avatar.png")}
-          style={{ width: 80, height: 80, borderRadius: 10 }}
+        <Avatar.Text
+          label={user?.name.charAt(0) || ""}
+          labelStyle={{ marginTop: -10 }}
         />
       </View>
     </View>

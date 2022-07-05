@@ -10,7 +10,6 @@ import {
   DarkTheme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SplashScreen from "./screens/SplashScreen";
 import { AuthContext } from "./context/AuthContext";
 import Signup from "./screens/auth/SignUp";
 import { TabNavigator } from "./navigation/BottomNavigator";
@@ -19,6 +18,7 @@ import AllTasks from "./screens/tasks/AllTasks";
 import AuthStack from "./navigation/AuthStack";
 import AppStack from "./navigation/AppStack";
 import { ThemeContext } from "./context/ThemeContext";
+import SplashScreen from "./common/SplashScreen";
 
 export type RootStackParams = {
   App: undefined;

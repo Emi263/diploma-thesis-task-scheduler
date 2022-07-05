@@ -6,6 +6,7 @@ import Settings from "../screens/settings/index";
 import AllTasks from "../screens/tasks/AllTasks";
 import { View, Text } from "react-native";
 import useTheme from "../common/hooks/useTheme";
+import NotificationList from "../screens/Notifications/NotificationList";
 
 const Tab = createBottomTabNavigator();
 
@@ -57,7 +58,7 @@ export const TabNavigator = () => {
       />
       <Tab.Screen
         name="Notifications"
-        component={TestComponent}
+        component={NotificationList}
         options={{
           headerShown: true,
           tabBarBadge: 3,

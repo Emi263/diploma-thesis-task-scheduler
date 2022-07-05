@@ -74,6 +74,7 @@ const Login = () => {
                         <TextInput
                           // label="Email"
                           autoComplete="email"
+                          keyboardType="email-address"
                           value={values.email}
                           onChangeText={handleChange("email")}
                           placeholder="Enter email"
