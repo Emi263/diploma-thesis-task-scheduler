@@ -12,4 +12,5 @@ export interface User {
   age: number;
   createdAt: Date | null;
   updatedAt: Date | null;
+  profileImage?: string;
 }

@@ -6,8 +6,6 @@ export const createTask = (data: Task) => {
 };
 
 export const updateTask = async ({ id, ...rest }: Task) => {
-  console.log(id);
-
   const { data } = await put(apiUrl + "/tasks/" + id, rest);
   return data;
 };

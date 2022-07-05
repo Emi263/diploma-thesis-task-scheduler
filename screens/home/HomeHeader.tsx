@@ -1,15 +1,65 @@
-import React, { useContext, useEffect } from "react";
-import { Text, View, TouchableOpacity, Image } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  ImageBackground,
+} from "react-native";
 import { AuthContext } from "../../context/AuthContext";
 import { headerStyles } from "./styles";
 import { clearAuthData } from "../../utils/tokenMgmt";
-import { Avatar, Button } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Avatar,
+  Button,
+  TouchableRipple,
+} from "react-native-paper";
 import useTheme from "../../common/hooks/useTheme";
+import { Feather } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import { uploadImage } from "../../helper/firebase";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { getUser, updateUser } from "../../api/user";
 
 const HomeHeader = () => {
+  const { mutateAsync } = useMutation(updateUser);
   const { user, setUser } = useContext(AuthContext);
-
+  const [selectedImage, setSelectedImage] = useState("");
   const { colors } = useTheme();
+  const queryClient = useQueryClient();
+  const [loading, setLoading] = useState(false);
+
+  const { data: userData } = useQuery("user", () => getUser(user?.id || 0), {
+    enabled: !!user?.id,
+  });
+
+  let openImagePickerAsync = async () => {
+    let permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+    setSelectedImage(pickerResult.uri);
+    setLoading(true);
+    const url: any = await uploadImage(pickerResult.uri);
+    await mutateAsync({ profileImage: url });
+    await queryClient.invalidateQueries();
+    setLoading(false);
+  };
+
   return (
     <View style={headerStyles.container}>
       <View
@@ -45,10 +95,30 @@ const HomeHeader = () => {
         <Text style={{ fontSize: 24, color: colors.primaryColor }}>
           {`Hello,\n${user?.name}`}
         </Text>
-        <Avatar.Text
-          label={user?.name.charAt(0) || ""}
-          labelStyle={{ marginTop: -10 }}
-        />
+        {userData && (
+          <TouchableRipple onPress={openImagePickerAsync}>
+            <ImageBackground
+              style={{
+                opacity: loading ? 0.3 : 0.8,
+                height: 100,
+                width: 100,
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 200,
+              }}
+              resizeMethod="scale"
+              resizeMode="cover"
+              source={{ uri: userData.profileImage }}
+            >
+              {loading && (
+                <View>
+                  <ActivityIndicator size="small" />
+                </View>
+              )}
+              {!loading && <Feather name="camera" size={24} color="black" />}
+            </ImageBackground>
+          </TouchableRipple>
+        )}
       </View>
     </View>
   );
