@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Alert,
+  Image,
+} from "react-native";
 import { Task } from "../../../models/task";
 import { Formik, FormikHelpers } from "formik";
 import { TaskSchema } from "../validation";
@@ -12,14 +19,14 @@ import {
   TextInput,
   TouchableRipple,
 } from "react-native-paper";
+
 import { FontAwesome } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
 import { useMutation, useQueryClient } from "react-query";
 import { createTask, updateTask } from "../../../api/task";
-import * as firebase from "firebase";
-import { storage } from "../../../helper/firebaseConfig";
 import { uploadImage } from "../../../helper/firebase";
+import { ScrollView } from "react-native-gesture-handler";
 
 interface IFormTask {
   task?: Task;
@@ -59,7 +66,8 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     InitialValues.shouldNotify
   );
 
-  const [pickerR, setPickerR] = useState(null as any);
+  const [pickerR, setPickerR] = useState(InitialValues.image) as any;
+
   //date and time
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
@@ -93,14 +101,27 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     if (pickerResult.cancelled === true) {
       return;
     }
-    setPickerR(pickerResult);
+    setPickerR(pickerResult.uri);
   };
 
   const handleSubmit = async (values: Task, resetForm: any) => {
     if (taskId) {
+      let imageChanged = InitialValues.image;
+      if (InitialValues.image !== pickerR) {
+        setUploading(true);
+        const url: any = await uploadImage(pickerR);
+        imageChanged = url;
+        setUploading(false);
+      }
+
       //update the task
       await mutateAsync(
-        { ...values, id: taskId, shouldNotify: checkboxChecked },
+        {
+          ...values,
+          id: taskId,
+          shouldNotify: checkboxChecked,
+          image: imageChanged,
+        },
         {
           onSuccess: () => {
             queryClient.invalidateQueries();
@@ -118,9 +139,9 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     }
 
     //create a new task
+    setUploading(true);
     const url: any = await uploadImage(pickerR);
-    console.log(url);
-
+    setUploading(false);
     await mutateAsync(
       { ...values, image: url },
       {
@@ -138,7 +159,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
   };
 
   return (
-    <View>
+    <ScrollView>
       <Formik
         initialValues={InitialValues}
         validationSchema={TaskSchema}
@@ -161,23 +182,6 @@ const TaskForm: React.FC<IFormTask> = (props) => {
         }) => (
           <>
             <View style={styles.view}>
-              <Snackbar
-                duration={1000}
-                style={{ zIndex: 2, marginBottom: 20 }}
-                visible={snackbarVisible}
-                onDismiss={() => {
-                  setSnackbarVisible(false);
-                }}
-                action={{
-                  label: "Success",
-                  onPress: () => {
-                    setSnackbarVisible(false);
-                    2;
-                  },
-                }}
-              >
-                Task created successfully
-              </Snackbar>
               <>
                 <Text style={styles.title}>Fill in the form</Text>
                 <View>
@@ -349,19 +353,31 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         </Text>
                       </TouchableOpacity>
                     </View>
+
+                    <View>
+                      {pickerR && (
+                        <Image
+                          source={{ uri: pickerR }}
+                          style={{ width: 200, height: 200 }}
+                        />
+                      )}
+                    </View>
                   </>
                 </View>
               </>
-              <View style={{ marginTop: 50 }}>
-                <Button onPress={() => handleSubmit()} loading={isLoading}>
-                  {taskId ? "Update" : "Create"}
+              <View style={{ marginTop: 40, marginBottom: 100 }}>
+                <Button
+                  onPress={() => handleSubmit()}
+                  loading={isLoading || uploading}
+                >
+                  <Text>{taskId ? "Update" : "Create"}</Text>
                 </Button>
               </View>
             </View>
           </>
         )}
       </Formik>
-    </View>
+    </ScrollView>
   );
 };
 

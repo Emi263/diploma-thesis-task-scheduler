@@ -17,9 +17,6 @@ import { homeStyles } from "./styles";
 import AllTasks from "../tasks/MainTasks";
 import CreateTask from "../tasks/CreateTask";
 import ModalComponent from "../../common/Modal";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParams } from "../../ScreenIndex";
-import Notifications from "../../common/Notifications";
 
 import { AntDesign } from "@expo/vector-icons";
 import { ThemeContext } from "../../context/ThemeContext";
@@ -28,8 +25,6 @@ import useTheme from "../../common/hooks/useTheme";
 
 const HomeScreen = () => {
   const { colors } = useTheme();
-
-  type introScreenProp = StackNavigationProp<RootStackParams>;
 
   const { setUserToken, userToken } = useContext(AuthContext);
   const { theme } = useContext(ThemeContext);

@@ -1,12 +1,5 @@
 import React, { SetStateAction, useState } from "react";
-import {
-  Pressable,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-} from "react-native";
+import { Pressable, Text, View, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 import TaskForm from "./components/TaskForm";

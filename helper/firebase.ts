@@ -2,7 +2,7 @@ import * as firebase from "firebase";
 import { storage } from "./firebaseConfig";
 
 export const uploadImage = async (pickerResult: any) => {
-  const dt = await fetch(pickerResult.uri);
+  const dt = await fetch(pickerResult);
   const bytes = await dt.blob();
   const ref = storage.ref().child(new Date().toISOString());
   const snapshot = ref.put(bytes);
