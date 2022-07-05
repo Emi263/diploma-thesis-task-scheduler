@@ -7,6 +7,7 @@ import {
   Dimensions,
   Animated,
 } from "react-native";
+
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { deleteTask, getAllTaks } from "../../api/task";
 import {
@@ -15,17 +16,21 @@ import {
 } from "react-native-gesture-handler";
 import "react-native-gesture-handler";
 import { RectButton } from "react-native-gesture-handler";
-import { TouchableRipple } from "react-native-paper";
+import { TouchableRipple, Surface } from "react-native-paper";
 import AwesomeAlert from "react-native-awesome-alerts";
 
 import { AntDesign } from "@expo/vector-icons";
 import { Task } from "../../models/task";
+import Loader from "../../common/Loader";
+import { formatDate } from "../../helper/helpers";
 
 const SCREEN_WIDTH = Dimensions.get("screen").width;
 const NotificationList = () => {
   const { data: tasks, isLoading, isError } = useQuery("allTaks", getAllTaks);
 
-  const [id, setID] = useState<null | number>(null);
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <View>
       <FlatList
@@ -49,14 +54,9 @@ interface Props {
 
 const ItemBox: React.FC<Props> = ({ data }) => {
   const [showAlert, setShowAlert] = useState(false);
-  const [id, setId] = useState<number | null>(null);
 
   const queryClient = useQueryClient();
   const { mutateAsync } = useMutation(deleteTask);
-
-  const handleDelete = async () => {
-    return;
-  };
 
   const leftSwipe = (progress, dragX) => {
     const trans = dragX.interpolate({
@@ -93,8 +93,8 @@ const ItemBox: React.FC<Props> = ({ data }) => {
       <AwesomeAlert
         show={showAlert}
         showProgress={false}
-        title="AwesomeAlert"
-        message="I have a message for you!"
+        title="You are deleting a task!"
+        message="Do you want to delete it?"
         closeOnTouchOutside={true}
         closeOnHardwareBackPress={false}
         showCancelButton={true}
@@ -116,6 +116,7 @@ const ItemBox: React.FC<Props> = ({ data }) => {
             });
         }}
       />
+
       <GestureHandlerRootView>
         <Swipeable renderLeftActions={leftSwipe}>
           <View
@@ -123,11 +124,22 @@ const ItemBox: React.FC<Props> = ({ data }) => {
               height: 80,
               width: SCREEN_WIDTH,
               padding: 16,
-              justifyContent: "center",
-              paddingHorizontal: 20,
+              paddingHorizontal: 30,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              elevation: 1,
+
+              shadowColor: "#52006A",
             }}
           >
-            <Text>Hello {data.title}</Text>
+            <View>
+              <Text style={{ fontWeight: "700" }}>{data.title}</Text>
+              <Text style={{ fontSize: 12 }}>{data.description}</Text>
+            </View>
+
+            <View>
+              <Text style={{ fontWeight: "600" }}>{formatDate(data.date)}</Text>
+            </View>
           </View>
         </Swipeable>
       </GestureHandlerRootView>
