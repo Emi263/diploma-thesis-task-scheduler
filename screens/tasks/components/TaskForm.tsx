@@ -1,17 +1,9 @@
 import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Alert,
-  Pressable,
-} from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Alert } from "react-native";
 import { Task } from "../../../models/task";
 import { Formik, FormikHelpers } from "formik";
 import { TaskSchema } from "../validation";
 import {
-  ActivityIndicator,
   Button,
   Checkbox,
   Chip,
@@ -20,19 +12,15 @@ import {
   TextInput,
   TouchableRipple,
 } from "react-native-paper";
-import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
 import { useMutation, useQueryClient } from "react-query";
 import { createTask, updateTask } from "../../../api/task";
-import { storage } from "../../../helper/firebaseConfig";
-import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
-import * as FileSystem from "expo-file-system";
-import * as firebase from "firebase/app";
 
 interface IFormTask {
   task?: Task;
+  setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface IFormInitialValues {
@@ -66,9 +54,6 @@ const TaskForm: React.FC<IFormTask> = (props) => {
   const [checkboxChecked, setCheckboxChecked] = useState(
     InitialValues.shouldNotify
   );
-  const [selectedImage, setSelectedImage] = useState<null | {
-    localUri: string;
-  }>();
 
   //date and time
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -102,9 +87,6 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     if (pickerResult.cancelled === true) {
       return;
     }
-    const file = await FileSystem.readAsStringAsync(pickerResult.uri, {
-      encoding: FileSystem.EncodingType.Base64,
-    });
   };
 
   const handleSubmit = async (values: Task, resetForm: any) => {
@@ -120,6 +102,11 @@ const TaskForm: React.FC<IFormTask> = (props) => {
         }
       );
       resetForm();
+      //close the modal
+      if (props.setOpenModal) {
+        props.setOpenModal(false);
+      }
+
       return;
     }
 
@@ -132,6 +119,9 @@ const TaskForm: React.FC<IFormTask> = (props) => {
       },
     });
     resetForm();
+    if (props.setOpenModal) {
+      props.setOpenModal(false);
+    }
     return;
   };
 
@@ -208,7 +198,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                           placeholder="Enter description"
                           onBlur={handleBlur("description")}
                           multiline
-                          maxLength={20}
+                          maxLength={100}
                         />
 
                         <HelperText

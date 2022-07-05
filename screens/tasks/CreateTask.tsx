@@ -26,7 +26,7 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({
       <Pressable style={styles.closeBtn} onPress={() => setShowModal(false)}>
         <AntDesign name="closecircle" size={30} color="black" />
       </Pressable>
-      <TaskForm />
+      <TaskForm setOpenModal={setShowModal} />
     </View>
   );
 };
