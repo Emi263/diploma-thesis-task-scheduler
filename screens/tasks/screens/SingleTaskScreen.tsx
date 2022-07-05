@@ -108,7 +108,9 @@ const SingleTaskScreen: React.FC<Props> = ({
             aut?
           </Paragraph>
         </Card.Content>
-        <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
+        <Card.Cover
+          source={{ uri: task?.image || "https://picsum.photos/700" }}
+        />
         <Card.Actions style={styles.cardActions}>
           <Button onPress={handleOpenModal}>Edit</Button>
           <Button onPress={handleDelete}>

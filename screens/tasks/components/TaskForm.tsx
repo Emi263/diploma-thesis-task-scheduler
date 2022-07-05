@@ -17,6 +17,9 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
 import { useMutation, useQueryClient } from "react-query";
 import { createTask, updateTask } from "../../../api/task";
+import * as firebase from "firebase";
+import { storage } from "../../../helper/firebaseConfig";
+import { uploadImage } from "../../../helper/firebase";
 
 interface IFormTask {
   task?: Task;
@@ -46,6 +49,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     description: props?.task?.description || "",
     shouldNotify: props?.task?.shouldNotify || false,
     date: props?.task?.date || new Date(),
+    image: props?.task?.image || "",
   };
 
   //local state
@@ -55,6 +59,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     InitialValues.shouldNotify
   );
 
+  const [pickerR, setPickerR] = useState(null as any);
   //date and time
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
@@ -64,6 +69,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
   const [selectedTime, setSelectedTime] = useState<null | string>();
   //end of story
 
+  const [uploading, setUploading] = useState(false);
   //format selected Date and Time
   const selectedDateAndTime =
     selectedDate && selectedTime ? `${selectedDate} at ${selectedTime}` : "";
@@ -87,6 +93,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     if (pickerResult.cancelled === true) {
       return;
     }
+    setPickerR(pickerResult);
   };
 
   const handleSubmit = async (values: Task, resetForm: any) => {
@@ -111,13 +118,18 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     }
 
     //create a new task
+    const url: any = await uploadImage(pickerR);
+    console.log(url);
 
-    await mutateAsync(values, {
-      onSuccess: () => {
-        queryClient.invalidateQueries();
-        Alert.alert("A new task was successfully created");
-      },
-    });
+    await mutateAsync(
+      { ...values, image: url },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries();
+          Alert.alert("A new task was successfully created");
+        },
+      }
+    );
     resetForm();
     if (props.setOpenModal) {
       props.setOpenModal(false);
@@ -320,7 +332,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                       )}
                     </View>
 
-                    {/* <View
+                    <View
                       style={{
                         justifyContent: "flex-start",
                         flexDirection: "row",
@@ -335,13 +347,8 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         <Text style={{ color: "white", paddingRight: 10 }}>
                           Pick a photo
                         </Text>
-                        <MaterialIcons
-                          name="add-a-photo"
-                          size={24}
-                          color="white"
-                        />
                       </TouchableOpacity>
-                    </View> */}
+                    </View>
                   </>
                 </View>
               </>
