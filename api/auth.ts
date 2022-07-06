@@ -8,6 +8,14 @@ export const login = (
   return post(apiUrl + "/auth/login", { email, password });
 };
 
+export const googleLogin = (
+  token: string
+): Promise<AxiosResponse<any, any>> => {
+  return post(apiUrl + "/auth/google-auth", {
+    token,
+  });
+};
+
 export const signup = (
   email: string,
   password: string,

@@ -14,29 +14,42 @@ import { LoginSchema } from "./validation";
 import { getUser } from "../../api/user";
 import { TextInput, HelperText, Text, Button } from "react-native-paper";
 import useTheme from "../../common/hooks/useTheme";
+import { GoogleSignIn } from "./GoogleSignin";
+import Loader from "../../common/Loader";
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
 const Login = () => {
   const nav = useNavigation<introScreenProp>();
+
+  const [loading, setLoading] = useState(false);
   const { user, setUser } = useContext(AuthContext);
 
   const { colors } = useTheme();
 
   const handleLogin = async (res: AxiosResponse) => {
     try {
+      setLoading(true);
       await setAuthToken(res.data.token).then(async () => {
         const userData = await getUserPayload();
         const userDt = await getUser(userData?.sub || 1);
+        setLoading(false);
         setUser(userDt);
       });
-    } catch (error) {}
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   const showAlert = (e) =>
     Alert.alert("Info", e, [
       { text: "OK", onPress: () => console.log("OK Pressed") },
     ]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <KeyboardAvoidingView style={styles.container}>
       <>
@@ -124,6 +137,8 @@ const Login = () => {
             </View>
           )}
         </Formik>
+
+        <GoogleSignIn setLoading={setLoading} />
         <View style={{ padding: 30 }}>
           <Button
             mode="contained"
