@@ -20,7 +20,6 @@ export function GoogleSignIn({ setLoading }) {
       await setAuthToken(res.data.token).then(async () => {
         const userData = await getUserPayload();
         const userDt = await getUser(userData?.sub || 1);
-        console.log(userDt);
 
         setUser(userDt);
         setLoading(false);

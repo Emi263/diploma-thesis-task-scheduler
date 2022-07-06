@@ -27,7 +27,6 @@ import { formatDate } from "../../helper/helpers";
 const SCREEN_WIDTH = Dimensions.get("screen").width;
 const NotificationList = () => {
   const { data: tasks, isLoading, isError } = useQuery("allTaks", getAllTaks);
-  console.log(tasks);
 
   if (isLoading) {
     return <Loader />;
