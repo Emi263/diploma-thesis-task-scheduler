@@ -24,6 +24,7 @@ export const AuthContext = createContext<authContext>({
     updatedAt: null,
     id: 1,
     isGoogleSignIn: false,
+    shouldChangePassword: false,
   },
   setUser: () => {},
 });

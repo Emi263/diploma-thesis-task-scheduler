@@ -47,6 +47,11 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (user?.shouldChangePassword) {
+    }
+  }, [user]);
+
   const changeTheme = async (theme: "dark" | "light") => {
     await saveThemeToLocalStorage(theme);
     setTheme(theme);

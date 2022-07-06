@@ -14,6 +14,7 @@ const Tab = createBottomTabNavigator();
 
 export const TabNavigator = () => {
   const { data: tasks } = useQuery("allTasks", getAllTaks);
+
   return (
     <Tab.Navigator
       screenOptions={{

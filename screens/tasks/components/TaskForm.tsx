@@ -62,8 +62,6 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     image: props?.task?.image || "",
   };
 
-  console.log(props.task?.shouldNotify);
-
   //local state
 
   const [checkboxChecked, setCheckboxChecked] = useState(
@@ -78,6 +76,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     InitialValues.date.toString()
   );
 
+  const [initialDateShown, setInitialDateShown] = useState(false);
   //end of story
 
   const [uploading, setUploading] = useState(false);
@@ -95,6 +94,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
   const handleConfirm = (date) => {
     setSelectedDate(date);
     hideDatePicker();
+    setInitialDateShown(true);
   };
   //image picker
   let openImagePickerAsync = async () => {
@@ -299,7 +299,9 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         <Text>Selected Date:</Text>
                         <Chip style={{ marginLeft: 10 }} icon="calendar">
                           <Text>
-                            {selectedDate && formatDateAndTime(selectedDate)}
+                            {initialDateShown &&
+                              selectedDate &&
+                              formatDateAndTime(selectedDate)}
                           </Text>
                         </Chip>
                       </View>

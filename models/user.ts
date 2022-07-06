@@ -14,4 +14,5 @@ export interface User {
   updatedAt: Date | null;
   profileImage?: string;
   isGoogleSignIn: boolean;
+  shouldChangePassword: boolean;
 }

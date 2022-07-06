@@ -34,6 +34,8 @@ const HomeHeader = () => {
     enabled: !!user?.id,
   });
 
+  console.log(userData);
+
   let openImagePickerAsync = async () => {
     let permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -56,7 +58,7 @@ const HomeHeader = () => {
     setLoading(true);
     const url: any = await uploadImage(pickerResult.uri);
     await mutateAsync({ profileImage: url });
-    await queryClient.invalidateQueries();
+    await queryClient.invalidateQueries("user");
     setLoading(false);
   };
 

@@ -1,3 +1,4 @@
+import { User } from "../models/user";
 import { get, apiUrl, put } from "../utils/apiMgmt";
 
 export const getUser = async (id: number) => {
@@ -10,14 +11,10 @@ export const getUser = async (id: number) => {
   }
 };
 
-export const updateUser = async ({ profileImage }) => {
-  try {
-    const { data } = await put(apiUrl + "/users/change-profile-pic", {
-      profileImage,
-    });
+export const updateUser = async ({ profileImage }): Promise<User> => {
+  const { data } = await put(apiUrl + "/users/change-profile-pic", {
+    profileImage,
+  });
 
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
+  return data;
 };

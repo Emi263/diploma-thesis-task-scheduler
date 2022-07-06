@@ -19,7 +19,7 @@ export default function ChangePassword() {
   const [showNewPass, setShowNewPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
 
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
   type Input = "newpass" | "confirmpass";
@@ -41,6 +41,7 @@ export default function ChangePassword() {
           if (res.status === 200) {
             setLoading(false);
             Alert.alert("Info", "Your password was changed successfully");
+            setUser({ ...user!, shouldChangePassword: false });
           }
         })
         .catch((e) => {

@@ -22,11 +22,18 @@ import { AntDesign } from "@expo/vector-icons";
 import { ThemeContext } from "../../context/ThemeContext";
 import { TouchableRipple } from "react-native-paper";
 import useTheme from "../../common/hooks/useTheme";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParams } from "../../ScreenIndex";
+import ChangePassword from "../settings/ChangePassword";
+
+type introScreenProp = StackNavigationProp<RootStackParams, "Settings">;
 
 const HomeScreen = () => {
+  const nav = useNavigation<introScreenProp>();
+
   const { colors } = useTheme();
 
-  const { setUserToken, userToken } = useContext(AuthContext);
+  const { setUserToken, userToken, user } = useContext(AuthContext);
   const { theme } = useContext(ThemeContext);
   const route = useRoute();
 
@@ -50,6 +57,11 @@ const HomeScreen = () => {
       isMounted = false;
     };
   }, [route.name]);
+
+  useEffect(() => {
+    if (user?.shouldChangePassword) {
+    }
+  }, [user]);
 
   return (
     <View style={[homeStyles.container, { backgroundColor: colors.primaryBg }]}>
@@ -88,6 +100,22 @@ const HomeScreen = () => {
         </TouchableRipple>
       </View>
 
+      <ModalComponent visible={user?.shouldChangePassword || false}>
+        <View style={{ padding: 30 }}>
+          <Text
+            style={{
+              paddingVertical: 30,
+              fontWeight: "600",
+              textTransform: "uppercase",
+              textAlign: "center",
+              marginBottom: 40,
+            }}
+          >
+            Please, change your password
+          </Text>
+          <ChangePassword />
+        </View>
+      </ModalComponent>
       <ModalComponent visible={showModal} animationType="slide">
         <CreateTask setShowModal={setShowModal} />
       </ModalComponent>
