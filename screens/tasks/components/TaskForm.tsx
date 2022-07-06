@@ -59,9 +59,10 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     image: props?.task?.image || "",
   };
 
+  console.log(props.task?.shouldNotify);
+
   //local state
 
-  const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [checkboxChecked, setCheckboxChecked] = useState(
     InitialValues.shouldNotify
   );
@@ -143,7 +144,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     const url: any = await uploadImage(pickerR);
     setUploading(false);
     await mutateAsync(
-      { ...values, image: url },
+      { ...values, image: url, shouldNotify: checkboxChecked },
       {
         onSuccess: () => {
           queryClient.invalidateQueries();
@@ -216,7 +217,6 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                           multiline
                           maxLength={100}
                         />
-
                         <HelperText
                           type="error"
                           visible={
@@ -285,7 +285,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                       >
                         <Text>Selected Date:</Text>
                         <Chip style={{ marginLeft: 10 }} icon="calendar">
-                          {selectedDateAndTime}
+                          <Text> {selectedDateAndTime}</Text>
                         </Chip>
                       </View>
 
@@ -335,7 +335,6 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         />
                       )}
                     </View>
-
                     <View
                       style={{
                         justifyContent: "flex-start",
@@ -355,7 +354,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                     </View>
 
                     <View>
-                      {pickerR && (
+                      {!!pickerR && (
                         <Image
                           source={{ uri: pickerR }}
                           style={{ width: 200, height: 200 }}
@@ -370,6 +369,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                   onPress={() => handleSubmit()}
                   loading={isLoading || uploading}
                 >
+                  <Text>d</Text>
                   <Text>{taskId ? "Update" : "Create"}</Text>
                 </Button>
               </View>

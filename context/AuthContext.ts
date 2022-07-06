@@ -23,6 +23,7 @@ export const AuthContext = createContext<authContext>({
     createdAt: null,
     updatedAt: null,
     id: 1,
+    isGoogleSignIn: false,
   },
   setUser: () => {},
 });

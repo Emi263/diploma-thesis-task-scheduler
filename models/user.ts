@@ -13,4 +13,5 @@ export interface User {
   createdAt: Date | null;
   updatedAt: Date | null;
   profileImage?: string;
+  isGoogleSignIn: boolean;
 }

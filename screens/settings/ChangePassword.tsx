@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -14,11 +14,13 @@ import { PasswordSchema } from "../auth/validation";
 import { ScrollView } from "react-native-gesture-handler";
 import { changePassword } from "../../api/auth";
 import { useMutation } from "react-query";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function ChangePassword() {
   const [showNewPass, setShowNewPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
 
+  const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
   type Input = "newpass" | "confirmpass";

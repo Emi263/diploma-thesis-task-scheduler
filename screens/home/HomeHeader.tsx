@@ -96,7 +96,9 @@ const HomeHeader = () => {
           {`Hello,\n${user?.name}`}
         </Text>
         {userData && (
-          <TouchableRipple onPress={openImagePickerAsync}>
+          <TouchableRipple
+            onPress={!user?.isGoogleSignIn ? openImagePickerAsync : () => {}}
+          >
             <ImageBackground
               style={{
                 opacity: loading ? 0.3 : 0.8,
@@ -115,7 +117,9 @@ const HomeHeader = () => {
                   <ActivityIndicator size="small" />
                 </View>
               )}
-              {!loading && <Feather name="camera" size={24} color="black" />}
+              {!loading && !user?.isGoogleSignIn && (
+                <Feather name="camera" size={24} color="black" />
+              )}
             </ImageBackground>
           </TouchableRipple>
         )}

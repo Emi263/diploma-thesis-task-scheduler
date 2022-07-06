@@ -7,10 +7,13 @@ import AllTasks from "../screens/tasks/AllTasks";
 import { View, Text } from "react-native";
 import useTheme from "../common/hooks/useTheme";
 import NotificationList from "../screens/Notifications/NotificationList";
+import { useQuery } from "react-query";
+import { getAllTaks } from "../api/task";
 
 const Tab = createBottomTabNavigator();
 
 export const TabNavigator = () => {
+  const { data: tasks } = useQuery("allTasks", getAllTaks);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -61,7 +64,7 @@ export const TabNavigator = () => {
         component={NotificationList}
         options={{
           headerShown: true,
-          tabBarBadge: 3,
+          tabBarBadge: tasks?.length,
           tabBarBadgeStyle: {
             backgroundColor: "orange",
           },

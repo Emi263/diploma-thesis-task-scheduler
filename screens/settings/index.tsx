@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Collapsible from "../../common/Collapsible";
 import useTheme from "../../common/hooks/useTheme";
+import { AuthContext } from "../../context/AuthContext";
 import ChangePassword from "./ChangePassword";
 import DisplaySettings from "./DisplaySettings";
 
 const Index = () => {
   const { colors } = useTheme();
+  const { user } = useContext(AuthContext);
   return (
     <View
       style={[
@@ -17,9 +19,11 @@ const Index = () => {
       ]}
     >
       <DisplaySettings />
-      <Collapsible headerLabel="Change Password">
-        <ChangePassword />
-      </Collapsible>
+      {!user?.isGoogleSignIn && (
+        <Collapsible headerLabel="Change Password">
+          <ChangePassword />
+        </Collapsible>
+      )}
     </View>
   );
 };

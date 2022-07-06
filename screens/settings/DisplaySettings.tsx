@@ -15,8 +15,6 @@ const DisplaySettings = () => {
     changeTheme(theme);
   };
 
-  console.log(theme);
-
   const { colors } = useTheme();
   return (
     <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
