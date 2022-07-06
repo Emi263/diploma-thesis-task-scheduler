@@ -13,7 +13,6 @@ import { Formik } from "formik";
 import { PasswordSchema } from "../auth/validation";
 import { ScrollView } from "react-native-gesture-handler";
 import { changePassword } from "../../api/auth";
-import { useMutation } from "react-query";
 import { AuthContext } from "../../context/AuthContext";
 
 export default function ChangePassword() {

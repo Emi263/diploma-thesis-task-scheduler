@@ -60,6 +60,11 @@ const HomeHeader = () => {
     setLoading(false);
   };
 
+  const imageSource = userData?.profileImage
+    ? {
+        uri: userData.profileImage,
+      }
+    : require("../../assets/user-avatar.png");
   return (
     <View style={headerStyles.container}>
       <View
@@ -110,7 +115,7 @@ const HomeHeader = () => {
               }}
               resizeMethod="scale"
               resizeMode="cover"
-              source={{ uri: userData.profileImage }}
+              source={imageSource}
             >
               {loading && (
                 <View>

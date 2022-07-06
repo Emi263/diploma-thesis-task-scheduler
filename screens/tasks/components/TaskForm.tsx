@@ -27,6 +27,9 @@ import { useMutation, useQueryClient } from "react-query";
 import { createTask, updateTask } from "../../../api/task";
 import { uploadImage } from "../../../helper/firebase";
 import { ScrollView } from "react-native-gesture-handler";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from "moment";
+import { formatDateAndTime } from "../../../helper/helpers";
 
 interface IFormTask {
   task?: Task;
@@ -70,19 +73,29 @@ const TaskForm: React.FC<IFormTask> = (props) => {
   const [pickerR, setPickerR] = useState(InitialValues.image) as any;
 
   //date and time
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [showTimePicker, setShowTimePicker] = useState(false);
+
   const [selectedDate, setSelectedDate] = useState<null | string>(
     InitialValues.date.toString()
   );
-  const [selectedTime, setSelectedTime] = useState<null | string>();
+
   //end of story
 
   const [uploading, setUploading] = useState(false);
-  //format selected Date and Time
-  const selectedDateAndTime =
-    selectedDate && selectedTime ? `${selectedDate} at ${selectedTime}` : "";
 
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    setSelectedDate(date);
+    hideDatePicker();
+  };
   //image picker
   let openImagePickerAsync = async () => {
     let permissionResult =
@@ -259,7 +272,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                             borderRadius: 20,
                             padding: 10,
                           }}
-                          onPress={() => setShowDatePicker(true)}
+                          onPress={showDatePicker}
                         >
                           <FontAwesome
                             name="calendar"
@@ -285,55 +298,18 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                       >
                         <Text>Selected Date:</Text>
                         <Chip style={{ marginLeft: 10 }} icon="calendar">
-                          <Text> {selectedDateAndTime}</Text>
+                          <Text>
+                            {selectedDate && formatDateAndTime(selectedDate)}
+                          </Text>
                         </Chip>
                       </View>
-
-                      {showDatePicker && (
-                        <DateTimePicker
-                          mode="date"
-                          minimumDate={new Date(1950, 0, 1)}
-                          maximumDate={new Date(2300, 10, 20)}
-                          value={
-                            selectedDate ? new Date(selectedDate) : new Date()
-                          }
-                          onChange={(e, d) => {
-                            if (e.type === "dismissed") {
-                              setShowDatePicker(false);
-                              setShowTimePicker(false);
-                              return;
-                            }
-
-                            if (d) {
-                              setSelectedDate(d.toDateString());
-                            }
-
-                            setShowTimePicker(true);
-                            setShowDatePicker(false);
-                          }}
-                        />
-                      )}
-                      {showTimePicker && (
-                        <DateTimePicker
-                          mode="time"
-                          value={
-                            selectedTime ? new Date(selectedTime) : new Date()
-                          }
-                          onChange={(e, d) => {
-                            if (e.type === "dismissed") {
-                              return;
-                            }
-                            let localizedDate: string = "";
-                            if (d) {
-                              localizedDate = d
-                                .toLocaleTimeString()
-                                .substring(0, 5);
-                            }
-                            setShowTimePicker(false);
-                            setSelectedTime(localizedDate);
-                          }}
-                        />
-                      )}
+                      <DateTimePickerModal
+                        minimumDate={new Date()}
+                        isVisible={isDatePickerVisible}
+                        mode="datetime"
+                        onConfirm={handleConfirm}
+                        onCancel={hideDatePicker}
+                      />
                     </View>
                     <View
                       style={{
@@ -369,7 +345,6 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                   onPress={() => handleSubmit()}
                   loading={isLoading || uploading}
                 >
-                  <Text>d</Text>
                   <Text>{taskId ? "Update" : "Create"}</Text>
                 </Button>
               </View>
