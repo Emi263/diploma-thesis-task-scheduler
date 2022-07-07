@@ -36,8 +36,7 @@ const IntroThree = () => {
         Get notified in real time
       </Text>
       <Text style={[styles.description, { color: colors.primaryColor }]}>
-        Register. Schedule a task. Attach a photo to it. Get notified 10 minutes
-        before. Easy and simple.
+        Enjoy it!
       </Text>
       <View style={styles.pagination}>
         <Text style={styles.dot}></Text>

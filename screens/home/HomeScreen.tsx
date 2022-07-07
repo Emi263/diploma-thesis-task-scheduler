@@ -1,40 +1,25 @@
 import React, { useEffect, useState } from "react";
-import {
-  Text,
-  Button,
-  View,
-  TouchableOpacity,
-  Image,
-  Pressable,
-} from "react-native";
+import { Text, View } from "react-native";
 import { clearAuthData } from "../../utils/tokenMgmt";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { isSessionActive } from "../../helper/helpers";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import HomeHeader from "./HomeHeader";
 import { homeStyles } from "./styles";
 import AllTasks from "../tasks/MainTasks";
 import CreateTask from "../tasks/CreateTask";
 import ModalComponent from "../../common/Modal";
-
 import { AntDesign } from "@expo/vector-icons";
-import { ThemeContext } from "../../context/ThemeContext";
 import { TouchableRipple } from "react-native-paper";
 import useTheme from "../../common/hooks/useTheme";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParams } from "../../ScreenIndex";
+
 import ChangePassword from "../settings/ChangePassword";
 
-type introScreenProp = StackNavigationProp<RootStackParams, "Settings">;
-
 const HomeScreen = () => {
-  const nav = useNavigation<introScreenProp>();
-
   const { colors } = useTheme();
 
-  const { setUserToken, userToken, user } = useContext(AuthContext);
-  const { theme } = useContext(ThemeContext);
+  const { setUserToken, user } = useContext(AuthContext);
   const route = useRoute();
 
   //local state
@@ -57,11 +42,6 @@ const HomeScreen = () => {
       isMounted = false;
     };
   }, [route.name]);
-
-  useEffect(() => {
-    if (user?.shouldChangePassword) {
-    }
-  }, [user]);
 
   return (
     <View style={[homeStyles.container, { backgroundColor: colors.primaryBg }]}>

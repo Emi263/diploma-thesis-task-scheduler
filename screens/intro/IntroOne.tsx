@@ -25,8 +25,8 @@ const IntroOne = () => {
         Create your task
       </Text>
       <Text style={[styles.description, { color: colors.primaryColor }]}>
-        Register. Schedule a task. Attach a photo to it. Get notified 10 minutes
-        before. Easy and simple.
+        Register. Schedule a task. Attach a photo to it. Get notified if you
+        want. Easy and simple.
       </Text>
       <View style={styles.pagination}>
         <Text style={styles.dot}></Text>

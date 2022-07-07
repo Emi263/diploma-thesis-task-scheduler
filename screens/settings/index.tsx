@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Collapsible from "../../common/Collapsible";
 import useTheme from "../../common/hooks/useTheme";
 import { AuthContext } from "../../context/AuthContext";

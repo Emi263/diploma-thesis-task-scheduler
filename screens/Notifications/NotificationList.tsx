@@ -7,7 +7,6 @@ import {
   Dimensions,
   Animated,
 } from "react-native";
-
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { deleteTask, getAllTaks } from "../../api/task";
 import {
@@ -15,10 +14,8 @@ import {
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
 import "react-native-gesture-handler";
-import { RectButton } from "react-native-gesture-handler";
 import { TouchableRipple, Surface } from "react-native-paper";
 import AwesomeAlert from "react-native-awesome-alerts";
-
 import { AntDesign } from "@expo/vector-icons";
 import { Task } from "../../models/task";
 import Loader from "../../common/Loader";
@@ -26,7 +23,7 @@ import { formatDate } from "../../helper/helpers";
 
 const SCREEN_WIDTH = Dimensions.get("screen").width;
 const NotificationList = () => {
-  const { data: tasks, isLoading, isError } = useQuery("allTaks", getAllTaks);
+  const { data: tasks, isLoading } = useQuery("allTaks", getAllTaks);
 
   if (isLoading) {
     return <Loader />;

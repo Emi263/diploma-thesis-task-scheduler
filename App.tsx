@@ -14,15 +14,13 @@ import {
   getThemeFromLocalStorage,
   saveThemeToLocalStorage,
 } from "./utils/themeMgmt";
-
 import "react-native-gesture-handler";
 
 export default function App() {
   const [userToken, setUserToken] = useState<UserToken | undefined>();
   const [user, setUser] = useState<User | undefined>();
   const [theme, setTheme] = useState<"dark" | "light">("dark");
-
-  // getThemeFromLocalStorage().then((theme) => setTheme(theme || "light"));
+  const client = new QueryClient();
 
   useEffect(() => {
     let isMounted = true;
@@ -47,15 +45,11 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
-    if (user?.shouldChangePassword) {
-    }
-  }, [user]);
-
   const changeTheme = async (theme: "dark" | "light") => {
     await saveThemeToLocalStorage(theme);
     setTheme(theme);
   };
+
   const context = {
     userToken,
     setUserToken,
@@ -68,41 +62,10 @@ export default function App() {
     changeTheme,
   };
 
-  const [appIsReady, setAppIsReady] = useState(false);
-
-  useEffect(() => {
-    async function prepare() {
-      try {
-        await SplashScreen.preventAutoHideAsync();
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        setAppIsReady(true);
-      }
-    }
-
-    prepare();
-  }, []);
-
-  const onLayoutRootView = useCallback(async () => {
-    if (appIsReady) {
-      await SplashScreen.hideAsync();
-    }
-  }, [appIsReady]);
-
-  if (!appIsReady) {
-    return null;
-  }
-  const client = new QueryClient();
-
   const styles = theme === "light" ? ColorsLight : ColorsDark;
   return (
     <ThemeContext.Provider value={themeContext}>
-      <View
-        style={{ flex: 1, backgroundColor: styles.primaryBg }}
-        onLayout={onLayoutRootView}
-      >
+      <View style={{ flex: 1, backgroundColor: styles.primaryBg }}>
         <AuthContext.Provider value={context}>
           <QueryClientProvider client={client}>
             <Screens />

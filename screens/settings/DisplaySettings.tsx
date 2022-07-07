@@ -6,8 +6,9 @@ import { ThemeContext } from "../../context/ThemeContext";
 
 const DisplaySettings = () => {
   const { changeTheme, theme } = useContext(ThemeContext);
-
   const [isSwitchOn, setIsSwitchOn] = React.useState(theme === "dark");
+
+  const { colors } = useTheme();
 
   const onToggleSwitch = (e: boolean) => {
     setIsSwitchOn((prev) => !prev);
@@ -15,7 +16,6 @@ const DisplaySettings = () => {
     changeTheme(theme);
   };
 
-  const { colors } = useTheme();
   return (
     <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
       <Text

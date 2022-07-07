@@ -7,7 +7,7 @@ import {
   Alert,
   ActivityIndicator,
 } from "react-native";
-import { Button, TextInput, HelperText } from "react-native-paper";
+import { TextInput, HelperText } from "react-native-paper";
 import { Feather } from "@expo/vector-icons";
 import { Formik } from "formik";
 import { PasswordSchema } from "../auth/validation";
@@ -41,7 +41,9 @@ export default function ChangePassword() {
           if (res.status === 200) {
             setLoading(false);
             Alert.alert("Info", "Your password was changed successfully");
-            setUser({ ...user!, shouldChangePassword: false });
+            if (user) {
+              setUser({ ...user, shouldChangePassword: false });
+            }
           }
         })
         .catch((e) => {

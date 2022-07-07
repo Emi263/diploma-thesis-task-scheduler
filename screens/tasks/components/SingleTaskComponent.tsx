@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  useColorScheme,
-} from "react-native";
+import { Text, View, Image, TouchableOpacity } from "react-native";
 import { styles } from "../styles";
 import { formatDate } from "../../../helper/helpers";
 import { generateRandomColor } from "../../../helper/generateRandomColor";

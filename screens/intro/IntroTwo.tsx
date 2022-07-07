@@ -36,8 +36,8 @@ const IntroTwo = () => {
         See you tasks list
       </Text>
       <Text style={[styles.description, { color: colors.primaryColor }]}>
-        Register. Schedule a task. Attach a photo to it. Get notified 10 minutes
-        before. Easy and simple.
+        You can log in with your google account or creating a new account from
+        scratch!
       </Text>
       <View style={styles.pagination}>
         <Text style={styles.dot}></Text>

@@ -4,8 +4,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/home/HomeScreen";
 import Settings from "../screens/settings/index";
 import AllTasks from "../screens/tasks/AllTasks";
-import { View, Text } from "react-native";
-import useTheme from "../common/hooks/useTheme";
 import NotificationList from "../screens/Notifications/NotificationList";
 import { useQuery } from "react-query";
 import { getAllTaks } from "../api/task";
@@ -77,19 +75,3 @@ export const TabNavigator = () => {
     </Tab.Navigator>
   );
 };
-
-function TestComponent() {
-  const { colors } = useTheme();
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: colors.primaryBg,
-      }}
-    >
-      <Text style={{ color: colors.primaryColor }}>Coming soon</Text>
-    </View>
-  );
-}

@@ -1,17 +1,8 @@
 import { AntDesign } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useState } from "react";
+import { Text, View, Pressable, StyleSheet, Alert } from "react-native";
 import {
-  Text,
-  TouchableOpacity,
-  View,
-  Pressable,
-  StyleSheet,
-  Alert,
-} from "react-native";
-
-import {
-  Avatar,
   Button,
   Card,
   Title,
@@ -100,13 +91,7 @@ const SingleTaskScreen: React.FC<Props> = ({
       <Card>
         <Card.Content>
           <Title>{task?.title}</Title>
-          <Paragraph>
-            {task?.description} Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Ad, perferendis ullam? Voluptate ratione facere
-            temporibus modi dolorem dicta et. Maiores beatae dolore amet
-            consectetur! Non nisi vero quis cum, a blanditiis sequi. Labore,
-            aut?
-          </Paragraph>
+          <Paragraph>{task?.description}</Paragraph>
         </Card.Content>
         <Card.Cover
           source={{ uri: task?.image || "https://picsum.photos/700" }}

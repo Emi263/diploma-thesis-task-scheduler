@@ -6,7 +6,6 @@ import { ActivityIndicator } from "react-native-paper";
 import { useQuery } from "react-query";
 import { getTopTasks } from "../../api/task";
 import useTheme from "../../common/hooks/useTheme";
-import { Task } from "../../models/task";
 import { RootStackParams } from "../../ScreenIndex";
 import SingleTask from "./components/SingleTaskComponent";
 import { styles } from "./styles";
@@ -14,11 +13,7 @@ import { styles } from "./styles";
 type introScreenProp = StackNavigationProp<RootStackParams>;
 
 const AllTasks = () => {
-  const {
-    data: topTasks,
-    isLoading,
-    isError,
-  } = useQuery("topTasks", getTopTasks);
+  const { data: topTasks, isLoading } = useQuery("topTasks", getTopTasks);
 
   const nav = useNavigation<introScreenProp>();
   const { colors } = useTheme();

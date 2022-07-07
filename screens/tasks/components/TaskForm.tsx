@@ -15,20 +15,16 @@ import {
   Checkbox,
   Chip,
   HelperText,
-  Snackbar,
   TextInput,
   TouchableRipple,
 } from "react-native-paper";
-
 import { FontAwesome } from "@expo/vector-icons";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
 import { useMutation, useQueryClient } from "react-query";
 import { createTask, updateTask } from "../../../api/task";
 import { uploadImage } from "../../../helper/firebase";
 import { ScrollView } from "react-native-gesture-handler";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import moment from "moment";
 import { formatDateAndTime } from "../../../helper/helpers";
 
 interface IFormTask {

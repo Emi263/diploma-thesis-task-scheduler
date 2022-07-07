@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import React from "react";
+import { StyleSheet, View, FlatList } from "react-native";
 import { useQuery } from "react-query";
 import { getAllTaks } from "../../api/task";
 import { ActivityIndicator } from "react-native-paper";
