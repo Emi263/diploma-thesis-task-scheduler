@@ -89,11 +89,8 @@ export const TabNavigator = () => {
         options={{
           headerShown: true,
           tabBarBadge: tasks?.length,
-          tabBarIconStyle: {
-            width: 1,
-            height: 80,
-            paddingVertical: 2,
-          },
+
+          tabBarIconStyle: {},
           tabBarBadgeStyle: {
             backgroundColor: "orange",
           },

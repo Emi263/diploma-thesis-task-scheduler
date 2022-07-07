@@ -7,7 +7,7 @@ import { isSessionActive } from "../../helper/helpers";
 import { useRoute } from "@react-navigation/native";
 import HomeHeader from "./HomeHeader";
 import { homeStyles } from "./styles";
-import AllTasks from "../tasks/MainTasks";
+import TopTasks from "../tasks/MainTasks";
 import CreateTask from "../tasks/CreateTask";
 import ModalComponent from "../../common/Modal";
 import { AntDesign } from "@expo/vector-icons";
@@ -51,7 +51,7 @@ const HomeScreen = () => {
         style={[homeStyles.container, { backgroundColor: colors.primaryBg }]}
       >
         <HomeHeader />
-        <AllTasks />
+        <TopTasks />
         <View
           style={{
             width: "100%",
@@ -64,9 +64,10 @@ const HomeScreen = () => {
             style={{
               justifyContent: "center",
               alignItems: "center",
-              paddingVertical: 10,
+              paddingVertical: 1,
               paddingHorizontal: 20,
               borderRadius: 15,
+              marginTop: -10,
             }}
             onPress={() => {
               setShowModal(true);

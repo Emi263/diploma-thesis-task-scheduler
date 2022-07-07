@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, Image, TouchableOpacity } from "react-native";
 import { styles } from "../styles";
-import { formatDate } from "../../../helper/helpers";
+import { formatDate, getTime } from "../../../helper/helpers";
 import { generateRandomColor } from "../../../helper/generateRandomColor";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -43,7 +43,10 @@ const SingleTask: React.FunctionComponent<SingleTaskProps> = (props) => {
             source={require("../../../assets/logoTest.png")}
             style={{ width: 36, height: 36 }}
           />
-          <Text style={{ fontSize: 12 }}>{formatDate(date)}</Text>
+          <View>
+            <Text style={{ fontSize: 12 }}>{formatDate(date)}</Text>
+            <Text style={{ fontSize: 12 }}>{getTime(date)}</Text>
+          </View>
         </View>
         <View style={styles.textContent}>
           <Text style={{ fontSize: 14, color: color }}>{title}</Text>

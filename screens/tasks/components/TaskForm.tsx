@@ -26,6 +26,7 @@ import { uploadImage } from "../../../helper/firebase";
 import { ScrollView } from "react-native-gesture-handler";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { formatDateAndTime } from "../../../helper/helpers";
+import useTheme from "../../../common/hooks/useTheme";
 
 interface IFormTask {
   task?: Task;
@@ -42,10 +43,11 @@ interface IFormInitialValues {
 }
 
 const TaskForm: React.FC<IFormTask> = (props) => {
+  const { colors } = useTheme();
   const queryClient = useQueryClient();
   const taskId = props?.task?.id;
 
-  const { mutateAsync, isLoading } = taskId
+  const { mutateAsync, isLoading, isError } = taskId
     ? useMutation(updateTask)
     : useMutation(createTask);
 
@@ -137,6 +139,9 @@ const TaskForm: React.FC<IFormTask> = (props) => {
             queryClient.invalidateQueries();
             Alert.alert("Task updated successfully");
           },
+          onError: () => {
+            Alert.alert("Error", "Something went wrong! Try again");
+          },
         }
       );
       resetForm();
@@ -158,6 +163,9 @@ const TaskForm: React.FC<IFormTask> = (props) => {
         onSuccess: () => {
           queryClient.invalidateQueries();
           Alert.alert("A new task was successfully created");
+        },
+        onError: () => {
+          Alert.alert("Error", "Something went wrong! Try again");
         },
       }
     );
@@ -191,9 +199,11 @@ const TaskForm: React.FC<IFormTask> = (props) => {
           values,
         }) => (
           <>
-            <View style={styles.view}>
+            <View style={[styles.view, { backgroundColor: colors.primaryBg }]}>
               <>
-                <Text style={styles.title}>Fill in the form</Text>
+                <Text style={[styles.title, { color: colors.primaryColor }]}>
+                  Fill in the form
+                </Text>
                 <View>
                   <>
                     <View style={styles.inputContainer}>
@@ -236,8 +246,9 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         </HelperText>
                       </>
                     </View>
-                    <View style={styles.checkbox}>
+                    <View style={[styles.checkbox, {}]}>
                       <Checkbox
+                        uncheckedColor={colors.primaryColor}
                         status={checkboxChecked ? "checked" : "unchecked"}
                         onPress={() => {
                           setCheckboxChecked((prev) => !prev);
@@ -247,7 +258,9 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         style={{ padding: 10 }}
                         onPress={() => setCheckboxChecked((prev) => !prev)}
                       >
-                        <Text>Should notify</Text>
+                        <Text style={{ color: colors.primaryColor }}>
+                          Should notify
+                        </Text>
                       </TouchableRipple>
                     </View>
                   </>
@@ -292,7 +305,9 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                           alignItems: "center",
                         }}
                       >
-                        <Text>Selected Date:</Text>
+                        <Text style={{ color: colors.primaryColor }}>
+                          Selected Date:
+                        </Text>
                         <Chip style={{ marginLeft: 10 }} icon="calendar">
                           <Text>
                             {(initialDateShown || props?.task?.id) &&

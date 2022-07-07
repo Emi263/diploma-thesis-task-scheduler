@@ -12,7 +12,7 @@ import { styles } from "./styles";
 
 type introScreenProp = StackNavigationProp<RootStackParams>;
 
-const AllTasks = () => {
+const Main = () => {
   const { data: topTasks, isLoading } = useQuery("topTasks", getTopTasks);
 
   const nav = useNavigation<introScreenProp>();
@@ -88,6 +88,10 @@ const AllTasks = () => {
                 fontWeight: "600",
                 textAlign: "right",
                 paddingHorizontal: 40,
+                color: colors.link,
+                textDecorationColor: colors.link,
+                textDecorationStyle: "solid",
+                textDecorationLine: "underline",
               }}
             >
               View all Tasks
@@ -99,4 +103,4 @@ const AllTasks = () => {
   );
 };
 
-export default AllTasks;
+export default Main;

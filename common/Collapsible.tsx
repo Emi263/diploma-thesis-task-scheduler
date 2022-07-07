@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+
+import useTheme from "./hooks/useTheme";
+
 interface Props {
   children: React.ReactNode;
   headerLabel: string;
@@ -12,11 +15,12 @@ const Collapsible: React.FunctionComponent<Props> = ({
 }) => {
   const [showContent, setShowContent] = useState(false);
 
+  const { colors } = useTheme();
   const Icon = (
     <AntDesign
       name={showContent ? "downcircleo" : "rightcircleo"}
       size={24}
-      color="black"
+      color={colors.primaryColor}
     />
   );
 
@@ -30,7 +34,15 @@ const Collapsible: React.FunctionComponent<Props> = ({
         activeOpacity={0.5}
         style={styles.header}
       >
-        <Text>{headerLabel}</Text>
+        <Text
+          style={[
+            {
+              color: colors.primaryColor,
+            },
+          ]}
+        >
+          {headerLabel}
+        </Text>
         {Icon}
       </TouchableOpacity>
 

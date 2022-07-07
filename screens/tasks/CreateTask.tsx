@@ -3,6 +3,7 @@ import { Pressable, View, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 import TaskForm from "./components/TaskForm";
+import useTheme from "../../common/hooks/useTheme";
 
 interface CreateTaskProps {
   setShowModal: React.Dispatch<SetStateAction<boolean>>;
@@ -13,11 +14,12 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({
 }) => {
   //insert modal here
 
+  const { colors } = useTheme();
   //let the user change the calendar mode? probably
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
       <Pressable style={styles.closeBtn} onPress={() => setShowModal(false)}>
-        <AntDesign name="closecircle" size={30} color="black" />
+        <AntDesign name="closecircle" size={30} color={colors.primaryColor} />
       </Pressable>
       <TaskForm setOpenModal={setShowModal} />
     </View>

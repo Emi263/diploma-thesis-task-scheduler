@@ -15,7 +15,10 @@ import { ScrollView } from "react-native-gesture-handler";
 import { changePassword } from "../../api/auth";
 import { AuthContext } from "../../context/AuthContext";
 
+import useTheme from "../../common/hooks/useTheme";
+
 export default function ChangePassword() {
+  const { colors } = useTheme();
   const [showNewPass, setShowNewPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
 
@@ -78,7 +81,16 @@ export default function ChangePassword() {
         }) => (
           <>
             <View style={styles.inputContainer}>
-              <Text style={styles.labelText}>Your current Password</Text>
+              <Text
+                style={[
+                  styles.labelText,
+                  {
+                    color: colors.primaryColor,
+                  },
+                ]}
+              >
+                Your current Password
+              </Text>
               <TextInput
                 placeholder="Enter current password"
                 value={values.currentPassword}
@@ -95,7 +107,16 @@ export default function ChangePassword() {
               </HelperText>
             </View>
             <View style={styles.inputContainer}>
-              <Text style={styles.labelText}>Your new Password</Text>
+              <Text
+                style={[
+                  styles.labelText,
+                  {
+                    color: colors.primaryColor,
+                  },
+                ]}
+              >
+                Your new Password
+              </Text>
               <View style={styles.input}>
                 <TextInput
                   value={values.newPassword}
@@ -120,7 +141,16 @@ export default function ChangePassword() {
               </HelperText>
             </View>
             <View style={styles.inputContainer}>
-              <Text style={styles.labelText}>Confirm your new password</Text>
+              <Text
+                style={[
+                  styles.labelText,
+                  {
+                    color: colors.primaryColor,
+                  },
+                ]}
+              >
+                Confirm your new password
+              </Text>
               <View style={styles.input}>
                 <TextInput
                   value={values.confirmNewPassword}

@@ -36,6 +36,11 @@ export const formatDate = (date: Date) => {
   return dt.calendar().split(" ")[0];
 };
 
+export const getTime = (date: Date) => {
+  const time = moment(date).format("HH:mm");
+  return time;
+};
+
 export const formatDateAndTime = (datetime: string) => {
   const date = formatDate(new Date(datetime));
   const time = moment(datetime).format("HH:mm");

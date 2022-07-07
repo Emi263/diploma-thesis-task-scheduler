@@ -17,6 +17,7 @@ import { RootStackParams } from "../../../ScreenIndex";
 import EditTask from "../components/EditTask";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import useTheme from "../../../common/hooks/useTheme";
 
 type Props = NativeStackScreenProps<RootStackParams, "SingleTask">;
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
@@ -33,6 +34,8 @@ const SingleTaskScreen: React.FC<Props> = ({
   } = useQuery(["singleTask", id], () => getTask(id), {
     enabled: !!id,
   });
+
+  const { colors } = useTheme();
 
   const nav = useNavigation<introScreenProp>();
   const { mutateAsync } = useMutation(deleteTask);
@@ -89,15 +92,23 @@ const SingleTaskScreen: React.FC<Props> = ({
   return (
     <View>
       <Card>
-        <Card.Content>
-          <Title>{task?.title || ""}</Title>
-          <Paragraph>{task?.description || ""}</Paragraph>
+        <Card.Content style={{ backgroundColor: colors.primaryBg }}>
+          <Title style={{ color: colors.primaryColor }}>
+            {task?.title || ""}
+          </Title>
+          <Paragraph style={{ color: colors.primaryColor }}>
+            {task?.description || ""}
+          </Paragraph>
         </Card.Content>
         <Card.Cover
           source={{ uri: task?.image || "https://picsum.photos/700" }}
         />
-        <Card.Actions style={styles.cardActions}>
-          <Button onPress={handleOpenModal}>Edit</Button>
+        <Card.Actions
+          style={[styles.cardActions, { backgroundColor: colors.primaryBg }]}
+        >
+          <Button onPress={handleOpenModal}>
+            <Text style={{ color: colors.primaryColor }}>Edit</Text>
+          </Button>
           <Button onPress={handleDelete}>
             <Text style={{ color: "red" }}>Delete</Text>
           </Button>
@@ -106,9 +117,15 @@ const SingleTaskScreen: React.FC<Props> = ({
 
       {!!task && (
         <ModalComponent visible={openModal}>
-          <Pressable style={styles.closeBtn} onPress={handleCloseModal}>
-            <AntDesign name="closecircle" size={30} color="black" />
-          </Pressable>
+          <View style={{ backgroundColor: colors.primaryBg }}>
+            <Pressable style={[styles.closeBtn]} onPress={handleCloseModal}>
+              <AntDesign
+                name="closecircle"
+                size={30}
+                color={colors.primaryColor}
+              />
+            </Pressable>
+          </View>
           <EditTask task={task} setOpenModal={setOpenModal} />
         </ModalComponent>
       )}
