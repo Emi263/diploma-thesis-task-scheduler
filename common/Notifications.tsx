@@ -10,9 +10,8 @@ type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 export default function Notication() {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState<any>(false);
-  const notificationListener = useRef() as any;
-  const responseListener = useRef() as any;
 
+  const lastNotificationResponse = Notifications.useLastNotificationResponse();
   const nav = useNavigation<introScreenProp>();
 
   useEffect(() => {
@@ -20,34 +19,45 @@ export default function Notication() {
       setExpoPushToken(token)
     );
 
-    Notifications.addNotificationReceivedListener((notification) => {
-      const { data, body, title } = notification.request.content;
-
-      const taskId: number = data.id as number;
-      setNotification(notification);
-      Alert.alert(title || "", body || "", [
-        {
-          text: "View task",
-          onPress: () => {
-            nav.navigate("SingleTask", {
-              id: taskId,
-            });
+    const notificationListener = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        const { data, body, title } = notification.request.content;
+        const taskId: number = data.id as number;
+        setNotification(notification);
+        Alert.alert(title || "", body || "", [
+          {
+            text: "View task",
+            onPress: () => {
+              nav.navigate("SingleTask", {
+                id: taskId,
+              });
+            },
           },
-        },
-      ]);
-    });
+        ]);
+      }
+    );
 
-    Notifications.addNotificationResponseReceivedListener((response) => {
-      Alert.alert(response.notification.request.content.body || "dsf");
-    });
+    const responseListener =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        Alert.alert(response.notification.request.content.body || "dsf");
+      });
 
     return () => {
-      Notifications.removeNotificationSubscription(
-        notificationListener.current
-      );
-      Notifications.removeNotificationSubscription(responseListener.current);
+      Notifications.removeNotificationSubscription(notificationListener);
+      Notifications.removeNotificationSubscription(responseListener);
     };
   }, []);
+
+  React.useEffect(() => {
+    if (lastNotificationResponse) {
+      const { data } = lastNotificationResponse.notification.request.content;
+
+      const taskID = data.id as number;
+      nav.navigate("SingleTask", {
+        id: taskID,
+      });
+    }
+  }, [lastNotificationResponse]);
 
   return <View></View>;
 }
