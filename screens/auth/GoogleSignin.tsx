@@ -10,6 +10,7 @@ import { getUserPayload } from "../../helper/helpers";
 import { getUser } from "../../api/user";
 import { AuthContext } from "../../context/AuthContext";
 import { AntDesign } from "@expo/vector-icons";
+import useTheme from "../../common/hooks/useTheme";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -28,6 +29,7 @@ export function GoogleSignIn({ setLoading }) {
       setLoading(false);
     }
   };
+  const { colors } = useTheme();
 
   const [request, response, promptAsync] = GoogleAuth.useAuthRequest({
     androidClientId:
@@ -41,27 +43,27 @@ export function GoogleSignIn({ setLoading }) {
   });
 
   React.useEffect(() => {
-    const subscription = AppState.addEventListener("change", () => {
-      if (response?.type === "success") {
-        setLoading(true);
-        const { authentication } = response;
-        if (authentication?.accessToken) {
-          googleLogin(authentication.accessToken)
-            .then(async (res) => handleLogin(res))
-            .catch((e) => {
-              console.log(e);
-            });
-        }
+    if (response?.type === "success") {
+      setLoading(true);
+      const { authentication } = response;
+      if (authentication?.accessToken) {
+        googleLogin(authentication.accessToken)
+          .then(async (res) => handleLogin(res))
+          .catch((e) => {
+            console.log(e);
+          });
       }
-    });
-    return () => {
-      subscription.remove();
-    };
+    }
   }, [response]);
 
   return (
-    <>
-      <Text style={{ padding: 10 }}>Sign in with</Text>
+    <View
+      style={{ padding: 10, justifyContent: "center", alignItems: "center" }}
+    >
+      <Text style={{ color: colors.primaryColor }}>Or</Text>
+      <Text style={{ color: colors.primaryColor, fontWeight: "700" }}>
+        Sign in with
+      </Text>
       <Button
         disabled={!request}
         onPress={() => {
@@ -71,6 +73,6 @@ export function GoogleSignIn({ setLoading }) {
       >
         <AntDesign name="google" size={20} color="black" />
       </Button>
-    </>
+    </View>
   );
 }

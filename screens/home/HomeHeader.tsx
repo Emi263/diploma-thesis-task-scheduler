@@ -34,8 +34,6 @@ const HomeHeader = () => {
     enabled: !!user?.id,
   });
 
-  console.log(userData);
-
   let openImagePickerAsync = async () => {
     let permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();

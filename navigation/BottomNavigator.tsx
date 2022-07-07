@@ -7,6 +7,8 @@ import AllTasks from "../screens/tasks/AllTasks";
 import NotificationList from "../screens/Notifications/NotificationList";
 import { useQuery } from "react-query";
 import { getAllTaks } from "../api/task";
+import { View } from "react-native";
+import { TouchableRipple } from "react-native-paper";
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +25,11 @@ export const TabNavigator = () => {
           height: 80,
           paddingBottom: 25,
         },
-
+        tabBarIconStyle: {
+          width: 100,
+          height: 80,
+          paddingVertical: 2,
+        },
         tabBarInactiveTintColor: "purple", //inactive tabs,
         tabBarActiveTintColor: "orange", //active color
       }}
@@ -41,6 +47,11 @@ export const TabNavigator = () => {
         name="Settings"
         component={Settings}
         options={{
+          tabBarIconStyle: {
+            width: 100,
+            height: 80,
+            paddingVertical: 2,
+          },
           tabBarIcon: ({ color, size }) => (
             <Feather name="settings" color={color} size={30} />
           ),
@@ -53,8 +64,22 @@ export const TabNavigator = () => {
         component={AllTasks}
         options={{
           headerShown: true,
+          tabBarIconStyle: {
+            width: 100,
+            height: 80,
+            paddingVertical: 2,
+          },
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="tasks" color={color} size={30} />
+            <TouchableRipple
+              style={{
+                width: 50,
+                height: 50,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <FontAwesome5 name="tasks" color={color} size={30} />
+            </TouchableRipple>
           ),
         }}
       />
@@ -64,6 +89,11 @@ export const TabNavigator = () => {
         options={{
           headerShown: true,
           tabBarBadge: tasks?.length,
+          tabBarIconStyle: {
+            width: 1,
+            height: 80,
+            paddingVertical: 2,
+          },
           tabBarBadgeStyle: {
             backgroundColor: "orange",
           },

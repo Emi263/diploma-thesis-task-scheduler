@@ -187,8 +187,19 @@ const Signup = () => {
                   >
                     Sign up
                   </Button>
-                  <Button onPress={() => nav.navigate("Login")}>
-                    <Text style={{ fontSize: 10, color: colors.primaryColor }}>
+                  <Button
+                    style={{ marginTop: 6 }}
+                    onPress={() => nav.navigate("Login")}
+                  >
+                    <Text
+                      style={{
+                        textTransform: "none",
+                        fontSize: 12,
+                        color: colors.link,
+                        textDecorationLine: "underline",
+                        textDecorationStyle: "solid",
+                      }}
+                    >
                       Go to Login
                     </Text>
                   </Button>

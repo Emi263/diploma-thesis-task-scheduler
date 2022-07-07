@@ -15,6 +15,7 @@ import { TouchableRipple } from "react-native-paper";
 import useTheme from "../../common/hooks/useTheme";
 
 import ChangePassword from "../settings/ChangePassword";
+import Notication from "../../common/Notifications";
 
 const HomeScreen = () => {
   const { colors } = useTheme();
@@ -44,62 +45,67 @@ const HomeScreen = () => {
   }, [route.name]);
 
   return (
-    <View style={[homeStyles.container, { backgroundColor: colors.primaryBg }]}>
-      <HomeHeader />
-      <AllTasks />
+    <>
+      <Notication />
       <View
-        style={{
-          width: "100%",
-          paddingVertical: 20,
-          display: "flex",
-          alignItems: "center",
-        }}
+        style={[homeStyles.container, { backgroundColor: colors.primaryBg }]}
       >
-        <TouchableRipple
+        <HomeHeader />
+        <AllTasks />
+        <View
           style={{
-            justifyContent: "center",
+            width: "100%",
+            paddingVertical: 20,
+            display: "flex",
             alignItems: "center",
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            borderRadius: 15,
-          }}
-          onPress={() => {
-            setShowModal(true);
           }}
         >
-          <>
-            <AntDesign
-              name="pluscircleo"
-              size={40}
-              color={colors.primaryColor}
-            />
-            <Text style={{ color: colors.primaryColor }}>
-              Create a new task
-            </Text>
-          </>
-        </TouchableRipple>
-      </View>
-
-      <ModalComponent visible={user?.shouldChangePassword || false}>
-        <View style={{ padding: 30 }}>
-          <Text
+          <TouchableRipple
             style={{
-              paddingVertical: 30,
-              fontWeight: "600",
-              textTransform: "uppercase",
-              textAlign: "center",
-              marginBottom: 40,
+              justifyContent: "center",
+              alignItems: "center",
+              paddingVertical: 10,
+              paddingHorizontal: 20,
+              borderRadius: 15,
+            }}
+            onPress={() => {
+              setShowModal(true);
             }}
           >
-            Please, change your password
-          </Text>
-          <ChangePassword />
+            <>
+              <AntDesign
+                name="pluscircleo"
+                size={40}
+                color={colors.primaryColor}
+              />
+              <Text style={{ color: colors.primaryColor }}>
+                Create a new task
+              </Text>
+            </>
+          </TouchableRipple>
         </View>
-      </ModalComponent>
-      <ModalComponent visible={showModal} animationType="slide">
-        <CreateTask setShowModal={setShowModal} />
-      </ModalComponent>
-    </View>
+
+        <ModalComponent visible={user?.shouldChangePassword || false}>
+          <View style={{ padding: 30 }}>
+            <Text
+              style={{
+                paddingVertical: 30,
+                fontWeight: "600",
+                textTransform: "uppercase",
+                textAlign: "center",
+                marginBottom: 40,
+              }}
+            >
+              Please, change your password
+            </Text>
+            <ChangePassword />
+          </View>
+        </ModalComponent>
+        <ModalComponent visible={showModal} animationType="slide">
+          <CreateTask setShowModal={setShowModal} />
+        </ModalComponent>
+      </View>
+    </>
   );
 };
 

@@ -144,24 +144,43 @@ const Login = () => {
                 >
                   Login
                 </Button>
+                <TouchableRipple
+                  style={{ paddingVertical: 4, marginTop: 10 }}
+                  onPress={handleForgotPassword}
+                >
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      textDecorationLine: "underline",
+                      textDecorationStyle: "solid",
+                      color: colors.link,
+                    }}
+                  >
+                    Forgot password
+                  </Text>
+                </TouchableRipple>
+
+                <GoogleSignIn setLoading={setLoading} />
+                <View style={{ padding: 3 }}>
+                  <TouchableRipple
+                    style={{ padding: 2 }}
+                    onPress={() => nav.navigate("Signup")}
+                  >
+                    <Text
+                      style={{
+                        color: colors.link,
+                        textDecorationLine: "underline",
+                        textDecorationColor: colors.link,
+                      }}
+                    >
+                      Don't have an account! Register!
+                    </Text>
+                  </TouchableRipple>
+                </View>
               </>
             </View>
           )}
         </Formik>
-        <TouchableRipple onPress={handleForgotPassword}>
-          <Text>Forgot password</Text>
-        </TouchableRipple>
-
-        <GoogleSignIn setLoading={setLoading} />
-        <View style={{ padding: 30 }}>
-          <Button
-            mode="contained"
-            icon="account"
-            onPress={() => nav.navigate("Signup")}
-          >
-            Register
-          </Button>
-        </View>
       </>
     </KeyboardAvoidingView>
   );

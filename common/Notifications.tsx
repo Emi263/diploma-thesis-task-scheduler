@@ -1,7 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
-import { View, Platform, Text, Button } from "react-native";
+import { View, Platform, Text, Button, Alert } from "react-native";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParams } from "../ScreenIndex";
+import { useNavigation } from "@react-navigation/native";
+type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
 export default function Notication() {
   const [expoPushToken, setExpoPushToken] = useState("");
@@ -9,20 +13,33 @@ export default function Notication() {
   const notificationListener = useRef() as any;
   const responseListener = useRef() as any;
 
+  const nav = useNavigation<introScreenProp>();
+
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token)
     );
 
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-      });
+    Notifications.addNotificationReceivedListener((notification) => {
+      const { data, body, title } = notification.request.content;
 
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
+      const taskId: number = data.id as number;
+      setNotification(notification);
+      Alert.alert(title || "", body || "", [
+        {
+          text: "View task",
+          onPress: () => {
+            nav.navigate("SingleTask", {
+              id: taskId,
+            });
+          },
+        },
+      ]);
+    });
+
+    Notifications.addNotificationResponseReceivedListener((response) => {
+      Alert.alert(response.notification.request.content.body || "dsf");
+    });
 
     return () => {
       Notifications.removeNotificationSubscription(
@@ -31,33 +48,8 @@ export default function Notication() {
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "space-around",
-      }}
-    >
-      <Text>Your expo push token: {expoPushToken}</Text>
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Text>
-          Title: {notification && notification.request.content.title}{" "}
-        </Text>
-        <Text>Body: {notification && notification.request.content.body}</Text>
-        <Text>
-          Data:{" "}
-          {notification && JSON.stringify(notification.request.content.data)}
-        </Text>
-      </View>
-      <Button
-        title="Press to schedule a notification"
-        onPress={async () => {
-          await schedulePushNotification();
-        }}
-      />
-    </View>
-  );
+
+  return <View></View>;
 }
 
 async function registerForPushNotificationsAsync() {
@@ -89,14 +81,4 @@ async function registerForPushNotificationsAsync() {
   }
 
   return token;
-}
-async function schedulePushNotification() {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "You've got mail! 📬",
-      body: "Here is the notification body",
-      data: { data: "goes here" },
-    },
-    trigger: { seconds: 2 },
-  });
 }

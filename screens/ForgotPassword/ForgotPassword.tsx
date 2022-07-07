@@ -1,6 +1,7 @@
+import { AxiosError } from "axios";
 import React, { useState } from "react";
 
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { forgotPassword } from "../../api/auth";
 
@@ -10,10 +11,42 @@ const ForgotPassword = () => {
   const handleResetPassword = () => {
     forgotPassword(email)
       .then((res) => {
-        console.log(res);
+        if (res.data.response.statusCode === 201) {
+          setEmail("");
+          Alert.alert(
+            "Success!",
+            `Your new password was sent to ${email}. Please chechk your inbox and follow the instructions there`
+          );
+        } else {
+          Alert.alert(
+            "Confused!",
+            `You sure ${email} has been used before in this app?`,
+            [
+              {
+                text: "Ok, sorry!",
+              },
+            ]
+          );
+        }
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((e: AxiosError) => {
+        if (e.code == "ERR_BAD_REQUEST") {
+          Alert.alert(
+            "Error. Invalid email!",
+            "Something went wrong! Please make sure your email is correct!",
+            [
+              {
+                text: "Close",
+              },
+            ]
+          );
+          return;
+        } else {
+          Alert.alert(
+            "Error",
+            "Something went wrong! Please make sure you have been registered with this email before "
+          );
+        }
       });
   };
 
@@ -32,7 +65,9 @@ const ForgotPassword = () => {
         />
         <View style={{ height: 50 }}></View>
 
-        <Button onPress={handleResetPassword}>Send Email </Button>
+        <Button mode="outlined" onPress={handleResetPassword}>
+          Get a new password
+        </Button>
       </View>
     </View>
   );
@@ -46,5 +81,7 @@ const styles = StyleSheet.create({
   },
   title: {
     paddingVertical: 30,
+    fontWeight: "700",
+    fontSize: 16,
   },
 });

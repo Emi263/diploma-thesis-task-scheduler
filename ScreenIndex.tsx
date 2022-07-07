@@ -16,6 +16,12 @@ import SingleTaskScreen from "./screens/tasks/screens/SingleTaskScreen";
 import AllTasks from "./screens/tasks/AllTasks";
 import { ThemeContext } from "./context/ThemeContext";
 import ForgotPassword from "./screens/ForgotPassword/ForgotPassword";
+import { useRef, useState, useEffect } from "react";
+import { View, Platform, Text, Button, Alert } from "react-native";
+import * as Notifications from "expo-notifications";
+import * as Device from "expo-device";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 export type RootStackParams = {
   App: undefined;
