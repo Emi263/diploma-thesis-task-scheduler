@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
+import { AppState, View } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import * as GoogleAuth from "expo-auth-session/providers/google";
 import { googleLogin } from "../../api/auth";
-import { useMutation } from "react-query";
 import { AxiosResponse } from "axios";
 import { setAuthToken } from "../../utils/tokenMgmt";
 import { getUserPayload } from "../../helper/helpers";
 import { getUser } from "../../api/user";
 import { AuthContext } from "../../context/AuthContext";
+import { AntDesign } from "@expo/vector-icons";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -20,7 +21,6 @@ export function GoogleSignIn({ setLoading }) {
       await setAuthToken(res.data.token).then(async () => {
         const userData = await getUserPayload();
         const userDt = await getUser(userData?.sub || 1);
-
         setUser(userDt);
         setLoading(false);
       });
@@ -41,28 +41,35 @@ export function GoogleSignIn({ setLoading }) {
   });
 
   React.useEffect(() => {
-    if (response?.type === "success") {
-      setLoading(true);
-      const { authentication } = response;
-      if (authentication?.accessToken) {
-        googleLogin(authentication.accessToken)
-          .then(async (res) => handleLogin(res))
-          .catch((e) => {
-            console.log(e);
-          });
+    const subscription = AppState.addEventListener("change", () => {
+      if (response?.type === "success") {
+        setLoading(true);
+        const { authentication } = response;
+        if (authentication?.accessToken) {
+          googleLogin(authentication.accessToken)
+            .then(async (res) => handleLogin(res))
+            .catch((e) => {
+              console.log(e);
+            });
+        }
       }
-    }
+    });
+    return () => {
+      subscription.remove();
+    };
   }, [response]);
 
   return (
     <>
+      <Text style={{ padding: 10 }}>Sign in with</Text>
       <Button
         disabled={!request}
         onPress={() => {
           promptAsync();
         }}
+        style={{ flexDirection: "row", alignItems: "center" }}
       >
-        Login
+        <AntDesign name="google" size={20} color="black" />
       </Button>
     </>
   );

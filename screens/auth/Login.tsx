@@ -12,7 +12,13 @@ import { AxiosError, AxiosResponse } from "axios";
 import { Formik } from "formik";
 import { LoginSchema } from "./validation";
 import { getUser } from "../../api/user";
-import { TextInput, HelperText, Text, Button } from "react-native-paper";
+import {
+  TextInput,
+  HelperText,
+  Text,
+  Button,
+  TouchableRipple,
+} from "react-native-paper";
 import useTheme from "../../common/hooks/useTheme";
 import { GoogleSignIn } from "./GoogleSignin";
 import Loader from "../../common/Loader";
@@ -22,6 +28,7 @@ type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 const Login = () => {
   const nav = useNavigation<introScreenProp>();
 
+  const [openForgotPass, setOpenForgotPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const { user, setUser } = useContext(AuthContext);
 
@@ -49,6 +56,10 @@ const Login = () => {
   if (loading) {
     return <Loader />;
   }
+
+  const handleForgotPassword = () => {
+    nav.navigate("ForgotPassword");
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -137,6 +148,9 @@ const Login = () => {
             </View>
           )}
         </Formik>
+        <TouchableRipple onPress={handleForgotPassword}>
+          <Text>Forgot password</Text>
+        </TouchableRipple>
 
         <GoogleSignIn setLoading={setLoading} />
         <View style={{ padding: 30 }}>

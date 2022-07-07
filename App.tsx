@@ -27,9 +27,12 @@ export default function App() {
     if (isMounted) {
       getUserPayload()
         .then((payload) => {
-          getUser(payload.sub).then((user) => {
-            setUser(user);
-          });
+          if (payload) {
+            getUser(payload?.sub).then((user) => {
+              setUser(user);
+            });
+          }
+          return;
         })
         .catch((e) => {
           console.log(e);

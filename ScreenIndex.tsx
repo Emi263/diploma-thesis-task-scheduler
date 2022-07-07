@@ -15,6 +15,7 @@ import { TabNavigator } from "./navigation/BottomNavigator";
 import SingleTaskScreen from "./screens/tasks/screens/SingleTaskScreen";
 import AllTasks from "./screens/tasks/AllTasks";
 import { ThemeContext } from "./context/ThemeContext";
+import ForgotPassword from "./screens/ForgotPassword/ForgotPassword";
 
 export type RootStackParams = {
   App: undefined;
@@ -31,6 +32,7 @@ export type RootStackParams = {
   };
   Tasks: undefined;
   Settings: undefined;
+  ForgotPassword: undefined;
 };
 
 const Screens = () => {
@@ -91,6 +93,11 @@ const Screens = () => {
                 options={{ animation: "simple_push" }}
               />
               <RootStack.Screen name="Signup" component={Signup} />
+              <RootStack.Screen
+                name="ForgotPassword"
+                component={ForgotPassword}
+                options={{ headerShown: true }}
+              />
             </RootStack.Group>
           </>
         )}

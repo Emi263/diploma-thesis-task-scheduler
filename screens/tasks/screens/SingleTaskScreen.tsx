@@ -90,8 +90,8 @@ const SingleTaskScreen: React.FC<Props> = ({
     <View>
       <Card>
         <Card.Content>
-          <Title>{task?.title}</Title>
-          <Paragraph>{task?.description}</Paragraph>
+          <Title>{task?.title || ""}</Title>
+          <Paragraph>{task?.description || ""}</Paragraph>
         </Card.Content>
         <Card.Cover
           source={{ uri: task?.image || "https://picsum.photos/700" }}
@@ -104,7 +104,7 @@ const SingleTaskScreen: React.FC<Props> = ({
         </Card.Actions>
       </Card>
 
-      {task && (
+      {!!task && (
         <ModalComponent visible={openModal}>
           <Pressable style={styles.closeBtn} onPress={handleCloseModal}>
             <AntDesign name="closecircle" size={30} color="black" />

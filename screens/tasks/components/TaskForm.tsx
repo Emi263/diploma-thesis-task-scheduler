@@ -295,7 +295,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         <Text>Selected Date:</Text>
                         <Chip style={{ marginLeft: 10 }} icon="calendar">
                           <Text>
-                            {initialDateShown &&
+                            {(initialDateShown || props?.task?.id) &&
                               selectedDate &&
                               formatDateAndTime(selectedDate)}
                           </Text>
