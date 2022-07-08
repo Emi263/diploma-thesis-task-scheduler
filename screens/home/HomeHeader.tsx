@@ -1,20 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  ImageBackground,
-} from "react-native";
+import { Text, View, ImageBackground } from "react-native";
 import { AuthContext } from "../../context/AuthContext";
 import { headerStyles } from "./styles";
 import { clearAuthData } from "../../utils/tokenMgmt";
-import {
-  ActivityIndicator,
-  Avatar,
-  Button,
-  TouchableRipple,
-} from "react-native-paper";
+import { ActivityIndicator, Button, TouchableRipple } from "react-native-paper";
 import useTheme from "../../common/hooks/useTheme";
 import { Feather } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";

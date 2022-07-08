@@ -1,7 +1,6 @@
 export const generateRandomColor = () => {
   const H = getRandomInt(1, 358);
   const S = 100;
-
   const bgL = 90;
   const cL = 40;
 

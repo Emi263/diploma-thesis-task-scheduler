@@ -1,6 +1,5 @@
 import { AxiosError } from "axios";
 import React, { useState } from "react";
-
 import { Alert, StyleSheet, View } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { forgotPassword } from "../../api/auth";
