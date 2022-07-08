@@ -1,16 +1,17 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { View, Platform, Text, Button, Alert } from "react-native";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParams } from "../ScreenIndex";
 import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../context/AuthContext";
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
 export default function Notication() {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState<any>(false);
-
+  const { user } = useContext(AuthContext);
   const lastNotificationResponse = Notifications.useLastNotificationResponse();
   const nav = useNavigation<introScreenProp>();
 
@@ -52,6 +53,9 @@ export default function Notication() {
     if (lastNotificationResponse) {
       const { data } = lastNotificationResponse.notification.request.content;
 
+      if (data.userId !== user?.id) {
+        return;
+      }
       const taskID = data.id as number;
       nav.navigate("SingleTask", {
         id: taskID,

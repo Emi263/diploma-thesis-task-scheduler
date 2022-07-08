@@ -11,13 +11,23 @@ const ForgotPassword = () => {
   const handleResetPassword = () => {
     forgotPassword(email)
       .then((res) => {
-        if (res.status === 201) {
+        if (res.data.email) {
           setEmail("");
           Alert.alert(
             "Success!",
-            `Your new password was sent to ${email}. Please chechk your inbox and follow the instructions there`
+            `Your new password was sent to ${email}. Please check your inbox and follow the instructions there`
           );
-        } else {
+          return;
+        }
+
+        if (res.data.response.statusCode === 201) {
+          setEmail("");
+          Alert.alert(
+            "Success!",
+            `Your new password was sent to ${email}. Please check your inbox and follow the instructions there`
+          );
+          return;
+        } else if (res.data.response.statusCode === 404) {
           Alert.alert(
             "Confused!",
             `You sure ${email} has been used before in this app?`,
@@ -27,6 +37,11 @@ const ForgotPassword = () => {
               },
             ]
           );
+          return;
+        } else if (res.data.response.statusCode === 406) {
+          Alert.alert("This user cannot have his password resetted");
+        } else {
+          return;
         }
       })
       .catch((e: AxiosError) => {

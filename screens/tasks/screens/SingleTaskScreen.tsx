@@ -35,8 +35,6 @@ const SingleTaskScreen: React.FC<Props> = ({
     enabled: !!id,
   });
 
-  console.log(task);
-
   const { colors } = useTheme();
 
   const nav = useNavigation<introScreenProp>();
