@@ -11,7 +11,7 @@ const ForgotPassword = () => {
   const handleResetPassword = () => {
     forgotPassword(email)
       .then((res) => {
-        if (res.data.response.statusCode === 201) {
+        if (res.status === 201) {
           setEmail("");
           Alert.alert(
             "Success!",
@@ -30,6 +30,8 @@ const ForgotPassword = () => {
         }
       })
       .catch((e: AxiosError) => {
+        console.log(e);
+
         if (e.code == "ERR_BAD_REQUEST") {
           Alert.alert(
             "Error. Invalid email!",

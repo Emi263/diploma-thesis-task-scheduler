@@ -41,6 +41,7 @@ const Signup = () => {
       });
     } catch (error) {
       console.log(error);
+
       setLoading(false);
 
       Alert.alert("Something went wrong");
@@ -82,6 +83,10 @@ const Signup = () => {
               signup(email, password, name, age.toString())
                 .then(async (res) => handleSignup(res))
                 .catch((e) => {
+                  Alert.alert(
+                    "Something went wrong",
+                    "Please check your data!"
+                  );
                   setLoading(false);
                   console.log(e);
                 });

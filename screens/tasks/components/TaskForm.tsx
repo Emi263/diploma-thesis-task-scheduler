@@ -135,8 +135,8 @@ const TaskForm: React.FC<IFormTask> = (props) => {
           image: imageChanged,
         },
         {
-          onSuccess: () => {
-            queryClient.invalidateQueries();
+          onSuccess: async () => {
+            await queryClient.invalidateQueries();
             Alert.alert("Task updated successfully");
           },
           onError: () => {
@@ -160,9 +160,12 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     await mutateAsync(
       { ...values, image: url, shouldNotify: checkboxChecked },
       {
-        onSuccess: () => {
-          queryClient.invalidateQueries();
+        onSuccess: async () => {
+          await queryClient.invalidateQueries();
           Alert.alert("A new task was successfully created");
+          if (props.setOpenModal) {
+            props.setOpenModal(false);
+          }
         },
         onError: () => {
           Alert.alert("Error", "Something went wrong! Try again");
@@ -170,9 +173,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
       }
     );
     resetForm();
-    if (props.setOpenModal) {
-      props.setOpenModal(false);
-    }
+
     return;
   };
 

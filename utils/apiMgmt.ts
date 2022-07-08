@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getAuthToken } from "./tokenMgmt";
 
-export const apiUrl = "http://192.168.254.202:3000";
+export const apiUrl = "http://192.168.1.5:3000";
 
 const getHeaders = async () => {
   const headers = {

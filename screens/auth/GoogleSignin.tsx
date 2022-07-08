@@ -16,14 +16,17 @@ WebBrowser.maybeCompleteAuthSession();
 
 export function GoogleSignIn({ setLoading }) {
   const { user, setUser } = useContext(AuthContext);
+
   const handleLogin = async (res: AxiosResponse) => {
     try {
       setLoading(true);
       await setAuthToken(res.data.token).then(async () => {
         const userData = await getUserPayload();
-        const userDt = await getUser(userData?.sub || 1);
-        setUser(userDt);
-        setLoading(false);
+        if (userData) {
+          const userDt = await getUser(userData?.sub);
+          setUser(userDt);
+          setLoading(false);
+        }
       });
     } catch (error) {
       setLoading(false);
@@ -54,7 +57,7 @@ export function GoogleSignIn({ setLoading }) {
           });
       }
     }
-  }, [response]);
+  }, [response, request]);
 
   return (
     <View

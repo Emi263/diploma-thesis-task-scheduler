@@ -39,7 +39,7 @@ export default function Notication() {
 
     const responseListener =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        Alert.alert(response.notification.request.content.body || "dsf");
+        Alert.alert(response.notification.request.content.body || "");
       });
 
     return () => {

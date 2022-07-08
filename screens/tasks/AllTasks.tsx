@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, Text } from "react-native";
 import { useQuery } from "react-query";
 import { getAllTaks } from "../../api/task";
 import { ActivityIndicator } from "react-native-paper";
@@ -15,6 +15,14 @@ const AllTasks = () => {
       {isLoading && (
         <View style={styles.loaderContainer}>
           <ActivityIndicator style={styles.loader} animating size="large" />
+        </View>
+      )}
+
+      {tasks?.length === 0 && (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text>No Tasks to show :(</Text>
         </View>
       )}
       <FlatList

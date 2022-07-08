@@ -35,6 +35,8 @@ const SingleTaskScreen: React.FC<Props> = ({
     enabled: !!id,
   });
 
+  console.log(task);
+
   const { colors } = useTheme();
 
   const nav = useNavigation<introScreenProp>();
@@ -58,8 +60,8 @@ const SingleTaskScreen: React.FC<Props> = ({
         onPress: () => {
           if (task) {
             mutateAsync(task.id.toString())
-              .then((res) => {
-                queryClient.invalidateQueries();
+              .then(async (res) => {
+                await queryClient.invalidateQueries();
               })
               .then(() => {
                 Alert.alert("Task Deleted", "Task was deleted succesfully");

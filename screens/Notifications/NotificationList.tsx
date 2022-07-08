@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList, Dimensions, Animated } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Dimensions,
+  Animated,
+  Text,
+} from "react-native";
 import { useQuery } from "react-query";
 import { getAllTaks } from "../../api/task";
 import "react-native-gesture-handler";
@@ -13,6 +20,14 @@ const NotificationList = () => {
 
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (tasks?.length === 0) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>No tasks to show!</Text>
+      </View>
+    );
   }
   return (
     <View>
