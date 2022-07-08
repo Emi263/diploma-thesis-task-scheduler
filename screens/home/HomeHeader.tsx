@@ -19,9 +19,7 @@ const HomeHeader = () => {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
 
-  const { data: userData } = useQuery("user", () => getUser(user?.id || 0), {
-    enabled: !!user?.id,
-  });
+  const { data: userData } = useQuery("user", () => getUser(user?.id || 0), {});
 
   let openImagePickerAsync = async () => {
     let permissionResult =

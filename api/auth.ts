@@ -38,5 +38,5 @@ export const changePassword = async (
 export const forgotPassword = async (
   email: string
 ): Promise<AxiosResponse<any, any>> => {
-  return post(apiUrl + "/auth/send-email", { email });
+  return post(apiUrl + "/auth/forgot-password", { email });
 };
