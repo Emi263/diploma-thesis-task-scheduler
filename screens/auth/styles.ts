@@ -1,24 +1,33 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+
+    alignItems: "center",
+    backgroundColor: "white",
+  },
   view: {
     flex: 1,
     width: "100%",
     display: "flex",
     alignContent: "center",
     alignItems: "center",
-    justifyContent: "center",
   },
-  container: {
-    flex: 1,
-    padding: 5,
+
+  upperView: {
+    backgroundColor: "#407BFF",
+    width: "100%",
+    height: 200,
     paddingTop: 50,
-    justifyContent: "center",
-    alignItems: "center",
+    paddingHorizontal: 20,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
   },
   title: {
-    fontWeight: "700",
     fontSize: 16,
+    alignSelf: "flex-start",
+    fontFamily: "poppins",
   },
   inputWrapper: {
     width: "100%",
@@ -42,6 +51,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontSize: 14,
     marginTop: 20,
+    backgroundColor: "white",
   },
   error: {
     color: "red",

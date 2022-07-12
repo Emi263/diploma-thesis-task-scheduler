@@ -21,6 +21,7 @@ import { useFonts } from "expo-font";
 
 //
 import AppLoading from "expo-app-loading";
+import { ActivityIndicator } from "react-native-paper";
 export default function App() {
   const [userToken, setUserToken] = useState<UserToken | undefined>();
   const [user, setUser] = useState<User | undefined>();
@@ -30,6 +31,7 @@ export default function App() {
   let [fontsLoaded] = useFonts({
     poppinsBold: require("./assets/fonts/Poppins-Bold.ttf"),
     poppinsLight: require("./assets/fonts/Poppins-Light.ttf"),
+    poppins: require("./assets/fonts/Poppins-Regular.ttf"),
   });
 
   useEffect(() => {
@@ -76,6 +78,10 @@ export default function App() {
   };
 
   const styles = theme === "light" ? ColorsLight : ColorsDark;
+  if (!fontsLoaded) {
+    return <ActivityIndicator />;
+  }
+
   return (
     <ThemeContext.Provider value={themeContext}>
       <View style={{ flex: 1, backgroundColor: styles.primaryBg }}>

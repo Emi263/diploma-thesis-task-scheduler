@@ -1,6 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { errorCodes, getUserPayload } from "../../helper/helpers";
-import { Alert, View, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  Alert,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+  Image,
+  StatusBar,
+} from "react-native";
 import { login } from "../../api/auth";
 import { styles } from "./styles";
 import { setAuthToken } from "../../utils/tokenMgmt";
@@ -22,6 +30,7 @@ import {
 import useTheme from "../../common/hooks/useTheme";
 import { GoogleSignIn } from "./GoogleSignin";
 import Loader from "../../common/Loader";
+import { Feather } from "@expo/vector-icons";
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
@@ -32,6 +41,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const { user, setUser } = useContext(AuthContext);
 
+  const [showPass, setShowPass] = useState(false);
   const { colors } = useTheme();
 
   const handleLogin = async (res: AxiosResponse) => {
@@ -63,6 +73,25 @@ const Login = () => {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#407BFF" />
+
+      <View
+        style={{
+          backgroundColor: "#407BFF",
+          height: 200,
+          width: "100%",
+          borderBottomRightRadius: 70,
+          borderBottomLeftRadius: 70,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Image
+          style={{ height: 180, width: 180 }}
+          source={require("../../assets/login-logo.png")}
+        />
+      </View>
+
       <>
         <Formik
           validationSchema={LoginSchema}
@@ -88,8 +117,19 @@ const Login = () => {
           }) => (
             <View style={styles.view}>
               <>
-                <Text style={[styles.title, { color: colors.primaryColor }]}>
-                  Log in
+                <Text
+                  style={[
+                    styles.title,
+                    {
+                      color: colors.primaryColor,
+                      alignSelf: "center",
+                      fontFamily: "poppinsBold",
+                      paddingTop: 20,
+                      fontSize: 20,
+                    },
+                  ]}
+                >
+                  Pick up where you left!
                 </Text>
                 <View style={styles.inputWrapper}>
                   <>
@@ -104,6 +144,12 @@ const Login = () => {
                           placeholder="Enter email"
                           onBlur={handleBlur("email")}
                           style={styles.input}
+                          left={
+                            <TextInput.Icon
+                              style={{ marginTop: 12 }}
+                              name="email"
+                            />
+                          }
                         />
                         <HelperText
                           type="error"
@@ -119,10 +165,31 @@ const Login = () => {
                           value={values.password}
                           onChangeText={handleChange("password")}
                           placeholder="Enter password"
-                          secureTextEntry
+                          secureTextEntry={!showPass}
                           style={styles.input}
                           onBlur={handleBlur("password")}
                           // label="Password"
+                          left={
+                            <TextInput.Icon
+                              style={{ marginTop: 12 }}
+                              name="onepassword"
+                            />
+                          }
+                          right={
+                            <TextInput.Icon
+                              style={{ marginTop: 12 }}
+                              name={() => (
+                                <TouchableRipple>
+                                  <Feather
+                                    name={showPass ? "eye" : "eye-off"}
+                                    size={24}
+                                    color="black"
+                                    onPress={() => setShowPass((prev) => !prev)}
+                                  />
+                                </TouchableRipple>
+                              )}
+                            />
+                          }
                         />
 
                         <HelperText
@@ -131,6 +198,22 @@ const Login = () => {
                         >
                           Password is required!
                         </HelperText>
+                        <TouchableOpacity
+                          style={{ paddingVertical: 4 }}
+                          activeOpacity={0.8}
+                          onPress={handleForgotPassword}
+                        >
+                          <Text
+                            style={{
+                              color: "#407BFF",
+                              fontFamily: "poppinsBold",
+                              fontSize: 12,
+                              textAlign: "right",
+                            }}
+                          >
+                            Forgot password?
+                          </Text>
+                        </TouchableOpacity>
                       </>
                     </View>
                   </>
@@ -138,44 +221,39 @@ const Login = () => {
 
                 {/**Sign in button */}
                 <Button
-                  style={{ marginTop: 20 }}
+                  style={{
+                    marginTop: 20,
+                    width: "90%",
+                    backgroundColor: "#407BFF",
+                    borderRadius: 10,
+                  }}
                   mode="contained"
                   onPress={() => handleSubmit()}
                 >
-                  Login
-                </Button>
-                <TouchableRipple
-                  style={{ paddingVertical: 4, marginTop: 10 }}
-                  onPress={handleForgotPassword}
-                >
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      textDecorationLine: "underline",
-                      textDecorationStyle: "solid",
-                      color: colors.link,
-                    }}
-                  >
-                    Forgot password
+                  <Text style={{ color: "white", fontFamily: "poppinsBold" }}>
+                    Login
                   </Text>
-                </TouchableRipple>
+                </Button>
 
                 <GoogleSignIn setLoading={setLoading} />
-                <View style={{ padding: 3 }}>
-                  <TouchableRipple
-                    style={{ padding: 2 }}
-                    onPress={() => nav.navigate("Signup")}
-                  >
+                <View
+                  style={{
+                    padding: 3,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text style={{ fontFamily: "poppins" }}>
+                    Don't have an account?
+                  </Text>
+                  <TouchableOpacity onPress={() => nav.navigate("Signup")}>
                     <Text
-                      style={{
-                        color: colors.link,
-                        textDecorationLine: "underline",
-                        textDecorationColor: colors.link,
-                      }}
+                      style={{ fontFamily: "poppinsBold", color: "#407BFF" }}
                     >
-                      Don't have an account! Register!
+                      {" Register!"}
                     </Text>
-                  </TouchableRipple>
+                  </TouchableOpacity>
                 </View>
               </>
             </View>

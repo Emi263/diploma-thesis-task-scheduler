@@ -1,6 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { getUserPayload, isSessionActive } from "../../helper/helpers";
-import { SafeAreaView, Alert, View, TouchableOpacity } from "react-native";
+import {
+  SafeAreaView,
+  Alert,
+  View,
+  TouchableOpacity,
+  StatusBar,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import {
   TextInput,
   HelperText,
@@ -21,6 +29,9 @@ import { AxiosResponse } from "axios";
 import { SignupSchema } from "./validation";
 import { getUser } from "../../api/user";
 import useTheme from "../../common/hooks/useTheme";
+import { AntDesign } from "@expo/vector-icons";
+import { Octicons } from "@expo/vector-icons";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
@@ -67,152 +78,215 @@ const Signup = () => {
         </View>
       )}
       <SafeAreaView style={styles.container}>
-        <>
-          <Formik
-            validationSchema={SignupSchema}
-            initialValues={{
-              email: "",
-              password: "",
-              name: "",
-              age: "",
-            }}
-            onSubmit={(values) => {
-              setLoading(true);
-              const { email, password, name, age } = values;
+        <StatusBar barStyle="light-content" backgroundColor="#407BFF" />
+        <KeyboardAvoidingView
+          style={{ flex: 1, width: "100%" }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <>
+            <Formik
+              validationSchema={SignupSchema}
+              initialValues={{
+                email: "",
+                password: "",
+                name: "",
+                age: "",
+              }}
+              onSubmit={(values) => {
+                setLoading(true);
+                const { email, password, name, age } = values;
+                signup(email, password, name, age.toString())
+                  .then(async (res) => handleSignup(res))
+                  .catch((e) => {
+                    Alert.alert(
+                      "Something went wrong",
+                      "Please check your data!"
+                    );
+                    setLoading(false);
+                    console.log(e);
+                  });
+              }}
+            >
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                touched,
+              }) => (
+                <View style={styles.view}>
+                  <>
+                    <View style={styles.upperView}>
+                      <Text
+                        style={[
+                          styles.title,
+                          { color: colors.primaryColor },
+                          { color: "white" },
+                        ]}
+                      >
+                        Welcome to Taskify!
+                      </Text>
+                      <Text
+                        style={[styles.title, { color: "white", fontSize: 12 }]}
+                      >
+                        Glad to have you here! Sign up to get you going!
+                      </Text>
+                    </View>
+                    <View style={styles.inputWrapper}>
+                      <>
+                        <View style={styles.inputContainer}>
+                          <>
+                            <TextInput
+                              autoComplete="email"
+                              value={values.email}
+                              onChangeText={handleChange("email")}
+                              placeholder="Enter email"
+                              style={styles.input}
+                              onBlur={handleBlur("email")}
+                              keyboardType="email-address"
+                              left={
+                                <TextInput.Icon
+                                  style={{ marginTop: 12 }}
+                                  name="email"
+                                />
+                              }
+                            />
+                            <HelperText
+                              type="error"
+                              visible={!!touched.email && !!errors.email}
+                            >
+                              Email address is invalid!
+                            </HelperText>
+                          </>
+                        </View>
+                        <View style={styles.inputContainer}>
+                          <>
+                            <TextInput
+                              value={values.password}
+                              onChangeText={handleChange("password")}
+                              placeholder="Enter password"
+                              secureTextEntry
+                              style={styles.input}
+                              onBlur={handleBlur("password")}
+                              left={
+                                <TextInput.Icon
+                                  style={{ marginTop: 12 }}
+                                  name="onepassword"
+                                />
+                              }
+                            />
 
-              signup(email, password, name, age.toString())
-                .then(async (res) => handleSignup(res))
-                .catch((e) => {
-                  Alert.alert(
-                    "Something went wrong",
-                    "Please check your data!"
-                  );
-                  setLoading(false);
-                  console.log(e);
-                });
-            }}
-          >
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              errors,
-              touched,
-            }) => (
-              <View style={styles.view}>
-                <>
-                  <Text style={[styles.title, { color: colors.primaryColor }]}>
-                    Fill in the form
-                  </Text>
-                  <View style={styles.inputWrapper}>
-                    <>
-                      <View style={styles.inputContainer}>
-                        <>
-                          <TextInput
-                            autoComplete="email"
-                            value={values.email}
-                            onChangeText={handleChange("email")}
-                            placeholder="Enter email"
-                            style={styles.input}
-                            onBlur={handleBlur("email")}
-                            keyboardType="email-address"
-                          />
-                          <HelperText
-                            type="error"
-                            visible={!!touched.email && !!errors.email}
-                          >
-                            Email address is invalid!
-                          </HelperText>
-                        </>
-                      </View>
-                      <View style={styles.inputContainer}>
-                        <>
-                          <TextInput
-                            value={values.password}
-                            onChangeText={handleChange("password")}
-                            placeholder="Enter password"
-                            secureTextEntry
-                            style={styles.input}
-                            onBlur={handleBlur("password")}
-                          />
+                            <HelperText
+                              type="error"
+                              visible={!!touched.password && !!errors.password}
+                            >
+                              {errors.password}
+                            </HelperText>
+                          </>
+                        </View>
+                        <View style={styles.inputContainer}>
+                          <>
+                            <TextInput
+                              value={values.name}
+                              onChangeText={handleChange("name")}
+                              placeholder="Enter name"
+                              style={styles.input}
+                              onBlur={handleBlur("name")}
+                              left={
+                                <TextInput.Icon
+                                  name={() => (
+                                    <AntDesign
+                                      name="user"
+                                      size={24}
+                                      color="black"
+                                    />
+                                  )}
+                                />
+                              }
+                            />
+                            <HelperText
+                              type="error"
+                              visible={!!touched.name && !!errors.name}
+                            >
+                              {errors.name}
+                            </HelperText>
+                          </>
+                        </View>
+                        <View style={styles.inputContainer}>
+                          <>
+                            <TextInput
+                              value={values.age.toString()}
+                              onChangeText={handleChange("age")}
+                              placeholder="Enter age"
+                              style={styles.input}
+                              onBlur={handleBlur("age")}
+                              keyboardType="number-pad"
+                              left={
+                                <TextInput.Icon
+                                  name={() => (
+                                    <Octicons
+                                      name="number"
+                                      size={24}
+                                      color="black"
+                                    />
+                                  )}
+                                />
+                              }
+                            />
 
-                          <HelperText
-                            type="error"
-                            visible={!!touched.password && !!errors.password}
-                          >
-                            {errors.password}
-                          </HelperText>
-                        </>
-                      </View>
-                      <View style={styles.inputContainer}>
-                        <>
-                          <TextInput
-                            value={values.name}
-                            onChangeText={handleChange("name")}
-                            placeholder="Enter name"
-                            style={styles.input}
-                            onBlur={handleBlur("name")}
-                          />
-                          <HelperText
-                            type="error"
-                            visible={!!touched.name && !!errors.name}
-                          >
-                            {errors.name}
-                          </HelperText>
-                        </>
-                      </View>
-                      <View style={styles.inputContainer}>
-                        <>
-                          <TextInput
-                            value={values.age.toString()}
-                            onChangeText={handleChange("age")}
-                            placeholder="Enter age"
-                            style={styles.input}
-                            onBlur={handleBlur("age")}
-                            keyboardType="number-pad"
-                          />
+                            <HelperText
+                              type="error"
+                              visible={!!touched.age && !!errors.age}
+                            >
+                              {errors.age}
+                            </HelperText>
+                          </>
+                        </View>
+                      </>
+                    </View>
 
-                          <HelperText
-                            type="error"
-                            visible={!!touched.age && !!errors.age}
-                          >
-                            {errors.age}
-                          </HelperText>
-                        </>
-                      </View>
-                    </>
-                  </View>
-
-                  {/**Sign in button */}
-                  <Button
-                    mode="contained"
-                    icon="login"
-                    onPress={() => handleSubmit()}
-                  >
-                    Sign up
-                  </Button>
-                  <Button
-                    style={{ marginTop: 6 }}
-                    onPress={() => nav.navigate("Login")}
-                  >
-                    <Text
+                    {/**Sign in button */}
+                    <Button
                       style={{
-                        textTransform: "none",
-                        fontSize: 12,
-                        color: colors.link,
-                        textDecorationLine: "underline",
-                        textDecorationStyle: "solid",
+                        width: "90%",
+                        marginTop: 20,
+                        backgroundColor: "#407BFF",
                       }}
+                      mode="contained"
+                      onPress={() => handleSubmit()}
                     >
-                      Go to Login
-                    </Text>
-                  </Button>
-                </>
-              </View>
-            )}
-          </Formik>
-        </>
+                      <Text
+                        style={{ color: "white", fontFamily: "poppinsBold" }}
+                      >
+                        Register
+                      </Text>
+                    </Button>
+
+                    <View style={{ flexDirection: "row", paddingTop: 20 }}>
+                      <Text style={{ fontFamily: "poppins" }}>
+                        Joined us before?
+                      </Text>
+                      <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() => nav.navigate("Login")}
+                      >
+                        <Text
+                          style={{
+                            color: "#407BFF",
+                            fontFamily: "poppinsBold",
+                          }}
+                        >
+                          {" Login"}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </>
+                </View>
+              )}
+            </Formik>
+          </>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </>
   );
