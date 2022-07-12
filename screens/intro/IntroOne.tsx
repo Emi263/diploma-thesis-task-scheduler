@@ -6,6 +6,8 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParams } from "../../ScreenIndex";
 import { styles } from "./styles";
+import { Feather } from "@expo/vector-icons";
+
 import useTheme from "../../common/hooks/useTheme";
 
 type IntroScreenProp = StackNavigationProp<RootStackParams, "Intro1">;
@@ -20,25 +22,47 @@ const IntroOne = () => {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
-      <Image style={styles.image} source={require("../../assets/todo.png")} />
-      <Text style={[styles.title, { color: colors.primaryColor }]}>
+      <Image
+        style={[styles.image, { marginTop: 40 }]}
+        source={require("../../assets/intro-1.png")}
+      />
+      <Text
+        style={[
+          styles.title,
+          { color: colors.primaryColor, fontFamily: "poppinsBold" },
+        ]}
+      >
         Create your task
       </Text>
-      <Text style={[styles.description, { color: colors.primaryColor }]}>
+      <Text
+        style={[
+          styles.description,
+          {
+            color: colors.primaryColor,
+            fontFamily: "poppinsLight",
+            lineHeight: 24,
+          },
+        ]}
+      >
         Register. Schedule a task. Attach a photo to it. Get notified if you
         want. Easy and simple.
       </Text>
-      <View style={styles.pagination}>
-        <Text style={styles.dot}></Text>
-        <Text style={[styles.dot, { backgroundColor: "#d9dbde" }]}></Text>
-        <Text style={[styles.dot, { backgroundColor: "#d9dbde" }]}></Text>
+
+      <View style={styles.footer}>
+        <View style={styles.pagination}>
+          <Text style={styles.dot}></Text>
+          <Text style={[styles.dot, { backgroundColor: "#d9dbde" }]}></Text>
+          <Text style={[styles.dot, { backgroundColor: "#d9dbde" }]}></Text>
+        </View>
+        <View style={styles.icon}>
+          <Feather
+            onPress={handleOnPressButton}
+            name="chevron-right"
+            size={30}
+            color="black"
+          />
+        </View>
       </View>
-      <CustomButton
-        title="Next"
-        onPress={handleOnPressButton}
-        color="white"
-        icon={<AntDesign name="caretright" size={18} color="white" />}
-      />
     </View>
   );
 };

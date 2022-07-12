@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { StatusBar, View } from "react-native";
 import Screens from "./ScreenIndex";
 import "react-native-gesture-handler";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -16,11 +16,21 @@ import {
 } from "./utils/themeMgmt";
 import "react-native-gesture-handler";
 
+//fonts
+import { useFonts } from "expo-font";
+
+//
+import AppLoading from "expo-app-loading";
 export default function App() {
   const [userToken, setUserToken] = useState<UserToken | undefined>();
   const [user, setUser] = useState<User | undefined>();
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const client = new QueryClient();
+
+  let [fontsLoaded] = useFonts({
+    poppinsBold: require("./assets/fonts/Poppins-Bold.ttf"),
+    poppinsLight: require("./assets/fonts/Poppins-Light.ttf"),
+  });
 
   useEffect(() => {
     let isMounted = true;
@@ -69,6 +79,7 @@ export default function App() {
   return (
     <ThemeContext.Provider value={themeContext}>
       <View style={{ flex: 1, backgroundColor: styles.primaryBg }}>
+        <StatusBar barStyle="dark-content" backgroundColor="white" />
         <AuthContext.Provider value={context}>
           <QueryClientProvider client={client}>
             <Screens />

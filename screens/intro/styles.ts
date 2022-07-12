@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   container: {
     paddingTop: 100,
     width: "100%",
-    backgroundColor: "white",
+    backgroundColor: "red",
     position: "relative",
     flex: 1,
   },
@@ -14,10 +14,10 @@ export const styles = StyleSheet.create({
     height: 270,
   },
   title: {
-    fontWeight: "600",
     padding: 2,
     paddingLeft: 30,
     paddingTop: 20,
+    fontSize: 20,
   },
   description: {
     padding: 2,
@@ -27,18 +27,16 @@ export const styles = StyleSheet.create({
   pagination: {
     display: "flex",
     position: "relative",
-    width: "100%",
     padding: 2,
     height: 30,
     flexDirection: "row",
-    justifyContent: "flex-end",
-    paddingRight: 30,
+    alignItems: "center",
   },
   dot: {
     position: "relative",
     width: 12,
     height: 12,
-    backgroundColor: "green",
+    backgroundColor: "#407BFF",
     borderRadius: 12 / 2,
     padding: 1,
     marginLeft: 5,
@@ -51,5 +49,19 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     width: 150,
     paddingVertical: 10,
+  },
+  footer: {
+    height: 50,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 30,
+    marginTop: 50,
+  },
+  icon: {
+    borderRadius: 50,
+    padding: 4,
+    elevation: 1,
+    backgroundColor: "white",
   },
 });

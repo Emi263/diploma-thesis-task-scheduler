@@ -2,13 +2,13 @@ import React from "react";
 import { Text, View, Image, TouchableOpacity } from "react-native";
 import { styles } from "./styles";
 import CustomButton from "../../common/Button";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import { RootStackParams } from "../../ScreenIndex";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import useTheme from "../../common/hooks/useTheme";
 
-type IntroScreenProp = StackNavigationProp<RootStackParams, "Intro2">;
+type IntroScreenProp = StackNavigationProp<RootStackParams, "Intro1">;
 
 const IntroTwo = () => {
   const nav = useNavigation<IntroScreenProp>();
@@ -24,32 +24,61 @@ const IntroTwo = () => {
   const { colors } = useTheme();
   return (
     <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
-      <TouchableOpacity
-        style={styles.back}
-        activeOpacity={0.8}
-        onPress={handleGoBack}
+      <View
+        style={{
+          paddingBottom: 20,
+          paddingLeft: 20,
+          position: "absolute",
+          top: 20,
+        }}
       >
-        <AntDesign name="back" size={24} color={colors.primaryColor} />
-      </TouchableOpacity>
-      <Image style={styles.image} source={require("../../assets/todo2.png")} />
-      <Text style={[styles.title, { color: colors.primaryColor }]}>
+        <Feather
+          onPress={handleGoBack}
+          name="chevron-left"
+          size={30}
+          color="black"
+        />
+      </View>
+      <Image
+        style={[styles.image, { marginTop: 70 }]}
+        source={require("../../assets/intro-2.png")}
+      />
+      <Text
+        style={[
+          styles.title,
+          { color: colors.primaryColor, fontFamily: "poppinsBold" },
+        ]}
+      >
         See you tasks list
       </Text>
-      <Text style={[styles.description, { color: colors.primaryColor }]}>
+      <Text
+        style={[
+          styles.description,
+          {
+            color: colors.primaryColor,
+            fontFamily: "poppinsLight",
+            lineHeight: 24,
+          },
+        ]}
+      >
         You can log in with your google account or creating a new account from
         scratch!
       </Text>
-      <View style={styles.pagination}>
-        <Text style={styles.dot}></Text>
-        <Text style={styles.dot}></Text>
-        <Text style={[styles.dot, { backgroundColor: "#d9dbde" }]}></Text>
+      <View style={styles.footer}>
+        <View style={styles.pagination}>
+          <Text style={styles.dot}></Text>
+          <Text style={styles.dot}></Text>
+          <Text style={[styles.dot, { backgroundColor: "#d9dbde" }]}></Text>
+        </View>
+        <View style={styles.icon}>
+          <Feather
+            onPress={handleOnPressButton}
+            name="chevron-right"
+            size={30}
+            color="black"
+          />
+        </View>
       </View>
-      <CustomButton
-        title="Next"
-        onPress={handleOnPressButton}
-        color="white"
-        icon={<AntDesign name="caretright" size={18} color="white" />}
-      />
     </View>
   );
 };
