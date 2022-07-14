@@ -102,7 +102,7 @@ const Screens = () => {
               <RootStack.Screen
                 name="ForgotPassword"
                 component={ForgotPassword}
-                options={{ headerShown: true }}
+                options={{ headerShown: false }}
               />
             </RootStack.Group>
           </>

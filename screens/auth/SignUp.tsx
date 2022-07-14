@@ -1,5 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
-import { getUserPayload, isSessionActive } from "../../helper/helpers";
+import {
+  capitalize,
+  getUserPayload,
+  isSessionActive,
+} from "../../helper/helpers";
 import {
   SafeAreaView,
   Alert,
@@ -155,8 +159,12 @@ const Signup = () => {
                             <HelperText
                               type="error"
                               visible={!!touched.email && !!errors.email}
+                              style={{
+                                fontFamily: "poppinsLight",
+                                fontSize: 10,
+                              }}
                             >
-                              Email address is invalid!
+                              {errors.email}
                             </HelperText>
                           </>
                         </View>
@@ -180,6 +188,10 @@ const Signup = () => {
                             <HelperText
                               type="error"
                               visible={!!touched.password && !!errors.password}
+                              style={{
+                                fontFamily: "poppinsLight",
+                                fontSize: 10,
+                              }}
                             >
                               {errors.password}
                             </HelperText>
@@ -208,6 +220,10 @@ const Signup = () => {
                             <HelperText
                               type="error"
                               visible={!!touched.name && !!errors.name}
+                              style={{
+                                fontFamily: "poppinsLight",
+                                fontSize: 10,
+                              }}
                             >
                               {errors.name}
                             </HelperText>
@@ -238,6 +254,10 @@ const Signup = () => {
                             <HelperText
                               type="error"
                               visible={!!touched.age && !!errors.age}
+                              style={{
+                                fontFamily: "poppinsLight",
+                                fontSize: 10,
+                              }}
                             >
                               {errors.age}
                             </HelperText>

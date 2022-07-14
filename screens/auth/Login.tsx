@@ -144,6 +144,7 @@ const Login = () => {
                           placeholder="Enter email"
                           onBlur={handleBlur("email")}
                           style={styles.input}
+                          theme={{ colors: { primary: "#407BFF" } }}
                           left={
                             <TextInput.Icon
                               style={{ marginTop: 12 }}
@@ -154,8 +155,12 @@ const Login = () => {
                         <HelperText
                           type="error"
                           visible={!!touched.email && !!errors.email}
+                          style={{
+                            fontFamily: "poppinsLight",
+                            fontSize: 10,
+                          }}
                         >
-                          Email address is invalid!
+                          {errors.email}
                         </HelperText>
                       </>
                     </View>
@@ -168,6 +173,7 @@ const Login = () => {
                           secureTextEntry={!showPass}
                           style={styles.input}
                           onBlur={handleBlur("password")}
+                          theme={{ colors: { primary: "#407BFF" } }}
                           // label="Password"
                           left={
                             <TextInput.Icon
@@ -195,6 +201,10 @@ const Login = () => {
                         <HelperText
                           type="error"
                           visible={!!touched.password && !!errors.password}
+                          style={{
+                            fontFamily: "poppinsLight",
+                            fontSize: 10,
+                          }}
                         >
                           Password is required!
                         </HelperText>

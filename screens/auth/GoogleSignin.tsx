@@ -64,22 +64,34 @@ export function GoogleSignIn({ setLoading }) {
     <View
       style={{ padding: 10, justifyContent: "center", alignItems: "center" }}
     >
-      <View style={{}}>
-        <Text
-          style={{
-            width: 30,
-            height: 30,
-            borderRadius: 30,
-            textAlign: "center",
-            fontFamily: "poppinsLight",
-            paddingBottom: 10,
-          }}
-        >
-          or
-        </Text>
-      </View>
+      <View
+        style={{
+          height: 2,
+          backgroundColor: "rgba(246, 246, 246, 1)",
+          transform: [
+            {
+              translateY: 15,
+            },
+          ],
+          width: 300,
+          alignSelf: "flex-start",
+        }}
+      ></View>
+      <Text
+        style={{
+          width: 30,
+          height: 30,
+          borderRadius: 30,
+          textAlign: "center",
+          fontFamily: "poppinsLight",
+          paddingBottom: 10,
+          backgroundColor: "white",
+        }}
+      >
+        or
+      </Text>
 
-      <View style={{ paddingHorizontal: 20 }}>
+      <View style={{ paddingHorizontal: 20, marginTop: 6 }}>
         <TouchableRipple
           disabled={!request}
           onPress={() => {

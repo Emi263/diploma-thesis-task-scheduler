@@ -22,8 +22,17 @@ const IntroOne = () => {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
+      <Text
+        style={{
+          textAlign: "center",
+          fontFamily: "poppinsBold",
+          fontSize: 19,
+        }}
+      >
+        Welcome to Tasky!
+      </Text>
       <Image
-        style={[styles.image, { marginTop: 40 }]}
+        style={[styles.image]}
         source={require("../../assets/intro-1.png")}
       />
       <Text
