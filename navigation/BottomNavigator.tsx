@@ -1,19 +1,83 @@
-import React from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { Ionicons, Feather, FontAwesome5 } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  BottomTabBarButtonProps,
+  createBottomTabNavigator,
+} from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/home/HomeScreen";
 import Settings from "../screens/settings/index";
 import AllTasks from "../screens/tasks/AllTasks";
 import NotificationList from "../screens/Notifications/NotificationList";
 import { useQuery } from "react-query";
 import { getAllTaks } from "../api/task";
-import { View } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
+import * as Animatable from "react-native-animatable";
 import { TouchableRipple } from "react-native-paper";
-
 const Tab = createBottomTabNavigator();
 
 export const TabNavigator = () => {
   const { data: tasks } = useQuery("allTasks", getAllTaks);
+
+  const bottomTabs = [
+    {
+      route: "Home2",
+      component: HomeScreen,
+      options: {},
+    },
+    {
+      route: "Settings",
+      component: Settings,
+      options: {},
+    },
+    {
+      route: "AllTasks",
+      component: AllTasks,
+      options: {},
+    },
+    {
+      route: "Notifications",
+      component: NotificationList,
+      options: {},
+    },
+  ];
+
+  const TabButton = (props) => {
+    const {
+      tab,
+      onPress,
+      accessibilityState: { selected },
+    } = props;
+    const color = selected ? "#407BFF" : "black";
+
+    const currentTabRef = useRef(null as any);
+
+    useLayoutEffect(() => {
+      if (selected && currentTabRef) {
+        currentTabRef?.current.animate({ 0: { scale: 1 }, 1: { scale: 1.5 } });
+      } else {
+        currentTabRef?.current.animate({ 0: { scale: 1 }, 1: { scale: 1 } });
+      }
+    }, [selected, currentTabRef.current]);
+    return (
+      <TouchableRipple
+        rippleColor="rgba(0, 0, 0, .32)"
+        borderless={true}
+        onPress={onPress}
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          height: 100,
+          width: 60,
+          borderRadius: 50,
+        }}
+      >
+        <Animatable.View ref={currentTabRef} duration={500}>
+          {yieldIcon(color, tab.route)}
+        </Animatable.View>
+      </TouchableRipple>
+    );
+  };
 
   return (
     <Tab.Navigator
@@ -21,84 +85,48 @@ export const TabNavigator = () => {
         tabBarShowLabel: false,
         headerShown: false, //remove header on top
         tabBarStyle: {
-          paddingVertical: 20,
-          height: 80,
+          height: 100,
           paddingBottom: 25,
         },
-        tabBarIconStyle: {
-          width: 100,
-          height: 80,
-          paddingVertical: 2,
-        },
-        tabBarInactiveTintColor: "purple", //inactive tabs,
-        tabBarActiveTintColor: "orange", //active color
       }}
     >
-      <Tab.Screen
-        name="Home2"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home-outline" color={color} size={30} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={Settings}
-        options={{
-          tabBarIconStyle: {
-            width: 100,
-            height: 80,
-            paddingVertical: 2,
-          },
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="settings" color={color} size={30} />
-          ),
-          headerShown: true,
-        }}
-      />
-
-      <Tab.Screen
-        name="All tasks"
-        component={AllTasks}
-        options={{
-          headerShown: true,
-          tabBarIconStyle: {
-            width: 100,
-            height: 80,
-            paddingVertical: 2,
-          },
-          tabBarIcon: ({ color, size }) => (
-            <TouchableRipple
-              style={{
-                width: 50,
-                height: 50,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <FontAwesome5 name="tasks" color={color} size={30} />
-            </TouchableRipple>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Notifications"
-        component={NotificationList}
-        options={{
-          headerShown: true,
-          tabBarBadge: tasks?.length,
-
-          tabBarIconStyle: {},
-          tabBarBadgeStyle: {
-            backgroundColor: "orange",
-          },
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="notifications-outline" color={color} size={30} />
-          ),
-        }}
-      />
+      {bottomTabs.map((tab) => {
+        return (
+          <Tab.Screen
+            key={tab.route}
+            component={tab.component}
+            name={tab.route}
+            options={{
+              tabBarButton: (props) => <TabButton {...props} tab={tab} />,
+            }}
+          />
+        );
+      })}
     </Tab.Navigator>
   );
+};
+
+const yieldIcon = (color: string, route: string): React.ReactNode => {
+  const icons = [
+    {
+      route: "Home2",
+      icon: <Ionicons name="home-outline" size={30} color={color} />,
+    },
+    {
+      route: "Settings",
+      icon: <Feather name="settings" size={30} color={color} />,
+    },
+    {
+      route: "AllTasks",
+      icon: <FontAwesome5 name="tasks" color={color} size={30} />,
+    },
+    {
+      route: "Notifications",
+      icon: <Ionicons name="notifications-outline" color={color} size={30} />,
+    },
+  ];
+
+  const icon = icons.find((ic) => ic.route === route);
+
+  return icon?.icon;
 };
