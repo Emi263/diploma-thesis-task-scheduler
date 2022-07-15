@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Alert,
   Image,
+  StatusBar,
+  TextInput,
 } from "react-native";
 import { Task } from "../../../models/task";
 import { Formik, FormikHelpers } from "formik";
@@ -15,10 +17,9 @@ import {
   Checkbox,
   Chip,
   HelperText,
-  TextInput,
   TouchableRipple,
 } from "react-native-paper";
-import { FontAwesome } from "@expo/vector-icons";
+import { Feather, FontAwesome } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useMutation, useQueryClient } from "react-query";
 import { createTask, updateTask } from "../../../api/task";
@@ -27,6 +28,9 @@ import { ScrollView } from "react-native-gesture-handler";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { formatDateAndTime } from "../../../helper/helpers";
 import useTheme from "../../../common/hooks/useTheme";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParams } from "../../../ScreenIndex";
+import { useNavigation } from "@react-navigation/native";
 
 interface IFormTask {
   task?: Task;
@@ -42,7 +46,11 @@ interface IFormInitialValues {
   shouldNotify: boolean;
 }
 
+type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
+
 const TaskForm: React.FC<IFormTask> = (props) => {
+  const nav = useNavigation<introScreenProp>();
+
   const { colors } = useTheme();
   const queryClient = useQueryClient();
   const taskId = props?.task?.id;
@@ -201,21 +209,39 @@ const TaskForm: React.FC<IFormTask> = (props) => {
         }) => (
           <>
             <View style={[styles.view, { backgroundColor: colors.primaryBg }]}>
+              <StatusBar barStyle="dark-content" />
               <>
+                <TouchableRipple
+                  style={{
+                    alignSelf: "flex-start",
+                    padding: 2,
+                    paddingLeft: 0,
+                  }}
+                  borderless={true}
+                >
+                  <Feather
+                    onPress={() => nav.goBack()}
+                    name="chevron-left"
+                    size={32}
+                    color="black"
+                  />
+                </TouchableRipple>
+
                 <Text style={[styles.title, { color: colors.primaryColor }]}>
-                  Fill in the form
+                  {!props.task ? "Create\na new task!" : "Update the task!"}
                 </Text>
                 <View>
                   <>
                     <View style={styles.inputContainer}>
-                      <Text>Task Title</Text>
+                      <Text style={styles.inputTitle}>Task Title</Text>
                       <>
                         <TextInput
                           style={styles.input}
                           value={values.title}
                           onChangeText={handleChange("title")}
-                          placeholder="Enter title"
+                          placeholder="Task title"
                           onBlur={handleBlur("title")}
+                          clearButtonMode="always"
                         />
                         <HelperText
                           type="error"
@@ -226,13 +252,20 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                       </>
                     </View>
                     <View style={styles.inputContainer}>
-                      <Text>Task description</Text>
+                      <Text style={styles.inputTitle}>Task description</Text>
                       <>
                         <TextInput
-                          style={styles.input}
+                          style={[
+                            styles.input,
+                            {
+                              backgroundColor: "#FFE6E7",
+                              height: 100,
+                              paddingVertical: 0,
+                            },
+                          ]}
                           value={values.description}
                           onChangeText={handleChange("description")}
-                          placeholder="Enter description"
+                          placeholder="Task description"
                           onBlur={handleBlur("description")}
                           multiline
                           maxLength={100}
@@ -379,8 +412,8 @@ export const styles = StyleSheet.create({
   },
   title: {
     paddingVertical: 20,
-    fontSize: 18,
-    textAlign: "center",
+    fontSize: 22,
+    fontFamily: "poppinsBold",
   },
 
   singleTask: {
@@ -401,7 +434,13 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   input: {
-    backgroundColor: "white",
+    backgroundColor: "#DEE3FC",
+    padding: 10,
+    paddingVertical: 20,
+    fontSize: 13,
+    fontFamily: "poppinsLight",
+
+    borderRadius: 10,
   },
 
   photoPicker: {
@@ -413,5 +452,8 @@ export const styles = StyleSheet.create({
   },
   inputContainer: {
     paddingVertical: 20,
+  },
+  inputTitle: {
+    fontFamily: "poppins",
   },
 });

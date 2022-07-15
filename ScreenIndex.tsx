@@ -85,14 +85,15 @@ const Screens = () => {
               name="CreateTask"
               component={CreateTask}
               options={{
-                headerShown: true,
+                headerShown: false,
+                animation: "fade",
               }}
             />
             <RootStack.Screen
               name="EditTask"
               component={EditTask}
               options={{
-                headerShown: true,
+                headerShown: false,
               }}
             />
           </>
