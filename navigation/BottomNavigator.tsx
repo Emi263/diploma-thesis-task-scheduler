@@ -48,28 +48,27 @@ export const TabNavigator = () => {
       accessibilityState: { selected },
     } = props;
     const color = selected ? "#407BFF" : "black";
-
     const currentTabRef = useRef(null as any);
 
     useLayoutEffect(() => {
       if (selected && currentTabRef) {
-        currentTabRef?.current.animate({ 0: { scale: 1 }, 1: { scale: 1.5 } });
+        currentTabRef?.current.animate({ 0: { scale: 1 }, 1: { scale: 1.25 } });
       } else {
         currentTabRef?.current.animate({ 0: { scale: 1 }, 1: { scale: 1 } });
       }
     }, [selected, currentTabRef.current]);
     return (
       <TouchableRipple
-        rippleColor="rgba(0, 0, 0, .32)"
+        rippleColor="rgba(0, 0, 0, .1)"
         borderless={true}
         onPress={onPress}
         style={{
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          height: 100,
-          width: 60,
-          borderRadius: 50,
+          height: 80,
+          width: 20,
+          borderRadius: 20,
         }}
       >
         <Animatable.View ref={currentTabRef} duration={500}>
@@ -85,8 +84,7 @@ export const TabNavigator = () => {
         tabBarShowLabel: false,
         headerShown: false, //remove header on top
         tabBarStyle: {
-          height: 100,
-          paddingBottom: 25,
+          height: 80,
         },
       }}
     >

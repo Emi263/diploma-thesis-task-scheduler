@@ -10,6 +10,8 @@ import * as ImagePicker from "expo-image-picker";
 import { uploadImage } from "../../helper/firebase";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getUser, updateUser } from "../../api/user";
+import { greet } from "../../helper/helpers";
+import { getTodayTasks } from "../../api/task";
 
 const HomeHeader = () => {
   const { mutateAsync } = useMutation(updateUser);
@@ -20,6 +22,7 @@ const HomeHeader = () => {
   const [loading, setLoading] = useState(false);
 
   const { data: userData } = useQuery("user", () => getUser(user?.id || 0), {});
+  const { data: todayTasks } = useQuery("todayTask", getTodayTasks);
 
   let openImagePickerAsync = async () => {
     let permissionResult =
@@ -53,17 +56,18 @@ const HomeHeader = () => {
       }
     : require("../../assets/user-avatar.png");
   return (
-    <View style={headerStyles.container}>
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          width: "100%",
-          justifyContent: "flex-end",
-          backgroundColor: colors.primaryBg,
-        }}
-      >
-        <View
+    <>
+      <View style={headerStyles.container}>
+        {/* <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            justifyContent: "flex-end",
+            backgroundColor: colors.primaryBg,
+          }}
+        >
+          {/* <View
           style={{
             width: "20%",
             justifyContent: "center",
@@ -80,43 +84,61 @@ const HomeHeader = () => {
           >
             <Text></Text>
           </Button>
+        </View> */}
+        {/* </View> */}
+        <View style={headerStyles.header}>
+          <View style={{ justifyContent: "center" }}>
+            <Text
+              style={{ fontSize: 16, color: "black", fontFamily: "poppins" }}
+            >
+              {greet()}
+            </Text>
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily: "poppinsBold",
+                marginTop: -10,
+              }}
+            >
+              {user?.name}
+            </Text>
+          </View>
+          {userData && (
+            <TouchableRipple
+              rippleColor="rgba(0, 0, 0, .1)"
+              borderless={true}
+              style={{
+                borderRadius: 40,
+              }}
+              onPress={!user?.isGoogleSignIn ? openImagePickerAsync : () => {}}
+            >
+              <ImageBackground
+                style={{
+                  opacity: loading ? 0.3 : 0.8,
+                  height: 80,
+                  width: 80,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                resizeMethod="scale"
+                resizeMode="cover"
+                source={imageSource}
+                borderRadius={40}
+              >
+                {loading && (
+                  <View>
+                    <ActivityIndicator size="small" />
+                  </View>
+                )}
+                {!loading && !user?.isGoogleSignIn && (
+                  <Feather name="camera" size={24} color="black" />
+                )}
+              </ImageBackground>
+            </TouchableRipple>
+          )}
         </View>
       </View>
-      <View style={headerStyles.header}></View>
-      <View style={headerStyles.header}>
-        <Text style={{ fontSize: 24, color: colors.primaryColor }}>
-          {`Hello,\n${user?.name}`}
-        </Text>
-        {userData && (
-          <TouchableRipple
-            onPress={!user?.isGoogleSignIn ? openImagePickerAsync : () => {}}
-          >
-            <ImageBackground
-              style={{
-                opacity: loading ? 0.3 : 0.8,
-                height: 100,
-                width: 100,
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 200,
-              }}
-              resizeMethod="scale"
-              resizeMode="cover"
-              source={imageSource}
-            >
-              {loading && (
-                <View>
-                  <ActivityIndicator size="small" />
-                </View>
-              )}
-              {!loading && !user?.isGoogleSignIn && (
-                <Feather name="camera" size={24} color="black" />
-              )}
-            </ImageBackground>
-          </TouchableRipple>
-        )}
-      </View>
-    </View>
+    </>
   );
 };
 

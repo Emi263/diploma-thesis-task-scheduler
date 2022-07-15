@@ -18,9 +18,6 @@ const CreateTask: React.FunctionComponent<CreateTaskProps> = ({
   //let the user change the calendar mode? probably
   return (
     <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
-      <Pressable style={styles.closeBtn} onPress={() => setShowModal(false)}>
-        <AntDesign name="closecircle" size={30} color={colors.primaryColor} />
-      </Pressable>
       <TaskForm setOpenModal={setShowModal} />
     </View>
   );

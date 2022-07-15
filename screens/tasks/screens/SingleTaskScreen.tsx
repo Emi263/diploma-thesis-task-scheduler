@@ -44,7 +44,11 @@ const SingleTaskScreen: React.FC<Props> = ({
   const [deleting, setDeleting] = useState(false);
   const queryClient = useQueryClient();
   const handleOpenModal = () => {
-    setOpenModal(true);
+    if (task) {
+      nav.navigate("EditTask", {
+        task: task,
+      });
+    }
   };
 
   const handleCloseModal = () => {
@@ -114,21 +118,6 @@ const SingleTaskScreen: React.FC<Props> = ({
           </Button>
         </Card.Actions>
       </Card>
-
-      {!!task && (
-        <ModalComponent visible={openModal}>
-          <View style={{ backgroundColor: colors.primaryBg }}>
-            <Pressable style={[styles.closeBtn]} onPress={handleCloseModal}>
-              <AntDesign
-                name="closecircle"
-                size={30}
-                color={colors.primaryColor}
-              />
-            </Pressable>
-          </View>
-          <EditTask task={task} setOpenModal={setOpenModal} />
-        </ModalComponent>
-      )}
     </View>
   );
 };

@@ -12,14 +12,10 @@ export const styles = StyleSheet.create({
   },
 
   singleTask: {
-    width: "40%",
-    marginBottom: 20,
-
     paddingHorizontal: 10,
-    padding: 20,
-    borderRadius: 20,
-    marginHorizontal: 16,
-    margin: "auto",
+    borderRadius: 10,
+    borderLeftWidth: 6,
+    borderLeftColor: "red",
   },
   textContent: {
     paddingVertical: 10,
@@ -36,5 +32,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
+  },
+  header: {
+    paddingHorizontal: 10,
   },
 });

@@ -52,3 +52,10 @@ export const capitalize = (str: string | undefined): string => {
 
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+export const greet = () => {
+  const currentHour = new Date().getHours();
+  if (currentHour < 12) return "Good morning!";
+  if (currentHour < 18) return "Good afternoon!";
+  return "Good evening!";
+};

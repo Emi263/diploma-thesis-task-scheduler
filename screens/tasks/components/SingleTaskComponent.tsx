@@ -6,6 +6,7 @@ import { generateRandomColor } from "../../../helper/generateRandomColor";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParams } from "../../../ScreenIndex";
+import { TouchableRipple } from "react-native-paper";
 
 interface SingleTaskProps {
   title: string;
@@ -13,17 +14,21 @@ interface SingleTaskProps {
   description: string;
   shouldNotify: boolean;
   date: Date;
+  image: string;
 }
 
 const SingleTask: React.FunctionComponent<SingleTaskProps> = (props) => {
-  const { title, description, date, shouldNotify = false, id } = props;
+  const { title, description, date, shouldNotify = false, id, image } = props;
 
   type introScreenProp = StackNavigationProp<RootStackParams>;
   const { background, color } = generateRandomColor();
   const nav = useNavigation<introScreenProp>();
   return (
-    <View style={[styles.singleTask, { backgroundColor: background }]}>
-      <TouchableOpacity
+    <View style={{ paddingHorizontal: 10 }}>
+      <TouchableRipple
+        rippleColor="rgba(0, 0, 0, .1)"
+        style={{ borderRadius: 10, marginTop: 20 }}
+        borderless={true}
         onPress={() => {
           nav.navigate("SingleTask", {
             id: id,
@@ -31,28 +36,64 @@ const SingleTask: React.FunctionComponent<SingleTaskProps> = (props) => {
         }}
       >
         <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: "100%",
-            alignItems: "center",
-          }}
+          style={[
+            styles.singleTask,
+            { backgroundColor: background, borderLeftColor: color },
+          ]}
         >
-          <Image
-            source={require("../../../assets/logoTest.png")}
-            style={{ width: 36, height: 36 }}
-          />
-          <View>
-            <Text style={{ fontSize: 12 }}>{formatDate(date)}</Text>
-            <Text style={{ fontSize: 12 }}>{getTime(date)}</Text>
-          </View>
+          <>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <View style={styles.header}>
+                <View style={styles.textContent}>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: color,
+                      fontFamily: "poppinsBold",
+                    }}
+                  >
+                    {title}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      fontFamily: "poppins",
+                      marginTop: -10,
+                    }}
+                  >
+                    {description}
+                  </Text>
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontFamily: "poppins",
+                      color: "#5e5e5e",
+                    }}
+                  >
+                    {formatDate(date)}
+                  </Text>
+                  <Text style={{ fontSize: 12, fontFamily: "poppinsBold" }}>
+                    {getTime(date)}
+                  </Text>
+                </View>
+              </View>
+
+              <Image
+                source={{ uri: image }}
+                style={{ width: 80, height: 80, borderRadius: 40 }}
+              />
+            </View>
+          </>
         </View>
-        <View style={styles.textContent}>
-          <Text style={{ fontSize: 14, color: color }}>{title}</Text>
-          <Text style={{ fontSize: 12 }}> {description}</Text>
-        </View>
-      </TouchableOpacity>
+      </TouchableRipple>
     </View>
   );
 };

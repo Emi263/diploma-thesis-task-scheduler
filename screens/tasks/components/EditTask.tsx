@@ -1,17 +1,19 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { View } from "react-native";
-import { Task } from "../../../models/task";
+import { RootStackParams } from "../../../ScreenIndex";
 import TaskForm from "./TaskForm";
 
-interface TaskProps {
-  task: Task;
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
+type Props = NativeStackScreenProps<RootStackParams, "EditTask">;
 
-const EditTask: React.FC<TaskProps> = ({ task, setOpenModal }) => {
+const EditTask: React.FC<Props> = ({
+  route: {
+    params: { task },
+  },
+}) => {
   return (
     <View>
-      <TaskForm task={task} setOpenModal={setOpenModal} />
+      <TaskForm task={task} />
     </View>
   );
 };

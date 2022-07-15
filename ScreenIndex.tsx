@@ -22,6 +22,9 @@ import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import CreateTask from "./screens/tasks/CreateTask";
+import EditTask from "./screens/tasks/components/EditTask";
+import { Task } from "./models/task";
 
 export type RootStackParams = {
   App: undefined;
@@ -37,6 +40,10 @@ export type RootStackParams = {
     id: number;
   };
   Tasks: undefined;
+  CreateTask: undefined;
+  EditTask: {
+    task: Task;
+  };
   Settings: undefined;
   ForgotPassword: undefined;
 };
@@ -70,6 +77,20 @@ const Screens = () => {
             <RootStack.Screen
               name="Tasks"
               component={AllTasks}
+              options={{
+                headerShown: true,
+              }}
+            />
+            <RootStack.Screen
+              name="CreateTask"
+              component={CreateTask}
+              options={{
+                headerShown: true,
+              }}
+            />
+            <RootStack.Screen
+              name="EditTask"
+              component={EditTask}
               options={{
                 headerShown: true,
               }}

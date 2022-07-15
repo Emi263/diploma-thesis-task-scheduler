@@ -3,13 +3,14 @@ import { StyleSheet } from "react-native";
 export const homeStyles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 60,
+    paddingTop: 20,
   },
 });
 
 export const headerStyles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 5,
+    paddingTop: 40,
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
@@ -20,8 +21,8 @@ export const headerStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingTop: 20,
     paddingRight: 10,
+    paddingHorizontal: 15,
   },
   button: {
     flex: 0.5,

@@ -28,3 +28,8 @@ export const getTopTasks = async (): Promise<Task[]> => {
 export const deleteTask = async (id: string) => {
   const { data } = await remove("/tasks/" + id);
 };
+
+export const getTodayTasks = async (): Promise<Task[]> => {
+  const { data } = await get("/tasks/task-today");
+  return data;
+};

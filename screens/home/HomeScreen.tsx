@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { StatusBar, Text, View } from "react-native";
 import { clearAuthData } from "../../utils/tokenMgmt";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -16,6 +16,7 @@ import useTheme from "../../common/hooks/useTheme";
 
 import ChangePassword from "../settings/ChangePassword";
 import Notication from "../../common/Notifications";
+import CreateTaskComponent from "./CreateTask";
 
 const HomeScreen = () => {
   const { colors } = useTheme();
@@ -42,49 +43,21 @@ const HomeScreen = () => {
     return () => {
       isMounted = false;
     };
-  }, [route.name]);
+  }, []);
 
   return (
     <>
       <Notication />
+      <StatusBar backgroundColor={"#fff"} barStyle="dark-content" />
       <View
-        style={[homeStyles.container, { backgroundColor: colors.primaryBg }]}
+        style={[
+          homeStyles.container,
+          { backgroundColor: colors.primaryBg, paddingTop: 10 },
+        ]}
       >
         <HomeHeader />
+        <CreateTaskComponent />
         <TopTasks />
-        <View
-          style={{
-            width: "100%",
-            paddingVertical: 20,
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <TouchableRipple
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              paddingVertical: 1,
-              paddingHorizontal: 20,
-              borderRadius: 15,
-              marginTop: -10,
-            }}
-            onPress={() => {
-              setShowModal(true);
-            }}
-          >
-            <>
-              <AntDesign
-                name="pluscircleo"
-                size={40}
-                color={colors.primaryColor}
-              />
-              <Text style={{ color: colors.primaryColor }}>
-                Create a new task
-              </Text>
-            </>
-          </TouchableRipple>
-        </View>
 
         <ModalComponent visible={user?.shouldChangePassword || false}>
           <View style={{ padding: 30 }}>
@@ -101,9 +74,6 @@ const HomeScreen = () => {
             </Text>
             <ChangePassword />
           </View>
-        </ModalComponent>
-        <ModalComponent visible={showModal} animationType="slide">
-          <CreateTask setShowModal={setShowModal} />
         </ModalComponent>
       </View>
     </>
