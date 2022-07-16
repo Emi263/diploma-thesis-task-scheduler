@@ -28,6 +28,7 @@ export default CreateTask;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
+    flex: 1,
   },
   closeBtn: {
     alignSelf: "flex-end",

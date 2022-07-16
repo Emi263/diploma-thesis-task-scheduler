@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal } from "react-native";
+import { Modal, View } from "react-native";
 import { Text } from "react-native-paper";
 import useTheme from "./hooks/useTheme";
 
@@ -17,11 +17,11 @@ const ModalComponent: React.FunctionComponent<ModalProps> = ({
   const { colors } = useTheme();
   return (
     <Modal
-      style={{ backgroundColor: colors.primaryBg }}
+      style={{ backgroundColor: "red", flex: 1 }}
       visible={visible}
       animationType={animationType}
     >
-      <>{children}</>
+      <View> {children}</View>
     </Modal>
   );
 };

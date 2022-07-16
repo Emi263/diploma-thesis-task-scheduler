@@ -31,7 +31,10 @@ import useTheme from "../../../common/hooks/useTheme";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParams } from "../../../ScreenIndex";
 import { useNavigation } from "@react-navigation/native";
+import ImagePreview from "react-native-image-preview";
 
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import ModalComponent from "../../../common/Modal";
 interface IFormTask {
   task?: Task;
   setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -63,7 +66,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     id: props.task?.id || 1,
     title: props.task?.title || "",
     description: props?.task?.description || "",
-    shouldNotify: props?.task?.shouldNotify || false,
+    shouldNotify: props?.task?.shouldNotify || true,
     date: props?.task?.date || new Date(),
     image: props?.task?.image || "",
   };
@@ -78,13 +81,12 @@ const TaskForm: React.FC<IFormTask> = (props) => {
 
   //date and time
 
-  const [selectedDate, setSelectedDate] = useState<null | string>(
+  const [selectedDate, setSelectedDate] = useState<string>(
     InitialValues.date.toString()
   );
 
-  const [initialDateShown, setInitialDateShown] = useState(false);
   //end of story
-
+  const [showModal, setShowModal] = useState(false);
   const [uploading, setUploading] = useState(false);
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -100,7 +102,6 @@ const TaskForm: React.FC<IFormTask> = (props) => {
   const handleConfirm = (date) => {
     setSelectedDate(date);
     hideDatePicker();
-    setInitialDateShown(true);
   };
   //image picker
   let openImagePickerAsync = async () => {
@@ -121,6 +122,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     if (pickerResult.cancelled === true) {
       return;
     }
+
     setPickerR(pickerResult.uri);
   };
 
@@ -193,7 +195,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
         onSubmit={(values: Task, form: FormikHelpers<IFormInitialValues>) => {
           const finalValues: Task = {
             ...values,
-            date: new Date(selectedDate || ""),
+            date: new Date(selectedDate),
           };
 
           handleSubmit(finalValues, form.resetForm);
@@ -247,7 +249,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                           type="error"
                           visible={!!touched.title && !!errors.title}
                         >
-                          Title is required
+                          {errors.title}
                         </HelperText>
                       </>
                     </View>
@@ -280,38 +282,30 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         </HelperText>
                       </>
                     </View>
-                    <View style={[styles.checkbox, {}]}>
-                      <Checkbox
-                        uncheckedColor={colors.primaryColor}
-                        status={checkboxChecked ? "checked" : "unchecked"}
-                        onPress={() => {
-                          setCheckboxChecked((prev) => !prev);
-                        }}
-                      />
-                      <TouchableRipple
-                        style={{ padding: 10 }}
-                        onPress={() => setCheckboxChecked((prev) => !prev)}
-                      >
-                        <Text style={{ color: colors.primaryColor }}>
-                          Should notify
-                        </Text>
-                      </TouchableRipple>
-                    </View>
                   </>
 
                   <>
                     <View style={{ display: "flex" }}>
+                      <Text style={{ fontFamily: "poppins", fontSize: 14 }}>
+                        Date and Time
+                      </Text>
+
                       <View
                         style={{
-                          paddingHorizontal: 10,
-                          paddingVertical: 20,
-                          alignItems: "flex-start",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          flexDirection: "row",
+                          borderBottomColor: "black",
+                          borderBottomWidth: 1,
+                          paddingVertical: 2,
                         }}
                       >
+                        <Text style={{ fontFamily: "poppins", fontSize: 13 }}>
+                          {formatDateAndTime(selectedDate)}
+                        </Text>
                         <TouchableOpacity
                           style={{
                             flexDirection: "row",
-                            backgroundColor: "#e3e2e1",
                             borderRadius: 20,
                             padding: 10,
                           }}
@@ -322,34 +316,12 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                             size={30}
                             color="black"
                           />
-                          <Text
-                            style={{
-                              paddingHorizontal: 20,
-                              paddingBottom: 5,
-                              color: "black",
-                            }}
-                          >
-                            Select Date
-                          </Text>
                         </TouchableOpacity>
                       </View>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Text style={{ color: colors.primaryColor }}>
-                          Selected Date:
-                        </Text>
-                        <Chip style={{ marginLeft: 10 }} icon="calendar">
-                          <Text>
-                            {(initialDateShown || props?.task?.id) &&
-                              selectedDate &&
-                              formatDateAndTime(selectedDate)}
-                          </Text>
-                        </Chip>
-                      </View>
+                      <HelperText type="error" visible={!!errors.date}>
+                        {errors.date}
+                      </HelperText>
+
                       <DateTimePickerModal
                         minimumDate={new Date()}
                         isVisible={isDatePickerVisible}
@@ -357,6 +329,29 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         onConfirm={handleConfirm}
                         onCancel={hideDatePicker}
                       />
+                    </View>
+                    <View style={[styles.checkbox]}>
+                      <Checkbox
+                        uncheckedColor={colors.primaryColor}
+                        status={checkboxChecked ? "checked" : "unchecked"}
+                        onPress={() => {
+                          setCheckboxChecked((prev) => !prev);
+                        }}
+                      />
+                      <TouchableRipple
+                        style={{ padding: 10, borderRadius: 10 }}
+                        onPress={() => setCheckboxChecked((prev) => !prev)}
+                        borderless={true}
+                      >
+                        <Text
+                          style={{
+                            color: colors.primaryColor,
+                            fontFamily: "poppins",
+                          }}
+                        >
+                          Should notify
+                        </Text>
+                      </TouchableRipple>
                     </View>
                     <View
                       style={{
@@ -370,29 +365,66 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         style={styles.photoPicker}
                         onPress={openImagePickerAsync}
                       >
-                        <Text style={{ color: "white", paddingRight: 10 }}>
-                          Pick a photo
+                        <Text
+                          style={{
+                            paddingRight: 10,
+                            fontFamily: "poppins",
+                            fontSize: 14,
+                          }}
+                        >
+                          Add an image (optional)
                         </Text>
+                        <MaterialCommunityIcons
+                          name="image-plus"
+                          size={30}
+                          color="black"
+                        />
                       </TouchableOpacity>
                     </View>
 
-                    <View>
-                      {!!pickerR && (
-                        <Image
-                          source={{ uri: pickerR }}
-                          style={{ width: 200, height: 200 }}
-                        />
-                      )}
-                    </View>
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      style={{
+                        paddingLeft: 10,
+                        marginTop: -10,
+                        alignSelf: "flex-start",
+                      }}
+                      onPress={() => setShowModal(true)}
+                    >
+                      <Text
+                        style={{
+                          color: "#407BFF",
+                          fontFamily: "poppins",
+                          fontSize: 12,
+                        }}
+                      >
+                        {pickerR && "Click to preview the image"}
+                      </Text>
+                    </TouchableOpacity>
+
+                    <ImagePreview
+                      visible={showModal}
+                      source={{ uri: pickerR }}
+                      close={() => setShowModal(false)}
+                    />
                   </>
                 </View>
               </>
-              <View style={{ marginTop: 40, marginBottom: 100 }}>
+              <View style={{ flex: 1 }}>
                 <Button
+                  style={{
+                    marginTop: 20,
+                    width: "100%",
+                    backgroundColor: "#407BFF",
+                    borderRadius: 10,
+                  }}
+                  mode="contained"
                   onPress={() => handleSubmit()}
                   loading={isLoading || uploading}
                 >
-                  <Text>{taskId ? "Update" : "Create"}</Text>
+                  <Text style={{ color: "white", fontFamily: "poppinsBold" }}>
+                    {taskId ? "Update" : "Create"}
+                  </Text>
                 </Button>
               </View>
             </View>
@@ -409,6 +441,7 @@ export const styles = StyleSheet.create({
   view: {
     paddingVertical: 10,
     paddingHorizontal: 10,
+    flex: 1,
   },
   title: {
     paddingVertical: 20,
@@ -439,20 +472,15 @@ export const styles = StyleSheet.create({
     paddingVertical: 20,
     fontSize: 13,
     fontFamily: "poppinsLight",
-
     borderRadius: 10,
   },
 
   photoPicker: {
-    backgroundColor: "purple",
-    paddingVertical: 10,
     paddingHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
   },
-  inputContainer: {
-    paddingVertical: 20,
-  },
+  inputContainer: {},
   inputTitle: {
     fontFamily: "poppins",
   },

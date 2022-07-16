@@ -4,7 +4,7 @@ import "react-native-gesture-handler";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { AuthContext } from "./context/AuthContext";
 import { useCallback, useEffect, useState } from "react";
-import { getUserPayload } from "./helper/helpers";
+import { getUserPayload, isSessionActive } from "./helper/helpers";
 import { User, UserToken } from "./models/user";
 import * as SplashScreen from "expo-splash-screen";
 import { getUser } from "./api/user";
@@ -22,6 +22,7 @@ import { useFonts } from "expo-font";
 //
 import AppLoading from "expo-app-loading";
 import { ActivityIndicator } from "react-native-paper";
+import { clearAuthData } from "./utils/tokenMgmt";
 export default function App() {
   const [userToken, setUserToken] = useState<UserToken | undefined>();
   const [user, setUser] = useState<User | undefined>();
@@ -55,6 +56,24 @@ export default function App() {
       });
     }
 
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+  useEffect(() => {
+    let isMounted = true;
+
+    const checkUserLoggedIn = async () => {
+      const isLoggedIn = await isSessionActive();
+      console.log(isLoggedIn);
+
+      if (!isLoggedIn) {
+        await clearAuthData();
+        if (isMounted) setUserToken(undefined);
+      }
+    };
+    checkUserLoggedIn();
+    //cleanup
     return () => {
       isMounted = false;
     };
