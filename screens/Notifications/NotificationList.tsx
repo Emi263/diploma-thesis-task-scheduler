@@ -8,7 +8,7 @@ import {
   Text,
 } from "react-native";
 import { useQuery } from "react-query";
-import { getAllTaks } from "../../api/task";
+import { getAllTaks, getTaskGraphValues } from "../../api/task";
 import "react-native-gesture-handler";
 import Loader from "../../common/Loader";
 import SingleNotifItem from "./SingleNotifItem";
@@ -21,10 +21,25 @@ import {
   ContributionGraph,
   StackedBarChart,
 } from "react-native-chart-kit";
+import {
+  VictoryBar,
+  VictoryChart,
+  VictoryTheme,
+  VictoryLine,
+  VictoryPie,
+  Bar,
+  VictoryAxis,
+  VictoryLabel,
+} from "victory-native";
+import { formatDate } from "../../helper/helpers";
 
 const NotificationList = () => {
+  const { data: values } = useQuery("taskValues", getTaskGraphValues);
+
   const { colors } = useTheme();
   const { data: tasks, isLoading } = useQuery("allTaks", getAllTaks);
+
+  console.log(values);
 
   if (isLoading) {
     return <Loader />;
@@ -38,63 +53,75 @@ const NotificationList = () => {
     );
   }
   return (
-    <View>
-      <LineChart
-        data={{
-          labels: ["January", "February", "March", "April", "May", "June"],
-          datasets: [
-            {
-              data: [
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-              ],
-            },
-          ],
-        }}
-        width={Dimensions.get("window").width} // from react-native
-        height={220}
-        yAxisLabel=""
-        yAxisSuffix=""
-        yAxisInterval={1} // optional, defaults to 1
-        chartConfig={{
-          backgroundColor: "#e26a00",
-          backgroundGradientFrom: "#fb8c00",
-          backgroundGradientTo: "#ffa726",
-          decimalPlaces: 2, // optional, defaults to 2dp
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-          propsForDots: {
-            r: "6",
-            strokeWidth: "1",
-            stroke: "#ffa726",
-          },
-        }}
-        bezier
-        style={{
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-      />
-      {/* <FlatList
-        data={tasks}
-        renderItem={({ item }) => {
-          return <SingleNotifItem data={item} />;
-        }}
-        ItemSeparatorComponent={() => {
-          return (
-            <View
-              style={{ height: 1, backgroundColor: colors.primaryColor }}
-            ></View>
-          );
-        }}
-      /> */}
+    <View style={{ backgroundColor: "white", paddingVertical: 80 }}>
+      <Text style={{ fontFamily: "poppinsBold", textAlign: "center" }}>
+        Past and upcoming tasks
+      </Text>
+      <View style={{ flex: 1, backgroundColor: "white" }}>
+        {values && (
+          <VictoryChart
+            style={{
+              background: {
+                fill: "white",
+                background: "white",
+                color: "white",
+              },
+            }}
+            theme={VictoryTheme.material}
+            domainPadding={10}
+          >
+            <VictoryBar
+              samples={100}
+              labels={values.map((va) => va.number_of_tasks)}
+              labelComponent={<VictoryLabel dy={30} />}
+              barRatio={0.8}
+              animate={{
+                duration: 2000,
+                onLoad: { duration: 1000 },
+              }}
+              style={{
+                data: { fill: "#407BFF", background: "white" },
+                labels: {
+                  fill: "white",
+                  fontSize: 20,
+                  fontFamily: "poppinsBold",
+                },
+              }}
+              data={values?.map((val) => {
+                return {
+                  x: formatDate(new Date(val.day)),
+                  y: val.number_of_tasks,
+                };
+              })}
+            />
+            <VictoryAxis
+              axisLabelComponent={
+                <View style={{ marginTop: 20, flex: 1 }}>
+                  <VictoryLabel />
+                </View>
+              }
+              orientation="bottom"
+              padding={20}
+              offsetY={50}
+              style={{
+                ticks: {
+                  stroke: "blue",
+                  fontFamily: "poppinsBold",
+                  fontSize: 20,
+                },
+                grid: { stroke: "transparent" },
+                tickLabels: {
+                  fill: "black",
+                  fontFamily: "poppinsBold",
+                  fontSize: 13,
+                  marginTop: 20,
+                },
+              }}
+            />
+          </VictoryChart>
+        )}
+      </View>
+      <Text>You have completed 6 tasks in the past weeek</Text>
     </View>
   );
 };

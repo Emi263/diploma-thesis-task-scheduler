@@ -1,7 +1,14 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { TouchableOpacity, View, Image, Text, Touchable } from "react-native";
+import {
+  TouchableOpacity,
+  View,
+  Image,
+  Text,
+  Touchable,
+  StatusBar,
+} from "react-native";
 import { RootStackParams } from "../../ScreenIndex";
 import { styles } from "./styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -25,6 +32,7 @@ const IntroThree = () => {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
+      <StatusBar barStyle={"dark-content"} backgroundColor="white" />
       <View
         style={{
           paddingBottom: 20,

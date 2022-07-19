@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Image, TouchableOpacity } from "react-native";
+import { Text, View, Image, TouchableOpacity, StatusBar } from "react-native";
 import { styles } from "./styles";
 import CustomButton from "../../common/Button";
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -24,6 +24,7 @@ const IntroTwo = () => {
   const { colors } = useTheme();
   return (
     <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
+      <StatusBar barStyle={"dark-content"} backgroundColor="white" />
       <View
         style={{
           paddingBottom: 20,

@@ -33,3 +33,10 @@ export const getTodayTasks = async (): Promise<Task[]> => {
   const { data } = await get("/tasks/task-today");
   return data;
 };
+
+export const getTaskGraphValues = async (): Promise<
+  { day: string; number_of_tasks: number }[]
+> => {
+  const { data } = await get("/tasks/task-graph-values");
+  return data;
+};
