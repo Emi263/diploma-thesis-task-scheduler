@@ -69,6 +69,7 @@ export default function App() {
 
       if (!isLoggedIn) {
         await clearAuthData();
+        setUser(undefined);
         if (isMounted) setUserToken(undefined);
       }
     };

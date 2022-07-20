@@ -40,3 +40,8 @@ export const getTaskGraphValues = async (): Promise<
   const { data } = await get("/tasks/task-graph-values");
   return data;
 };
+
+export const getLastWeekTasks = async (): Promise<Task[]> => {
+  const { data } = await get("/tasks/tasks-last-week");
+  return data;
+};

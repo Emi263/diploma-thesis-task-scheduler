@@ -1,13 +1,22 @@
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useState } from "react";
-import { Text, View, Pressable, StyleSheet, Alert } from "react-native";
+import {
+  Text,
+  View,
+  Pressable,
+  StyleSheet,
+  Alert,
+  Image,
+  Dimensions,
+} from "react-native";
 import {
   Button,
   Card,
   Title,
   Paragraph,
   ActivityIndicator,
+  TouchableRipple,
 } from "react-native-paper";
 
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -18,6 +27,7 @@ import EditTask from "../components/EditTask";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import useTheme from "../../../common/hooks/useTheme";
+import ImageBlurLoading from "react-native-image-blur-loading";
 
 type Props = NativeStackScreenProps<RootStackParams, "SingleTask">;
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
@@ -38,10 +48,10 @@ const SingleTaskScreen: React.FC<Props> = ({
   const { colors } = useTheme();
 
   const nav = useNavigation<introScreenProp>();
-  const { mutateAsync } = useMutation(deleteTask);
+  const { mutateAsync, isLoading: load } = useMutation(deleteTask);
 
   const [openModal, setOpenModal] = useState(false);
-  const [deleting, setDeleting] = useState(false);
+
   const queryClient = useQueryClient();
   const handleOpenModal = () => {
     if (task) {
@@ -49,10 +59,6 @@ const SingleTaskScreen: React.FC<Props> = ({
         task: task,
       });
     }
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
   };
 
   const handleDelete = async () => {
@@ -66,8 +72,8 @@ const SingleTaskScreen: React.FC<Props> = ({
                 await queryClient.invalidateQueries();
               })
               .then(() => {
-                Alert.alert("Task Deleted", "Task was deleted succesfully");
                 nav.navigate("Home");
+                Alert.alert("Task Deleted", "Task was deleted succesfully");
               });
           }
         },
@@ -94,30 +100,77 @@ const SingleTaskScreen: React.FC<Props> = ({
   }
 
   return (
-    <View>
-      <Card>
-        <Card.Content style={{ backgroundColor: colors.primaryBg }}>
-          <Title style={{ color: colors.primaryColor }}>
-            {task?.title || ""}
-          </Title>
-          <Paragraph style={{ color: colors.primaryColor }}>
-            {task?.description || ""}
-          </Paragraph>
-        </Card.Content>
-        <Card.Cover
-          source={{ uri: task?.image || "https://picsum.photos/700" }}
+    <View style={{ backgroundColor: "white", padding: 20, flex: 1 }}>
+      <TouchableRipple
+        style={{
+          alignSelf: "flex-start",
+          padding: 2,
+          paddingLeft: 0,
+        }}
+        borderless={true}
+      >
+        <Feather
+          onPress={() => nav.goBack()}
+          name="chevron-left"
+          size={32}
+          color="black"
         />
-        <Card.Actions
-          style={[styles.cardActions, { backgroundColor: colors.primaryBg }]}
+      </TouchableRipple>
+
+      <View style={{ paddingVertical: 20 }}>
+        <Text
+          style={{
+            fontFamily: "poppinsBold",
+            fontSize: 18,
+            textAlign: "center",
+          }}
         >
-          <Button onPress={handleOpenModal}>
-            <Text style={{ color: colors.primaryColor }}>Edit</Text>
-          </Button>
-          <Button onPress={handleDelete}>
-            <Text style={{ color: "red" }}>Delete</Text>
-          </Button>
-        </Card.Actions>
-      </Card>
+          {task?.title || ""}
+        </Text>
+        <Text
+          style={{
+            fontFamily: "poppins",
+            fontSize: 16,
+          }}
+        >
+          {task?.description || ""}
+        </Text>
+      </View>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <Image
+          style={{ height: 200, width: Dimensions.get("screen").width - 20 }}
+          source={{ uri: task?.image || "" }}
+        />
+      </View>
+
+      <Button
+        style={{
+          marginTop: 20,
+          width: "100%",
+          backgroundColor: "#407BFF",
+          borderRadius: 10,
+        }}
+        mode="contained"
+        onPress={() => handleOpenModal()}
+        loading={isLoading}
+      >
+        <Text style={{ color: "white", fontFamily: "poppinsBold" }}>Edit</Text>
+      </Button>
+      <Button
+        style={{
+          marginTop: 20,
+          width: "100%",
+          backgroundColor: "red",
+          borderRadius: 10,
+        }}
+        mode="contained"
+        onPress={() => handleDelete()}
+        loading={load}
+      >
+        <Text style={{ color: "white", fontFamily: "poppinsBold" }}>
+          Delete
+        </Text>
+      </Button>
     </View>
   );
 };

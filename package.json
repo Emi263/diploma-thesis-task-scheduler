@@ -59,6 +59,7 @@
     "react-native-events-calendar": "^1.0.8",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "~2.2.1",
+    "react-native-image-blur-loading": "^1.1.6",
     "react-native-image-preview": "^0.3.1",
     "react-native-modal-datetime-picker": "^13.1.2",
     "react-native-paper": "^4.12.1",

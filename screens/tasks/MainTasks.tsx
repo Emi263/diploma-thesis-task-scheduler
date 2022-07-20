@@ -15,9 +15,13 @@ import { Entypo } from "@expo/vector-icons";
 type introScreenProp = StackNavigationProp<RootStackParams>;
 
 const Main = () => {
-  const { data: topTasks, isLoading } = useQuery("topTasks", getTopTasks);
+  const { data: topTasks, isLoading } = useQuery("topTasks", getTopTasks, {
+    retryDelay: 300,
+  });
 
   const { data: todayTasks } = useQuery("todayTask", getTodayTasks);
+
+  console.log(isLoading);
 
   const nav = useNavigation<introScreenProp>();
   const { colors } = useTheme();

@@ -38,6 +38,7 @@ const Collapsible: React.FunctionComponent<Props> = ({
           style={[
             {
               color: colors.primaryColor,
+              fontFamily: "poppins",
             },
           ]}
         >

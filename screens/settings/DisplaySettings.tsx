@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StatusBar, StyleSheet, Text, View } from "react-native";
 import { Switch } from "react-native-paper";
 import useTheme from "../../common/hooks/useTheme";
 import { ThemeContext } from "../../context/ThemeContext";
@@ -18,6 +18,7 @@ const DisplaySettings = () => {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
+      <StatusBar barStyle={"dark-content"} backgroundColor="white" />
       <Text
         style={[
           styles.title,
@@ -30,7 +31,13 @@ const DisplaySettings = () => {
       </Text>
       <View>
         <View style={styles.mode}>
-          <Text style={{ paddingRight: 20, color: colors.primaryColor }}>
+          <Text
+            style={{
+              paddingRight: 20,
+              fontFamily: "poppins",
+              color: colors.primaryColor,
+            }}
+          >
             Dark Mode
           </Text>
           <Switch
@@ -47,10 +54,12 @@ const DisplaySettings = () => {
 export default DisplaySettings;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    paddingVertical: 20,
+  },
   title: {
-    fontWeight: "700",
-    fontSize: 14,
+    fontSize: 18,
+    fontFamily: "poppinsBold",
   },
   mode: {
     flexDirection: "row",

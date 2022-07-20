@@ -70,9 +70,7 @@ const Screens = () => {
             <RootStack.Screen
               name="SingleTask"
               component={SingleTaskScreen}
-              options={{
-                headerShown: true,
-              }}
+              options={{}}
             />
             <RootStack.Screen
               name="Tasks"
@@ -118,9 +116,13 @@ const Screens = () => {
               <RootStack.Screen
                 name="Login"
                 component={Login}
-                options={{ animation: "simple_push" }}
+                options={{ animation: "fade" }}
               />
-              <RootStack.Screen name="Signup" component={Signup} />
+              <RootStack.Screen
+                name="Signup"
+                component={Signup}
+                options={{ animation: "fade" }}
+              />
               <RootStack.Screen
                 name="ForgotPassword"
                 component={ForgotPassword}
