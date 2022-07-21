@@ -25,39 +25,31 @@ const Index = () => {
         },
       ]}
     >
+      <Button
+        style={{
+          backgroundColor: "#407BFF",
+          borderRadius: 10,
+          alignSelf: "flex-end",
+        }}
+        mode="contained"
+        onPress={() => handleLogout()}
+      >
+        <Text
+          style={{
+            color: "white",
+            fontFamily: "poppinsBold",
+          }}
+        ></Text>
+        <Text style={{ marginLeft: 10 }}>
+          <AntDesign name="logout" size={16} color="white" />
+        </Text>
+      </Button>
       <DisplaySettings />
       {!user?.isGoogleSignIn && (
         <Collapsible headerLabel="Change Password">
           <ChangePassword />
         </Collapsible>
       )}
-
-      <View style={{ flex: 1 }}>
-        <Button
-          style={{
-            marginTop: 20,
-            width: "100%",
-            backgroundColor: "#407BFF",
-            borderRadius: 10,
-            flexDirection: "row",
-            justifyContent: "space-around",
-          }}
-          mode="contained"
-          onPress={() => handleLogout()}
-        >
-          <Text
-            style={{
-              color: "white",
-              fontFamily: "poppinsBold",
-            }}
-          >
-            Logout
-          </Text>
-          <Text style={{ marginLeft: 10 }}>
-            <AntDesign name="logout" size={16} color="white" />
-          </Text>
-        </Button>
-      </View>
     </View>
   );
 };

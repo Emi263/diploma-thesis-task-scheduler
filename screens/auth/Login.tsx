@@ -9,6 +9,8 @@ import {
   Image,
   StatusBar,
   Dimensions,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { login } from "../../api/auth";
 import { styles } from "./styles";
@@ -74,211 +76,224 @@ const Login = () => {
   };
 
   return (
-    <KeyboardAvoidingViewWrapper>
-      <StatusBar barStyle="light-content" backgroundColor="#407BFF" />
+    // <KeyboardAvoidingViewWrapper>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View
         style={{
-          backgroundColor: "#407BFF",
-          height: 200,
-          width: "100%",
-          borderBottomRightRadius: 70,
-          borderBottomLeftRadius: 70,
-          justifyContent: "center",
-          alignItems: "center",
+          flex: 1,
+          height: Dimensions.get("screen").height,
         }}
       >
-        <Image
-          style={{ height: 180, width: 180 }}
-          source={require("../../assets/login-logo.png")}
-        />
-      </View>
-
-      <>
-        <Formik
-          validationSchema={LoginSchema}
-          initialValues={{
-            email: "",
-            password: "",
-          }}
-          onSubmit={(values) => {
-            login(values.email, values.password)
-              .then(async (res) => handleLogin(res))
-              .catch((e: AxiosError) => {
-                showAlert(errorCodes(e.response?.status || 400));
-              });
+        <StatusBar barStyle="light-content" backgroundColor="#407BFF" />
+        <View
+          style={{
+            backgroundColor: "#407BFF",
+            height: 200,
+            width: "100%",
+            borderBottomRightRadius: 70,
+            borderBottomLeftRadius: 70,
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched,
-          }) => (
-            <View
-              style={[
-                styles.view,
-                {
-                  width: Dimensions.get("screen").width,
-                },
-              ]}
-            >
-              <>
-                <Text
-                  style={[
-                    styles.title,
-                    {
-                      color: colors.primaryColor,
-                      alignSelf: "center",
-                      fontFamily: "poppinsBold",
-                      paddingTop: 20,
-                      fontSize: 20,
-                    },
-                  ]}
-                >
-                  Pick up where you left!
-                </Text>
-                <View style={styles.inputWrapper}>
-                  <>
-                    <View style={styles.inputContainer}>
-                      <>
-                        <TextInput
-                          // label="Email"
-                          autoComplete="email"
-                          keyboardType="email-address"
-                          value={values.email}
-                          onChangeText={handleChange("email")}
-                          placeholder="Enter email"
-                          onBlur={handleBlur("email")}
-                          style={styles.input}
-                          theme={{ colors: { primary: "#407BFF" } }}
-                          left={
-                            <TextInput.Icon
-                              style={{ marginTop: 12 }}
-                              name="email"
-                            />
-                          }
-                        />
-                        <HelperText
-                          type="error"
-                          visible={!!touched.email && !!errors.email}
-                          style={{
-                            fontFamily: "poppinsLight",
-                            fontSize: 10,
-                          }}
-                        >
-                          {errors.email}
-                        </HelperText>
-                      </>
-                    </View>
-                    <View style={styles.inputContainer}>
-                      <>
-                        <TextInput
-                          value={values.password}
-                          onChangeText={handleChange("password")}
-                          placeholder="Enter password"
-                          secureTextEntry={!showPass}
-                          style={styles.input}
-                          onBlur={handleBlur("password")}
-                          theme={{ colors: { primary: "#407BFF" } }}
-                          // label="Password"
-                          left={
-                            <TextInput.Icon
-                              style={{ marginTop: 12 }}
-                              name="onepassword"
-                            />
-                          }
-                          right={
-                            <TextInput.Icon
-                              style={{ marginTop: 12 }}
-                              name={() => (
-                                <TouchableRipple>
-                                  <Feather
-                                    name={showPass ? "eye" : "eye-off"}
-                                    size={24}
-                                    color="black"
-                                    onPress={() => setShowPass((prev) => !prev)}
-                                  />
-                                </TouchableRipple>
-                              )}
-                            />
-                          }
-                        />
-
-                        <HelperText
-                          type="error"
-                          visible={!!touched.password && !!errors.password}
-                          style={{
-                            fontFamily: "poppinsLight",
-                            fontSize: 10,
-                          }}
-                        >
-                          Password is required!
-                        </HelperText>
-                        <TouchableOpacity
-                          style={{ paddingVertical: 4 }}
-                          activeOpacity={0.8}
-                          onPress={handleForgotPassword}
-                        >
-                          <Text
+          <Image
+            style={{ height: 180, width: 180 }}
+            source={require("../../assets/login-logo.png")}
+          />
+        </View>
+        <>
+          <Formik
+            validationSchema={LoginSchema}
+            initialValues={{
+              email: "",
+              password: "",
+            }}
+            onSubmit={(values) => {
+              login(values.email, values.password)
+                .then(async (res) => handleLogin(res))
+                .catch((e: AxiosError) => {
+                  showAlert(errorCodes(e.response?.status || 400));
+                });
+            }}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+            }) => (
+              <View
+                style={[
+                  styles.view,
+                  {
+                    width: Dimensions.get("screen").width,
+                  },
+                ]}
+              >
+                <>
+                  <Text
+                    style={[
+                      styles.title,
+                      {
+                        color: colors.primaryColor,
+                        alignSelf: "center",
+                        fontFamily: "poppinsBold",
+                        paddingTop: 20,
+                        fontSize: 20,
+                      },
+                    ]}
+                  >
+                    Pick up where you left!
+                  </Text>
+                  <View style={styles.inputWrapper}>
+                    <>
+                      <View style={styles.inputContainer}>
+                        <>
+                          <TextInput
+                            // label="Email"
+                            autoComplete="email"
+                            keyboardType="email-address"
+                            value={values.email}
+                            onChangeText={handleChange("email")}
+                            placeholder="Enter email"
+                            onBlur={handleBlur("email")}
+                            style={styles.input}
+                            theme={{ colors: { primary: "#407BFF" } }}
+                            left={
+                              <TextInput.Icon
+                                style={{ marginTop: 12 }}
+                                name="email"
+                              />
+                            }
+                          />
+                          <HelperText
+                            type="error"
+                            visible={!!touched.email && !!errors.email}
                             style={{
-                              color: "#407BFF",
-                              fontFamily: "poppinsBold",
-                              fontSize: 12,
-                              textAlign: "right",
+                              fontFamily: "poppinsLight",
+                              fontSize: 10,
                             }}
                           >
-                            Forgot password?
-                          </Text>
-                        </TouchableOpacity>
-                      </>
-                    </View>
-                  </>
-                </View>
+                            {errors.email}
+                          </HelperText>
+                        </>
+                      </View>
+                      <View style={styles.inputContainer}>
+                        <>
+                          <TextInput
+                            value={values.password}
+                            onChangeText={handleChange("password")}
+                            placeholder="Enter password"
+                            secureTextEntry={!showPass}
+                            style={styles.input}
+                            onBlur={handleBlur("password")}
+                            theme={{ colors: { primary: "#407BFF" } }}
+                            // label="Password"
+                            left={
+                              <TextInput.Icon
+                                style={{ marginTop: 12 }}
+                                name="onepassword"
+                              />
+                            }
+                            right={
+                              <TextInput.Icon
+                                style={{ marginTop: 12 }}
+                                name={() => (
+                                  <TouchableRipple>
+                                    <Feather
+                                      name={showPass ? "eye" : "eye-off"}
+                                      size={24}
+                                      color="black"
+                                      onPress={() =>
+                                        setShowPass((prev) => !prev)
+                                      }
+                                    />
+                                  </TouchableRipple>
+                                )}
+                              />
+                            }
+                          />
 
-                {/**Sign in button */}
-                <Button
-                  style={{
-                    marginTop: 20,
-                    width: "90%",
-                    backgroundColor: "#407BFF",
-                    borderRadius: 10,
-                  }}
-                  mode="contained"
-                  onPress={() => handleSubmit()}
-                >
-                  <Text style={{ color: "white", fontFamily: "poppinsBold" }}>
-                    Login
-                  </Text>
-                </Button>
+                          <HelperText
+                            type="error"
+                            visible={!!touched.password && !!errors.password}
+                            style={{
+                              fontFamily: "poppinsLight",
+                              fontSize: 10,
+                            }}
+                          >
+                            Password is required!
+                          </HelperText>
+                          <TouchableOpacity
+                            style={{
+                              paddingVertical: 4,
+                              alignSelf: "flex-end",
+                            }}
+                            activeOpacity={0.8}
+                            onPress={handleForgotPassword}
+                          >
+                            <Text
+                              style={{
+                                color: "#407BFF",
+                                fontFamily: "poppinsBold",
+                                fontSize: 12,
+                                textAlign: "right",
+                              }}
+                            >
+                              Forgot password?
+                            </Text>
+                          </TouchableOpacity>
+                        </>
+                      </View>
+                    </>
+                  </View>
 
-                <GoogleSignIn setLoading={setLoading} />
-                <View
-                  style={{
-                    padding: 3,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text style={{ fontFamily: "poppins" }}>
-                    Don't have an account?
-                  </Text>
-                  <TouchableOpacity onPress={() => nav.navigate("Signup")}>
-                    <Text
-                      style={{ fontFamily: "poppinsBold", color: "#407BFF" }}
-                    >
-                      {" Register!"}
+                  {/**Sign in button */}
+                  <Button
+                    style={{
+                      marginTop: 20,
+                      width: "90%",
+                      backgroundColor: "#407BFF",
+                      borderRadius: 10,
+                    }}
+                    mode="contained"
+                    onPress={() => handleSubmit()}
+                  >
+                    <Text style={{ color: "white", fontFamily: "poppinsBold" }}>
+                      Login
                     </Text>
-                  </TouchableOpacity>
-                </View>
-              </>
-            </View>
-          )}
-        </Formik>
-      </>
-    </KeyboardAvoidingViewWrapper>
+                  </Button>
+
+                  <GoogleSignIn setLoading={setLoading} />
+                  <View
+                    style={{
+                      padding: 3,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Text style={{ fontFamily: "poppins" }}>
+                      Don't have an account?
+                    </Text>
+                    <TouchableOpacity onPress={() => nav.navigate("Signup")}>
+                      <Text
+                        style={{ fontFamily: "poppinsBold", color: "#407BFF" }}
+                      >
+                        {" Register!"}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </>
+              </View>
+            )}
+          </Formik>
+        </>
+      </View>
+    </TouchableWithoutFeedback>
+    // </KeyboardAvoidingViewWrapper>
   );
 };
 

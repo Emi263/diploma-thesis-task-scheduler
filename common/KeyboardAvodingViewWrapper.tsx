@@ -15,9 +15,9 @@ export const KeyboardAvoidingViewWrapper: React.FC<{
 }> = ({ children }) => {
   return (
     <KeyboardAvoidingView
-      keyboardVerticalOffset={0}
+      keyboardVerticalOffset={10}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
+      style={{ flex: 1, backgroundColor: "white" }}
     >
       <ScrollView showsVerticalScrollIndicator={false}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

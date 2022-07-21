@@ -7,10 +7,10 @@ export const styles = StyleSheet.create({
   },
   view: {
     flex: 1,
-    display: "flex",
     alignContent: "center",
     alignItems: "center",
     backgroundColor: "white",
+    width: "100%",
   },
 
   upperView: {

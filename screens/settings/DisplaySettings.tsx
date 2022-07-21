@@ -55,7 +55,7 @@ export default DisplaySettings;
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 20,
+    paddingVertical: 0,
   },
   title: {
     fontSize: 18,

@@ -8,12 +8,15 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
+  StatusBar,
   StyleSheet,
   View,
 } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { forgotPassword } from "../../api/auth";
+import KeyboardAvoidingViewWrapper from "../../common/KeyboardAvodingViewWrapper";
 import { RootStackParams } from "../../ScreenIndex";
+import * as yup from "yup";
 
 type IntroScreenProp = StackNavigationProp<RootStackParams, "Intro1">;
 
@@ -84,11 +87,9 @@ const ForgotPassword = () => {
     nav.goBack();
   };
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    <KeyboardAvoidingViewWrapper>
       <View style={{ flex: 1 }}>
+        <StatusBar backgroundColor="white" barStyle="dark-content" />
         <View style={styles.container}>
           <View>
             <Feather
@@ -124,7 +125,6 @@ const ForgotPassword = () => {
 
           <Button
             style={{
-              marginTop: 20,
               width: "100%",
               backgroundColor: "#407BFF",
               borderRadius: 10,
@@ -138,7 +138,7 @@ const ForgotPassword = () => {
           </Button>
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingViewWrapper>
   );
 };
 
@@ -167,4 +167,11 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "white",
   },
+});
+
+const validate = yup.object({
+  email: yup
+    .string()
+    .email("Please insert a correct email")
+    .required("Please insert an email address"),
 });

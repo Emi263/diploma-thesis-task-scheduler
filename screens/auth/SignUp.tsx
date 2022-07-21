@@ -86,7 +86,6 @@ const Signup = () => {
       <KeyboardAvoidingViewWrapper>
         <SafeAreaView style={styles.container}>
           <StatusBar barStyle="light-content" backgroundColor="#407BFF" />
-
           <>
             <Formik
               validationSchema={SignupSchema}
@@ -119,15 +118,7 @@ const Signup = () => {
                 errors,
                 touched,
               }) => (
-                <View
-                  style={[
-                    styles.view,
-                    {
-                      width: Dimensions.get("screen").width,
-                      height: Dimensions.get("screen").height,
-                    },
-                  ]}
-                >
+                <View style={[styles.view]}>
                   <>
                     <View style={styles.upperView}>
                       <Text
