@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -6,6 +6,8 @@ import {
   Dimensions,
   Animated,
   Text,
+  ImageBackground,
+  Image,
 } from "react-native";
 import { useQuery } from "react-query";
 import {
@@ -49,16 +51,38 @@ const NotificationList = () => {
   const { data: lastWeekTasks } = useQuery("lastWeekTasks", getLastWeekTasks);
   console.log(lastWeekTasks);
 
-  if (tasks?.length === 0) {
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
+
+  if (loading) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>No tasks to show!</Text>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "white",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Loader />
       </View>
     );
   }
   return (
     <>
-      <View style={{ backgroundColor: "white", paddingVertical: 80, flex: 1 }}>
+      <View style={{ backgroundColor: "white", paddingVertical: 0, flex: 1 }}>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <Image
+            style={{ width: Dimensions.get("screen").width - 200, height: 250 }}
+            source={require("../../assets/data.png")}
+          />
+        </View>
         <Text style={{ fontFamily: "poppinsBold", textAlign: "center" }}>
           Past and upcoming tasks in numbers:
         </Text>
@@ -76,7 +100,6 @@ const NotificationList = () => {
               domainPadding={10}
             >
               <VictoryBar
-                samples={100}
                 labels={values.map((va) => va.number_of_tasks)}
                 labelComponent={<VictoryLabel dy={30} />}
                 barRatio={0.8}
@@ -123,12 +146,13 @@ const NotificationList = () => {
           )}
         </View>
         {values && (
-          <View style={{ backgroundColor: "white", flex: 1, paddingTop: 100 }}>
+          <View style={{ backgroundColor: "white", flex: 1, paddingTop: 10 }}>
             <Text
               style={{
                 fontFamily: "poppinsBold",
                 color: "#407BFF",
-                paddingHorizontal: 10,
+                paddingHorizontal: 20,
+                textAlign: "center",
                 fontSize: 18,
               }}
             >

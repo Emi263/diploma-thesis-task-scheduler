@@ -12,6 +12,7 @@ import {
   StatusBar,
   KeyboardAvoidingView,
   Platform,
+  Dimensions,
 } from "react-native";
 import {
   TextInput,
@@ -36,6 +37,7 @@ import useTheme from "../../common/hooks/useTheme";
 import { AntDesign } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import KeyboardAvoidingViewWrapper from "../../common/KeyboardAvodingViewWrapper";
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
@@ -81,12 +83,10 @@ const Signup = () => {
           <ActivityIndicator size="large" style={{ opacity: 1 }} />
         </View>
       )}
-      <SafeAreaView style={styles.container}>
-        <StatusBar barStyle="light-content" backgroundColor="#407BFF" />
-        <KeyboardAvoidingView
-          style={{ flex: 1, width: "100%" }}
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
+      <KeyboardAvoidingViewWrapper>
+        <SafeAreaView style={styles.container}>
+          <StatusBar barStyle="light-content" backgroundColor="#407BFF" />
+
           <>
             <Formik
               validationSchema={SignupSchema}
@@ -119,7 +119,15 @@ const Signup = () => {
                 errors,
                 touched,
               }) => (
-                <View style={styles.view}>
+                <View
+                  style={[
+                    styles.view,
+                    {
+                      width: Dimensions.get("screen").width,
+                      height: Dimensions.get("screen").height,
+                    },
+                  ]}
+                >
                   <>
                     <View style={styles.upperView}>
                       <Text
@@ -306,8 +314,8 @@ const Signup = () => {
               )}
             </Formik>
           </>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
+        </SafeAreaView>
+      </KeyboardAvoidingViewWrapper>
     </>
   );
 };

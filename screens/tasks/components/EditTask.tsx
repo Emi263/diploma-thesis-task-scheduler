@@ -12,7 +12,7 @@ const EditTask: React.FC<Props> = ({
   },
 }) => {
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <TaskForm task={task} />
     </View>
   );

@@ -23,6 +23,7 @@ import { changePassword } from "../../api/auth";
 import { AuthContext } from "../../context/AuthContext";
 
 import useTheme from "../../common/hooks/useTheme";
+import KeyboardAvoidingViewWrapper from "../../common/KeyboardAvodingViewWrapper";
 
 export default function ChangePassword() {
   const { colors } = useTheme();
@@ -66,30 +67,28 @@ export default function ChangePassword() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
-      >
-        <Formik
-          validationSchema={PasswordSchema}
-          initialValues={{
-            currentPassword: "",
-            newPassword: "",
-            confirmNewPassword: "",
-          }}
-          onSubmit={(values) => {
-            handlePasswordChange(values.currentPassword, values.newPassword);
-          }}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched,
-          }) => (
+    // <KeyboardAvoidingViewWrapper>
+    <Formik
+      validationSchema={PasswordSchema}
+      initialValues={{
+        currentPassword: "",
+        newPassword: "",
+        confirmNewPassword: "",
+      }}
+      onSubmit={(values) => {
+        handlePasswordChange(values.currentPassword, values.newPassword);
+      }}
+    >
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        errors,
+        touched,
+      }) => (
+        <>
+          <KeyboardAvoidingViewWrapper>
             <>
               <View style={styles.inputContainer}>
                 <Text
@@ -253,10 +252,10 @@ export default function ChangePassword() {
                 </View>
               </View>
             </>
-          )}
-        </Formik>
-      </KeyboardAvoidingView>
-    </ScrollView>
+          </KeyboardAvoidingViewWrapper>
+        </>
+      )}
+    </Formik>
   );
 }
 

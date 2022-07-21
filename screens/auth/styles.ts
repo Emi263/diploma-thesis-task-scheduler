@@ -3,16 +3,14 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-
     alignItems: "center",
-    backgroundColor: "white",
   },
   view: {
     flex: 1,
-    width: "100%",
     display: "flex",
     alignContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
   },
 
   upperView: {

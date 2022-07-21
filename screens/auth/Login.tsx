@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   StatusBar,
+  Dimensions,
 } from "react-native";
 import { login } from "../../api/auth";
 import { styles } from "./styles";
@@ -31,6 +32,7 @@ import useTheme from "../../common/hooks/useTheme";
 import { GoogleSignIn } from "./GoogleSignin";
 import Loader from "../../common/Loader";
 import { Feather } from "@expo/vector-icons";
+import KeyboardAvoidingViewWrapper from "../../common/KeyboardAvodingViewWrapper";
 
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
@@ -72,9 +74,8 @@ const Login = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingViewWrapper>
       <StatusBar barStyle="light-content" backgroundColor="#407BFF" />
-
       <View
         style={{
           backgroundColor: "#407BFF",
@@ -115,7 +116,14 @@ const Login = () => {
             errors,
             touched,
           }) => (
-            <View style={styles.view}>
+            <View
+              style={[
+                styles.view,
+                {
+                  width: Dimensions.get("screen").width,
+                },
+              ]}
+            >
               <>
                 <Text
                   style={[
@@ -270,7 +278,7 @@ const Login = () => {
           )}
         </Formik>
       </>
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingViewWrapper>
   );
 };
 

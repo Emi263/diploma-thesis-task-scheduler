@@ -71,6 +71,8 @@ const TaskForm: React.FC<IFormTask> = (props) => {
     image: props?.task?.image || "",
   };
 
+  console.log(InitialValues);
+
   //local state
 
   const [checkboxChecked, setCheckboxChecked] = useState(
@@ -81,8 +83,8 @@ const TaskForm: React.FC<IFormTask> = (props) => {
 
   //date and time
 
-  const [selectedDate, setSelectedDate] = useState<string>(
-    InitialValues.date.toString()
+  const [selectedDate, setSelectedDate] = useState<any>(
+    new Date(InitialValues.date).toISOString()
   );
 
   //end of story
@@ -146,8 +148,8 @@ const TaskForm: React.FC<IFormTask> = (props) => {
         },
         {
           onSuccess: async () => {
-            await queryClient.invalidateQueries();
             Alert.alert("Task updated successfully");
+            await queryClient.invalidateQueries();
           },
           onError: () => {
             Alert.alert("Error", "Something went wrong! Try again");
@@ -171,8 +173,9 @@ const TaskForm: React.FC<IFormTask> = (props) => {
       { ...values, image: url, shouldNotify: checkboxChecked },
       {
         onSuccess: async () => {
-          await queryClient.invalidateQueries();
           Alert.alert("A new task was successfully created");
+          await queryClient.invalidateQueries();
+
           if (props.setOpenModal) {
             props.setOpenModal(false);
           }
@@ -188,7 +191,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={{ flex: 0 }}>
       <Formik
         initialValues={InitialValues}
         validationSchema={TaskSchema}

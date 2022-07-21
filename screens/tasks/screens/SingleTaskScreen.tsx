@@ -9,6 +9,7 @@ import {
   Alert,
   Image,
   Dimensions,
+  ImageBackground,
 } from "react-native";
 import {
   Button,
@@ -28,6 +29,8 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import useTheme from "../../../common/hooks/useTheme";
 import ImageBlurLoading from "react-native-image-blur-loading";
+import { Ionicons } from "@expo/vector-icons";
+import { formatDateAndTime } from "../../../helper/helpers";
 
 type Props = NativeStackScreenProps<RootStackParams, "SingleTask">;
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
@@ -141,6 +144,18 @@ const SingleTaskScreen: React.FC<Props> = ({
           style={{ height: 200, width: Dimensions.get("screen").width - 20 }}
           source={{ uri: task?.image || "" }}
         />
+      </View>
+      <View
+        style={{
+          paddingTop: 20,
+          alignItems: "center",
+          flexDirection: "row",
+        }}
+      >
+        <Ionicons name="notifications" size={30} color="black" />
+        <Text style={{ fontFamily: "poppins" }}>
+          {" " + formatDateAndTime(task.date.toString())}
+        </Text>
       </View>
 
       <Button

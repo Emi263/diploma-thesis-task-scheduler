@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, View, FlatList, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Text,
+  Image,
+  Dimensions,
+} from "react-native";
 import { useQuery } from "react-query";
 import { getAllTaks } from "../../api/task";
 import { ActivityIndicator } from "react-native-paper";
@@ -36,19 +43,33 @@ const AllTasks = () => {
       />
     </View>
   );
+
+  if (tasks?.length === 0) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <Image
+          style={{ width: Dimensions.get("screen").width - 20, height: 400 }}
+          source={require("../../assets/empty.png")}
+        />
+        <Text style={{ fontFamily: "poppinsBold", fontSize: 16 }}>
+          No Tasks to show :(
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
       {isLoading && (
         <View style={styles.loaderContainer}>
           <ActivityIndicator style={styles.loader} animating size="large" />
-        </View>
-      )}
-
-      {tasks?.length === 0 && (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <Text>No Tasks to show :(</Text>
         </View>
       )}
 

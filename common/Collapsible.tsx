@@ -28,7 +28,7 @@ const Collapsible: React.FunctionComponent<Props> = ({
     setShowContent((show) => !show);
   };
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <TouchableOpacity
         onPress={toggleContent}
         activeOpacity={0.5}

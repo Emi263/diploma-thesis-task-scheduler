@@ -96,6 +96,7 @@ export const TabNavigator = () => {
             name={tab.route}
             options={{
               tabBarButton: (props) => <TabButton {...props} tab={tab} />,
+              tabBarHideOnKeyboard: true,
             }}
           />
         );
