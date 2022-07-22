@@ -55,7 +55,7 @@ const ForgotPassword = () => {
           );
           return;
         } else if (res.data.response.statusCode === 406) {
-          Alert.alert("This user cannot have his password resetted");
+          Alert.alert("Error!", "This user cannot have his password resetted");
         } else {
           return;
         }

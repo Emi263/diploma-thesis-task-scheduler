@@ -15,4 +15,5 @@ export interface User {
   profileImage?: string;
   isGoogleSignIn: boolean;
   shouldChangePassword: boolean;
+  expoToken: string;
 }

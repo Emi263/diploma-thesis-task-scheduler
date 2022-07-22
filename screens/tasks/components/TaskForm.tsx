@@ -173,7 +173,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
       { ...values, image: url, shouldNotify: checkboxChecked },
       {
         onSuccess: async () => {
-          Alert.alert("A new task was successfully created");
+          Alert.alert("Success!", "A new task was successfully created");
           await queryClient.invalidateQueries();
 
           if (props.setOpenModal) {

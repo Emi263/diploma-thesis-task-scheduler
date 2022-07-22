@@ -87,7 +87,7 @@ const SingleTaskScreen: React.FC<Props> = ({
     ]);
   };
 
-  if (isLoading) {
+  if (isLoading || !task) {
     return (
       <View
         style={{
@@ -154,7 +154,7 @@ const SingleTaskScreen: React.FC<Props> = ({
       >
         <Ionicons name="notifications" size={30} color="black" />
         <Text style={{ fontFamily: "poppins" }}>
-          {" " + formatDateAndTime(task.date.toString())}
+          {" " + formatDateAndTime(task?.date.toString())}
         </Text>
       </View>
 

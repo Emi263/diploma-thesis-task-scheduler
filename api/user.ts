@@ -18,3 +18,10 @@ export const updateUser = async ({ profileImage }): Promise<User> => {
 
   return data;
 };
+
+export const updateUserToken = async (token: string) => {
+  const { data } = await put(apiUrl + "/users/token", {
+    expotoken: token,
+  });
+  return data;
+};

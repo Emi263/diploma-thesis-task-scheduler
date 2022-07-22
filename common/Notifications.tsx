@@ -6,6 +6,8 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParams } from "../ScreenIndex";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../context/AuthContext";
+import { useMutation } from "react-query";
+import { updateUserToken } from "../api/user";
 type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 
 export default function Notication() {
@@ -15,10 +17,20 @@ export default function Notication() {
   const lastNotificationResponse = Notifications.useLastNotificationResponse();
   const nav = useNavigation<introScreenProp>();
 
+  const { mutateAsync, isError, isLoading } = useMutation(updateUserToken);
+
+  console.log(isError);
+
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token)
-    );
+    registerForPushNotificationsAsync().then(async (token) => {
+      if (token === user.expoToken) return;
+      console.log(token);
+
+      await mutateAsync(token, {
+        onError: (e) => console.log("SSS" + e),
+        onSuccess: (data) => console.log(data),
+      });
+    });
 
     const notificationListener = Notifications.addNotificationReceivedListener(
       (notification) => {
@@ -81,7 +93,6 @@ async function registerForPushNotificationsAsync() {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
   } else {
     alert("Must use physical device for Push Notifications");
   }

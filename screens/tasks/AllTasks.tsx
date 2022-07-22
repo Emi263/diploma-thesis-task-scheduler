@@ -73,25 +73,27 @@ const AllTasks = () => {
         </View>
       )}
 
-      <FlatList
-        numColumns={1}
-        data={tasks}
-        keyExtractor={(item) => item.id.toString()}
-        ListHeaderComponent={header}
-        ListFooterComponent={<View style={{ height: 20 }}></View>}
-        renderItem={({
-          item: { date, shouldNotify, title, description, id, image },
-        }) => (
-          <SingleTask
-            id={id}
-            date={date}
-            title={title}
-            description={description}
-            shouldNotify={shouldNotify}
-            image={image ? image : ""}
-          />
-        )}
-      />
+      {!isLoading && !isError && (
+        <FlatList
+          numColumns={1}
+          data={tasks}
+          keyExtractor={(item) => item.id.toString()}
+          ListHeaderComponent={header}
+          ListFooterComponent={<View style={{ height: 20 }}></View>}
+          renderItem={({
+            item: { date, shouldNotify, title, description, id, image },
+          }) => (
+            <SingleTask
+              id={id}
+              date={date}
+              title={title}
+              description={description}
+              shouldNotify={shouldNotify}
+              image={image ? image : ""}
+            />
+          )}
+        />
+      )}
     </View>
   );
 };
