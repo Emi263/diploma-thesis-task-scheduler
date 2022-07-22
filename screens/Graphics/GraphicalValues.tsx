@@ -1,56 +1,26 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  View,
-  FlatList,
-  Dimensions,
-  Animated,
-  Text,
-  ImageBackground,
-  Image,
-} from "react-native";
+import { View, Dimensions, Text, Image } from "react-native";
 import { useQuery } from "react-query";
-import {
-  getAllTaks,
-  getLastWeekTasks,
-  getTaskGraphValues,
-} from "../../api/task";
+import { getLastWeekTasks, getTaskGraphValues } from "../../api/task";
 import "react-native-gesture-handler";
 import Loader from "../../common/Loader";
-import SingleNotifItem from "./SingleNotifItem";
-import useTheme from "../../common/hooks/useTheme";
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from "react-native-chart-kit";
+
 import {
   VictoryBar,
   VictoryChart,
   VictoryTheme,
-  VictoryLine,
-  VictoryPie,
-  Bar,
   VictoryAxis,
   VictoryLabel,
 } from "victory-native";
 import { formatDate } from "../../helper/helpers";
-import { ActivityIndicator } from "react-native-paper";
 
-const NotificationList = () => {
+const GraphicalValues = () => {
   const { data: values, isLoading: l } = useQuery(
     "taskValues",
     getTaskGraphValues
   );
 
-  const { colors } = useTheme();
-  const { data: tasks, isLoading } = useQuery("allTaks", getAllTaks);
   const { data: lastWeekTasks } = useQuery("lastWeekTasks", getLastWeekTasks);
-  console.log(lastWeekTasks);
-
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -170,4 +140,4 @@ const NotificationList = () => {
   );
 };
 
-export default NotificationList;
+export default GraphicalValues;

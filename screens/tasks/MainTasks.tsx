@@ -12,6 +12,7 @@ import SingleTask from "./components/SingleTaskComponent";
 import { styles } from "./styles";
 
 import { Entypo } from "@expo/vector-icons";
+import Loader from "../../common/Loader";
 type introScreenProp = StackNavigationProp<RootStackParams>;
 
 const Main = () => {
@@ -30,18 +31,7 @@ const Main = () => {
       <View>
         {generateTodayTask(todayTasks)}
         <View style={{}}>
-          {isLoading && (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                paddingVertical: 30,
-              }}
-            >
-              <ActivityIndicator size="large" />
-            </View>
-          )}
+          {isLoading && <Loader />}
 
           <FlatList
             numColumns={1}

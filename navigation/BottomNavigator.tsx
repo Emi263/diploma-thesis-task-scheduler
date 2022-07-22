@@ -1,23 +1,15 @@
 import React, { useLayoutEffect, useRef } from "react";
 import { Ionicons, Feather, FontAwesome5 } from "@expo/vector-icons";
-import {
-  BottomTabBarButtonProps,
-  createBottomTabNavigator,
-} from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/home/HomeScreen";
 import Settings from "../screens/settings/index";
 import AllTasks from "../screens/tasks/AllTasks";
-import NotificationList from "../screens/Notifications/NotificationList";
-import { useQuery } from "react-query";
-import { getAllTaks } from "../api/task";
-import { View, Text, TouchableOpacity } from "react-native";
+import Graphics from "../screens/Graphics/GraphicalValues";
 import * as Animatable from "react-native-animatable";
 import { TouchableRipple } from "react-native-paper";
 const Tab = createBottomTabNavigator();
 
 export const TabNavigator = () => {
-  const { data: tasks } = useQuery("allTasks", getAllTaks);
-
   const bottomTabs = [
     {
       route: "Home2",
@@ -36,7 +28,7 @@ export const TabNavigator = () => {
     },
     {
       route: "Notifications",
-      component: NotificationList,
+      component: Graphics,
       options: {},
     },
   ];

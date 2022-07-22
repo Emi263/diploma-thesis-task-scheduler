@@ -191,7 +191,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
   };
 
   return (
-    <ScrollView style={{ flex: 0 }}>
+    <ScrollView style={{ flex: 0 }} showsVerticalScrollIndicator={false}>
       <Formik
         initialValues={InitialValues}
         validationSchema={TaskSchema}
