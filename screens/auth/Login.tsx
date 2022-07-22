@@ -48,17 +48,32 @@ const Login = () => {
   const [showPass, setShowPass] = useState(false);
   const { colors } = useTheme();
 
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    setIsMounted(true);
+
+    return () => {
+      isMounted = false;
+      setIsMounted(false);
+    };
+  }, []);
+
   const handleLogin = async (res: AxiosResponse) => {
-    try {
-      setLoading(true);
-      await setAuthToken(res.data.token).then(async () => {
-        const userData = await getUserPayload();
-        const userDt = await getUser(userData?.sub || 1);
+    if (isMounted) {
+      try {
+        setLoading(true);
+        await setAuthToken(res.data.token).then(async () => {
+          const userData = await getUserPayload();
+          const userDt = await getUser(userData?.sub || 1);
+          setLoading(false);
+          setUser(userDt);
+        });
+      } catch (error) {
         setLoading(false);
-        setUser(userDt);
-      });
-    } catch (error) {
-      setLoading(false);
+      }
     }
   };
 

@@ -18,19 +18,33 @@ WebBrowser.maybeCompleteAuthSession();
 export function GoogleSignIn({ setLoading }) {
   const { user, setUser } = useContext(AuthContext);
 
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    setIsMounted(true);
+
+    return () => {
+      isMounted = false;
+      setIsMounted(false);
+    };
+  }, []);
   const handleLogin = async (res: AxiosResponse) => {
-    try {
-      setLoading(true);
-      await setAuthToken(res.data.token).then(async () => {
-        const userData = await getUserPayload();
-        if (userData) {
-          const userDt = await getUser(userData?.sub);
-          setUser(userDt);
-          setLoading(false);
-        }
-      });
-    } catch (error) {
-      setLoading(false);
+    if (isMounted) {
+      try {
+        setLoading(true);
+        await setAuthToken(res.data.token).then(async () => {
+          const userData = await getUserPayload();
+          if (userData) {
+            const userDt = await getUser(userData?.sub);
+            setUser(userDt);
+            setLoading(false);
+          }
+        });
+      } catch (error) {
+        setLoading(false);
+      }
     }
   };
   const { colors } = useTheme();
@@ -58,7 +72,7 @@ export function GoogleSignIn({ setLoading }) {
           });
       }
     }
-  }, [response, request]);
+  }, [response]);
 
   return (
     <View

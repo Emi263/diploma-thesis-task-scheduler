@@ -20,6 +20,7 @@ import "react-native-gesture-handler";
 import { useFonts } from "expo-font";
 
 //
+import { LogBox } from "react-native";
 import AppLoading from "expo-app-loading";
 import { ActivityIndicator } from "react-native-paper";
 import { clearAuthData } from "./utils/tokenMgmt";
@@ -34,6 +35,8 @@ export default function App() {
     poppinsLight: require("./assets/fonts/Poppins-Light.ttf"),
     poppins: require("./assets/fonts/Poppins-Regular.ttf"),
   });
+
+  LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
   useEffect(() => {
     let isMounted = true;
@@ -65,6 +68,7 @@ export default function App() {
 
     const checkUserLoggedIn = async () => {
       const isLoggedIn = await isSessionActive();
+      console.log(isLoggedIn);
 
       if (!isLoggedIn) {
         await clearAuthData();

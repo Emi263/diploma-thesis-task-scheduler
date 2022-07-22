@@ -80,7 +80,7 @@ const IntroThree = () => {
           style={{
             padding: 10,
             backgroundColor: "#407BFF",
-            borderRadius: 40,
+            borderRadius: 10,
             paddingHorizontal: 20,
           }}
         >

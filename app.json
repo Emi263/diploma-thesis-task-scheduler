@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "task-scheduler",
+    "scheme": "https",
     "slug": "task-scheduler",
     "version": "1.0.0",
     "orientation": "portrait",

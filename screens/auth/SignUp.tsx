@@ -48,20 +48,35 @@ const Signup = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    setIsMounted(true);
+
+    return () => {
+      isMounted = false;
+      setIsMounted(false);
+    };
+  }, []);
+
   const handleSignup = async (res: AxiosResponse) => {
-    try {
-      await setAuthToken(res.data.token).then(async () => {
-        const userData = await getUserPayload();
-        const userDt = await getUser(userData?.sub || 1);
-        setUser(userDt);
+    if (isMounted) {
+      try {
+        await setAuthToken(res.data.token).then(async () => {
+          const userData = await getUserPayload();
+          const userDt = await getUser(userData?.sub || 1);
+          setUser(userDt);
+          setLoading(false);
+        });
+      } catch (error) {
+        console.log(error);
+
         setLoading(false);
-      });
-    } catch (error) {
-      console.log(error);
 
-      setLoading(false);
-
-      Alert.alert("Something went wrong");
+        Alert.alert("Something went wrong");
+      }
     }
   };
 
