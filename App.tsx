@@ -36,7 +36,7 @@ export default function App() {
     poppins: require("./assets/fonts/Poppins-Regular.ttf"),
   });
 
-  LogBox.ignoreLogs(["EventEmitter.removeListener"]);
+  LogBox.ignoreAllLogs();
 
   useEffect(() => {
     let isMounted = true;

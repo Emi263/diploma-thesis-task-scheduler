@@ -8,6 +8,7 @@ import {
   Text,
   Touchable,
   StatusBar,
+  Platform,
 } from "react-native";
 import { RootStackParams } from "../../ScreenIndex";
 import { styles } from "./styles";
@@ -38,14 +39,14 @@ const IntroThree = () => {
           paddingBottom: 20,
           paddingLeft: 20,
           position: "absolute",
-          top: 20,
+          top: Platform.OS === "ios" ? 60 : 20,
         }}
       >
         <Feather
           onPress={handleGoBack}
           name="chevron-left"
           size={30}
-          color="black"
+          color={colors.primaryColor}
         />
       </View>
       <Image

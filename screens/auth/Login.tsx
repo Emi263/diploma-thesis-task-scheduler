@@ -3,8 +3,6 @@ import { errorCodes, getUserPayload } from "../../helper/helpers";
 import {
   Alert,
   View,
-  KeyboardAvoidingView,
-  Platform,
   TouchableOpacity,
   Image,
   StatusBar,
@@ -41,7 +39,6 @@ type introScreenProp = StackNavigationProp<RootStackParams, "Home">;
 const Login = () => {
   const nav = useNavigation<introScreenProp>();
 
-  const [openForgotPass, setOpenForgotPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const { user, setUser } = useContext(AuthContext);
 
@@ -144,6 +141,7 @@ const Login = () => {
                   styles.view,
                   {
                     width: Dimensions.get("screen").width,
+                    backgroundColor: colors.primaryBg,
                   },
                 ]}
               >
@@ -168,13 +166,17 @@ const Login = () => {
                         <>
                           <TextInput
                             // label="Email"
+
                             autoComplete="email"
                             keyboardType="email-address"
                             value={values.email}
                             onChangeText={handleChange("email")}
                             placeholder="Enter email"
                             onBlur={handleBlur("email")}
-                            style={styles.input}
+                            style={[
+                              styles.input,
+                              { backgroundColor: colors.input },
+                            ]}
                             theme={{ colors: { primary: "#407BFF" } }}
                             left={
                               <TextInput.Icon
@@ -189,6 +191,7 @@ const Login = () => {
                             style={{
                               fontFamily: "poppinsLight",
                               fontSize: 10,
+                              color: colors.error,
                             }}
                           >
                             {errors.email}
@@ -202,7 +205,10 @@ const Login = () => {
                             onChangeText={handleChange("password")}
                             placeholder="Enter password"
                             secureTextEntry={!showPass}
-                            style={styles.input}
+                            style={[
+                              styles.input,
+                              { backgroundColor: colors.input },
+                            ]}
                             onBlur={handleBlur("password")}
                             theme={{ colors: { primary: "#407BFF" } }}
                             // label="Password"
@@ -237,6 +243,7 @@ const Login = () => {
                             style={{
                               fontFamily: "poppinsLight",
                               fontSize: 10,
+                              color: colors.error,
                             }}
                           >
                             Password is required!
@@ -288,9 +295,15 @@ const Login = () => {
                       flexDirection: "row",
                       alignItems: "center",
                       justifyContent: "center",
+                      backgroundColor: colors.primaryBg,
                     }}
                   >
-                    <Text style={{ fontFamily: "poppins" }}>
+                    <Text
+                      style={{
+                        fontFamily: "poppins",
+                        color: colors.primaryColor,
+                      }}
+                    >
                       Don't have an account?
                     </Text>
                     <TouchableOpacity onPress={() => nav.navigate("Signup")}>

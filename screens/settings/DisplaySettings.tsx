@@ -64,5 +64,6 @@ const styles = StyleSheet.create({
   mode: {
     flexDirection: "row",
     alignItems: "center",
+    paddingVertical: 10,
   },
 });

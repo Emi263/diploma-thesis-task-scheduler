@@ -10,6 +10,7 @@ import {
   Image,
   Dimensions,
   ImageBackground,
+  Platform,
 } from "react-native";
 import {
   Button,
@@ -103,11 +104,11 @@ const SingleTaskScreen: React.FC<Props> = ({
   }
 
   return (
-    <View style={{ backgroundColor: "white", padding: 20, flex: 1 }}>
+    <View style={{ backgroundColor: colors.primaryBg, padding: 20, flex: 1 }}>
       <TouchableRipple
         style={{
           alignSelf: "flex-start",
-          padding: 2,
+          padding: Platform.OS === "ios" ? 20 : 2,
           paddingLeft: 0,
         }}
         borderless={true}
@@ -116,7 +117,7 @@ const SingleTaskScreen: React.FC<Props> = ({
           onPress={() => nav.goBack()}
           name="chevron-left"
           size={32}
-          color="black"
+          color={colors.primaryColor}
         />
       </TouchableRipple>
 
@@ -126,6 +127,7 @@ const SingleTaskScreen: React.FC<Props> = ({
             fontFamily: "poppinsBold",
             fontSize: 18,
             textAlign: "center",
+            color: colors.primaryColor,
           }}
         >
           {task?.title || ""}
@@ -134,6 +136,7 @@ const SingleTaskScreen: React.FC<Props> = ({
           style={{
             fontFamily: "poppins",
             fontSize: 16,
+            color: colors.primaryColor,
           }}
         >
           {task?.description || ""}

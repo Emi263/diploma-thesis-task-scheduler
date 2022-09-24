@@ -8,6 +8,7 @@ import {
   Image,
   StatusBar,
   TextInput,
+  Platform,
 } from "react-native";
 import { Task } from "../../../models/task";
 import { Formik, FormikHelpers } from "formik";
@@ -219,8 +220,8 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                 <TouchableRipple
                   style={{
                     alignSelf: "flex-start",
-                    padding: 2,
-                    paddingLeft: 0,
+                    paddingTop: Platform.OS === "ios" ? 30 : 0,
+                    marginLeft: -10,
                   }}
                   borderless={true}
                 >
@@ -228,7 +229,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                     onPress={() => nav.goBack()}
                     name="chevron-left"
                     size={32}
-                    color="black"
+                    color={colors.primaryColor}
                   />
                 </TouchableRipple>
 
@@ -238,7 +239,14 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                 <View>
                   <>
                     <View style={styles.inputContainer}>
-                      <Text style={styles.inputTitle}>Task Title</Text>
+                      <Text
+                        style={[
+                          styles.inputTitle,
+                          { color: colors.primaryColor },
+                        ]}
+                      >
+                        Task Title
+                      </Text>
                       <>
                         <TextInput
                           style={styles.input}
@@ -251,13 +259,23 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         <HelperText
                           type="error"
                           visible={!!touched.title && !!errors.title}
+                          style={{ color: colors.error }}
                         >
                           {errors.title}
                         </HelperText>
                       </>
                     </View>
                     <View style={styles.inputContainer}>
-                      <Text style={styles.inputTitle}>Task description</Text>
+                      <Text
+                        style={[
+                          styles.inputTitle,
+                          {
+                            color: colors.primaryColor,
+                          },
+                        ]}
+                      >
+                        Task description
+                      </Text>
                       <>
                         <TextInput
                           style={[
@@ -277,6 +295,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         />
                         <HelperText
                           type="error"
+                          style={{ color: colors.error }}
                           visible={
                             !!touched.description && !!errors.description
                           }
@@ -289,7 +308,13 @@ const TaskForm: React.FC<IFormTask> = (props) => {
 
                   <>
                     <View style={{ display: "flex" }}>
-                      <Text style={{ fontFamily: "poppins", fontSize: 14 }}>
+                      <Text
+                        style={{
+                          fontFamily: "poppins",
+                          fontSize: 14,
+                          color: colors.primaryColor,
+                        }}
+                      >
                         Date and Time
                       </Text>
 
@@ -303,7 +328,13 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                           paddingVertical: 2,
                         }}
                       >
-                        <Text style={{ fontFamily: "poppins", fontSize: 13 }}>
+                        <Text
+                          style={{
+                            fontFamily: "poppins",
+                            fontSize: 13,
+                            color: colors.primaryColor,
+                          }}
+                        >
                           {formatDateAndTime(selectedDate)}
                         </Text>
                         <TouchableOpacity
@@ -317,11 +348,15 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                           <FontAwesome
                             name="calendar"
                             size={30}
-                            color="black"
+                            color={colors.primaryColor}
                           />
                         </TouchableOpacity>
                       </View>
-                      <HelperText type="error" visible={!!errors.date}>
+                      <HelperText
+                        type="error"
+                        style={{ color: colors.error }}
+                        visible={!!errors.date}
+                      >
                         {errors.date}
                       </HelperText>
 
@@ -373,6 +408,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                             paddingRight: 10,
                             fontFamily: "poppins",
                             fontSize: 14,
+                            color: colors.primaryColor,
                           }}
                         >
                           Add an image (optional)
@@ -380,7 +416,7 @@ const TaskForm: React.FC<IFormTask> = (props) => {
                         <MaterialCommunityIcons
                           name="image-plus"
                           size={30}
-                          color="black"
+                          color={colors.primaryColor}
                         />
                       </TouchableOpacity>
                     </View>
@@ -486,5 +522,6 @@ export const styles = StyleSheet.create({
   inputContainer: {},
   inputTitle: {
     fontFamily: "poppins",
+    paddingVertical: 10,
   },
 });

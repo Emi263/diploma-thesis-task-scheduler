@@ -76,12 +76,17 @@ export function GoogleSignIn({ setLoading }) {
 
   return (
     <View
-      style={{ padding: 10, justifyContent: "center", alignItems: "center" }}
+      style={{
+        padding: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: colors.primaryBg,
+      }}
     >
       <View
         style={{
           height: 2,
-          backgroundColor: "rgba(246, 246, 246, 1)",
+          backgroundColor: colors.line,
           transform: [
             {
               translateY: 15,
@@ -99,7 +104,8 @@ export function GoogleSignIn({ setLoading }) {
           textAlign: "center",
           fontFamily: "poppinsLight",
           paddingBottom: 10,
-          backgroundColor: "white",
+          backgroundColor: colors.primaryBg,
+          color: colors.primaryColor,
         }}
       >
         or
@@ -112,7 +118,7 @@ export function GoogleSignIn({ setLoading }) {
             promptAsync();
           }}
           style={{
-            backgroundColor: "#F1F6F7",
+            backgroundColor: colors.button,
             width: "80%",
             flexDirection: "row",
             alignItems: "center",
@@ -133,6 +139,7 @@ export function GoogleSignIn({ setLoading }) {
                 textAlign: "right",
                 fontSize: 16,
                 marginLeft: 20,
+                color: colors.primaryColor,
               }}
             >
               Login with Google

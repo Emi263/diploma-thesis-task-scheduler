@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Image, TouchableOpacity } from "react-native";
+import { Text, View, Image, TouchableOpacity, Platform } from "react-native";
 import { styles } from "../styles";
 import { formatDate, getTime } from "../../../helper/helpers";
 import { generateRandomColor } from "../../../helper/generateRandomColor";
@@ -64,7 +64,7 @@ const SingleTask: React.FunctionComponent<SingleTaskProps> = (props) => {
                     style={{
                       fontSize: 14,
                       fontFamily: "poppins",
-                      marginTop: -10,
+                      marginTop: Platform.OS === "ios" ? 0 : -10,
                     }}
                   >
                     {description}

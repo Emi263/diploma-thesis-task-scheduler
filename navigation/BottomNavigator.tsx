@@ -7,9 +7,11 @@ import AllTasks from "../screens/tasks/AllTasks";
 import Graphics from "../screens/Graphics/GraphicalValues";
 import * as Animatable from "react-native-animatable";
 import { TouchableRipple } from "react-native-paper";
+import useTheme from "../common/hooks/useTheme";
 const Tab = createBottomTabNavigator();
 
 export const TabNavigator = () => {
+  const { colors } = useTheme();
   const bottomTabs = [
     {
       route: "Home2",
@@ -39,7 +41,7 @@ export const TabNavigator = () => {
       onPress,
       accessibilityState: { selected },
     } = props;
-    const color = selected ? "#407BFF" : "black";
+    const color = selected ? "#407BFF" : colors.primaryColor;
     const currentTabRef = useRef(null as any);
 
     useLayoutEffect(() => {

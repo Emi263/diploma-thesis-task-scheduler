@@ -89,7 +89,11 @@ const HomeHeader = () => {
         <View style={headerStyles.header}>
           <View style={{ justifyContent: "center" }}>
             <Text
-              style={{ fontSize: 16, color: "black", fontFamily: "poppins" }}
+              style={{
+                fontSize: 16,
+                color: colors.primaryColor,
+                fontFamily: "poppins",
+              }}
             >
               {greet()}
             </Text>
@@ -97,7 +101,8 @@ const HomeHeader = () => {
               style={{
                 fontSize: 20,
                 fontFamily: "poppinsBold",
-                marginTop: -10,
+
+                color: colors.primaryColor,
               }}
             >
               {user?.name}

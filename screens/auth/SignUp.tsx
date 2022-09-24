@@ -133,15 +133,13 @@ const Signup = () => {
                 errors,
                 touched,
               }) => (
-                <View style={[styles.view]}>
+                <View
+                  style={[styles.view, { backgroundColor: colors.primaryBg }]}
+                >
                   <>
-                    <View style={styles.upperView}>
+                    <View style={[styles.upperView, {}]}>
                       <Text
-                        style={[
-                          styles.title,
-                          { color: colors.primaryColor },
-                          { color: "white" },
-                        ]}
+                        style={[styles.title, { color: colors.primaryColor }]}
                       >
                         Welcome to Taskify!
                       </Text>
@@ -151,7 +149,14 @@ const Signup = () => {
                         Glad to have you here! Sign up to get you going!
                       </Text>
                     </View>
-                    <View style={styles.inputWrapper}>
+                    <View
+                      style={[
+                        styles.inputWrapper,
+                        {
+                          backgroundColor: colors.primaryBg,
+                        },
+                      ]}
+                    >
                       <>
                         <View style={styles.inputContainer}>
                           <>
@@ -160,7 +165,12 @@ const Signup = () => {
                               value={values.email}
                               onChangeText={handleChange("email")}
                               placeholder="Enter email"
-                              style={styles.input}
+                              style={[
+                                styles.input,
+                                {
+                                  backgroundColor: colors.input,
+                                },
+                              ]}
                               onBlur={handleBlur("email")}
                               keyboardType="email-address"
                               left={
@@ -176,6 +186,7 @@ const Signup = () => {
                               style={{
                                 fontFamily: "poppinsLight",
                                 fontSize: 10,
+                                color: colors.error,
                               }}
                             >
                               {errors.email}
@@ -189,7 +200,12 @@ const Signup = () => {
                               onChangeText={handleChange("password")}
                               placeholder="Enter password"
                               secureTextEntry
-                              style={styles.input}
+                              style={[
+                                styles.input,
+                                {
+                                  backgroundColor: colors.input,
+                                },
+                              ]}
                               onBlur={handleBlur("password")}
                               left={
                                 <TextInput.Icon
@@ -205,6 +221,7 @@ const Signup = () => {
                               style={{
                                 fontFamily: "poppinsLight",
                                 fontSize: 10,
+                                color: colors.error,
                               }}
                             >
                               {errors.password}
@@ -217,7 +234,12 @@ const Signup = () => {
                               value={values.name}
                               onChangeText={handleChange("name")}
                               placeholder="Enter name"
-                              style={styles.input}
+                              style={[
+                                styles.input,
+                                {
+                                  backgroundColor: colors.input,
+                                },
+                              ]}
                               onBlur={handleBlur("name")}
                               left={
                                 <TextInput.Icon
@@ -237,6 +259,7 @@ const Signup = () => {
                               style={{
                                 fontFamily: "poppinsLight",
                                 fontSize: 10,
+                                color: colors.error,
                               }}
                             >
                               {errors.name}
@@ -249,7 +272,12 @@ const Signup = () => {
                               value={values.age.toString()}
                               onChangeText={handleChange("age")}
                               placeholder="Enter age"
-                              style={styles.input}
+                              style={[
+                                styles.input,
+                                {
+                                  backgroundColor: colors.input,
+                                },
+                              ]}
                               onBlur={handleBlur("age")}
                               keyboardType="number-pad"
                               left={
@@ -271,6 +299,7 @@ const Signup = () => {
                               style={{
                                 fontFamily: "poppinsLight",
                                 fontSize: 10,
+                                color: colors.error,
                               }}
                             >
                               {errors.age}
@@ -298,7 +327,12 @@ const Signup = () => {
                     </Button>
 
                     <View style={{ flexDirection: "row", paddingTop: 20 }}>
-                      <Text style={{ fontFamily: "poppins" }}>
+                      <Text
+                        style={{
+                          fontFamily: "poppins",
+                          color: colors.primaryColor,
+                        }}
+                      >
                         Joined us before?
                       </Text>
                       <TouchableOpacity

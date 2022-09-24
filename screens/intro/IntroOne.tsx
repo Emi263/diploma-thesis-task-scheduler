@@ -1,6 +1,6 @@
 import React from "react";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Image, StatusBar, Text, View } from "react-native";
+import { Image, Platform, StatusBar, Text, View } from "react-native";
 import CustomButton from "../../common/Button";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
@@ -21,13 +21,22 @@ const IntroOne = () => {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: colors.primaryBg,
+          top: Platform.OS === "ios" ? 50 : 0,
+        },
+      ]}
+    >
       <StatusBar barStyle={"dark-content"} backgroundColor="white" />
       <Text
         style={{
           textAlign: "center",
           fontFamily: "poppinsBold",
           fontSize: 19,
+          color: colors.primaryColor,
         }}
       >
         Welcome to Tasky!

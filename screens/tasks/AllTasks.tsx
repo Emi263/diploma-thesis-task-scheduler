@@ -6,6 +6,7 @@ import {
   Text,
   Image,
   Dimensions,
+  Platform,
 } from "react-native";
 import { useQuery } from "react-query";
 import { getAllTaks } from "../../api/task";
@@ -23,16 +24,22 @@ const AllTasks = () => {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        paddingTop: 40,
+        paddingTop: Platform.OS === "ios" ? 60 : 40,
       }}
     >
-      <Text style={{ fontFamily: "poppinsBold", fontSize: 16 }}>
+      <Text
+        style={{
+          fontFamily: "poppinsBold",
+          fontSize: 16,
+          color: colors.primaryColor,
+        }}
+      >
         Here is the list of all tasks
       </Text>
       <FontAwesome
         name="hand-pointer-o"
         size={30}
-        color="black"
+        color={colors.primaryColor}
         style={{
           transform: [
             {
@@ -51,14 +58,20 @@ const AllTasks = () => {
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#fff",
+          backgroundColor: colors.primaryBg,
         }}
       >
         <Image
           style={{ width: Dimensions.get("screen").width - 20, height: 400 }}
           source={require("../../assets/empty.png")}
         />
-        <Text style={{ fontFamily: "poppinsBold", fontSize: 16 }}>
+        <Text
+          style={{
+            fontFamily: "poppinsBold",
+            fontSize: 16,
+            color: colors.primaryColor,
+          }}
+        >
           No Tasks to show :(
         </Text>
       </View>

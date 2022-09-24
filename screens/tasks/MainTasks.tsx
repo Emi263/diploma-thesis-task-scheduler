@@ -70,6 +70,7 @@ const Main = () => {
                   textAlign: "center",
                   padding: 10,
                   fontFamily: "poppins",
+                  color: colors.primaryColor,
                 }}
               >
                 View all tasks
@@ -78,7 +79,7 @@ const Main = () => {
                 style={{ marginTop: -2 }}
                 name="chevron-small-right"
                 size={30}
-                color="black"
+                color={colors.primaryColor}
               />
             </View>
           </TouchableRipple>
@@ -122,6 +123,7 @@ const Main = () => {
 export default Main;
 
 const generateTodayTask = (tasks: Task[] | undefined) => {
+  const { colors } = useTheme();
   if (!tasks) return <View></View>;
   if (!tasks.length) {
     return (
@@ -138,6 +140,7 @@ const generateTodayTask = (tasks: Task[] | undefined) => {
               fontFamily: "poppinsBold",
               fontSize: 20,
               textAlign: "center",
+              color: colors.primaryColor,
             }}
           >
             You have no tasks today!
@@ -166,7 +169,13 @@ const generateTodayTask = (tasks: Task[] | undefined) => {
         paddingVertical: 10,
       }}
     >
-      <Text style={{ fontFamily: "poppinsBold", fontSize: 20 }}>
+      <Text
+        style={{
+          fontFamily: "poppinsBold",
+          fontSize: 20,
+          color: colors.primaryColor,
+        }}
+      >
         You have got{" "}
       </Text>
       <Text

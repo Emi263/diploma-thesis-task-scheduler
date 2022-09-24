@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 import Collapsible from "../../common/Collapsible";
 import useTheme from "../../common/hooks/useTheme";
@@ -29,6 +29,7 @@ const Index = () => {
         style={{
           backgroundColor: "#407BFF",
           borderRadius: 10,
+          marginTop: Platform.OS === "ios" ? 60 : 0,
           alignSelf: "flex-end",
         }}
         mode="contained"

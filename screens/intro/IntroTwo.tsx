@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Image, TouchableOpacity, StatusBar } from "react-native";
+import { Text, View, Image, StatusBar, Platform } from "react-native";
 import { styles } from "./styles";
 import CustomButton from "../../common/Button";
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -30,14 +30,14 @@ const IntroTwo = () => {
           paddingBottom: 20,
           paddingLeft: 20,
           position: "absolute",
-          top: 20,
+          top: Platform.OS === "ios" ? 60 : 20,
         }}
       >
         <Feather
           onPress={handleGoBack}
           name="chevron-left"
           size={30}
-          color="black"
+          color={colors.primaryColor}
         />
       </View>
       <Image

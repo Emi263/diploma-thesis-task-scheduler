@@ -13,8 +13,10 @@ import {
   VictoryLabel,
 } from "victory-native";
 import { formatDate } from "../../helper/helpers";
+import useTheme from "../../common/hooks/useTheme";
 
 const GraphicalValues = () => {
+  const { colors } = useTheme();
   const { data: values, isLoading: l } = useQuery(
     "taskValues",
     getTaskGraphValues
@@ -35,7 +37,7 @@ const GraphicalValues = () => {
       <View
         style={{
           flex: 1,
-          backgroundColor: "white",
+          backgroundColor: colors.primaryBg,
           alignItems: "center",
           justifyContent: "center",
         }}
@@ -46,24 +48,37 @@ const GraphicalValues = () => {
   }
   return (
     <>
-      <View style={{ backgroundColor: "white", paddingVertical: 0, flex: 1 }}>
+      <View
+        style={{
+          backgroundColor: colors.primaryBg,
+          paddingVertical: 0,
+          marginTop: 100,
+          flex: 1,
+        }}
+      >
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <Image
-            style={{ width: Dimensions.get("screen").width - 200, height: 250 }}
+            style={{ width: 100, height: 100 }}
             source={require("../../assets/data.png")}
           />
         </View>
-        <Text style={{ fontFamily: "poppinsBold", textAlign: "center" }}>
+        <Text
+          style={{
+            fontFamily: "poppinsBold",
+            textAlign: "center",
+            color: colors.primaryColor,
+          }}
+        >
           Past and upcoming tasks in numbers:
         </Text>
-        <View style={{ backgroundColor: "white", minHeight: 200 }}>
+        <View style={{ backgroundColor: colors.primaryBg, minHeight: 200 }}>
           {values && (
             <VictoryChart
               style={{
                 background: {
-                  fill: "white",
-                  background: "white",
-                  color: "white",
+                  fill: colors.primaryBg,
+                  background: colors.primaryBg,
+                  color: colors.primaryBg,
                 },
               }}
               theme={VictoryTheme.material}
@@ -74,11 +89,9 @@ const GraphicalValues = () => {
                 labelComponent={<VictoryLabel dy={30} />}
                 barRatio={0.8}
                 style={{
-                  data: { fill: "#407BFF", background: "white" },
+                  data: { fill: "#407BFF", background: colors.primaryBg },
                   labels: {
-                    fill: "white",
-                    fontSize: 20,
-                    fontFamily: "poppinsBold",
+                    fill: colors.primaryColor,
                   },
                 }}
                 data={values?.map((val) => {
@@ -100,13 +113,11 @@ const GraphicalValues = () => {
                 style={{
                   ticks: {
                     stroke: "blue",
-                    fontFamily: "poppinsBold",
                     fontSize: 20,
                   },
                   grid: { stroke: "transparent" },
                   tickLabels: {
-                    fill: "black",
-                    fontFamily: "poppinsBold",
+                    fill: colors.primaryColor,
                     fontSize: 13,
                     marginTop: 20,
                   },
@@ -116,20 +127,26 @@ const GraphicalValues = () => {
           )}
         </View>
         {values && (
-          <View style={{ backgroundColor: "white", flex: 1, paddingTop: 10 }}>
+          <View
+            style={{
+              backgroundColor: colors.primaryBg,
+              flex: 1,
+              paddingTop: 10,
+            }}
+          >
             <Text
               style={{
-                fontFamily: "poppinsBold",
                 color: "#407BFF",
                 paddingHorizontal: 20,
                 textAlign: "center",
                 fontSize: 18,
+                fontFamily: "poppinsBold",
               }}
             >
               You have created
-              <Text style={{ color: "black" }}>
+              <Text style={{ color: colors.primaryColor }}>
                 {" "}
-                {lastWeekTasks?.length} tasks{" "}
+                {lastWeekTasks?.length} task/s{" "}
               </Text>
               in the past week!
             </Text>

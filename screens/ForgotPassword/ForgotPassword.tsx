@@ -17,6 +17,7 @@ import { forgotPassword } from "../../api/auth";
 import KeyboardAvoidingViewWrapper from "../../common/KeyboardAvodingViewWrapper";
 import { RootStackParams } from "../../ScreenIndex";
 import * as yup from "yup";
+import useTheme from "../../common/hooks/useTheme";
 
 type IntroScreenProp = StackNavigationProp<RootStackParams, "Intro1">;
 
@@ -86,17 +87,23 @@ const ForgotPassword = () => {
   const handleGoBack = () => {
     nav.goBack();
   };
+
+  const { colors } = useTheme();
   return (
     <KeyboardAvoidingViewWrapper>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: colors.primaryBg }}>
         <StatusBar backgroundColor="white" barStyle="dark-content" />
-        <View style={styles.container}>
-          <View>
+        <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
+          <View
+            style={{
+              marginTop: Platform.OS === "ios" ? 40 : 20,
+            }}
+          >
             <Feather
               onPress={handleGoBack}
               name="chevron-left"
               size={30}
-              color="black"
+              color={colors.primaryColor}
             />
           </View>
           <View style={styles.imgWrapper}>
@@ -105,8 +112,17 @@ const ForgotPassword = () => {
               source={require("../../assets/forgotPass.png")}
             />
           </View>
-          <Text style={styles.title}>{"Forgot \npassword ?"}</Text>
-          <Text style={styles.subTitle}>
+          <Text style={[styles.title, { color: colors.primaryColor }]}>
+            {"Forgot \npassword ?"}
+          </Text>
+          <Text
+            style={[
+              styles.subTitle,
+              {
+                color: colors.primaryColor,
+              },
+            ]}
+          >
             Do not worry! It happens! Please enter the email address associated
             with your account.
           </Text>
@@ -118,7 +134,12 @@ const ForgotPassword = () => {
             value={email}
             onChangeText={setEmail}
             placeholder="Enter email"
-            style={styles.input}
+            style={[
+              styles.input,
+              {
+                backgroundColor: colors.input,
+              },
+            ]}
             left={<TextInput.Icon style={{ marginTop: 12 }} name="email" />}
           />
           <View style={{ height: 50 }}></View>
