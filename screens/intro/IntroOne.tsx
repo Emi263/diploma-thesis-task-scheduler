@@ -26,17 +26,16 @@ const IntroOne = () => {
         styles.container,
         {
           backgroundColor: colors.primaryBg,
-          top: Platform.OS === "ios" ? 50 : 0,
         },
       ]}
     >
-      <StatusBar barStyle={"dark-content"} backgroundColor="white" />
       <Text
         style={{
           textAlign: "center",
           fontFamily: "poppinsBold",
           fontSize: 19,
           color: colors.primaryColor,
+          paddingVertical: 20,
         }}
       >
         Welcome to Tasky!
@@ -69,9 +68,9 @@ const IntroOne = () => {
 
       <View style={styles.footer}>
         <View style={styles.pagination}>
-          <Text style={styles.dot}></Text>
-          <Text style={[styles.dot, { backgroundColor: "#d9dbde" }]}></Text>
-          <Text style={[styles.dot, { backgroundColor: "#d9dbde" }]}></Text>
+          <View style={styles.dot}></View>
+          <View style={[styles.dot, { backgroundColor: "#d9dbde" }]}></View>
+          <View style={[styles.dot, { backgroundColor: "#d9dbde" }]}></View>
         </View>
         <View style={styles.icon}>
           <Feather

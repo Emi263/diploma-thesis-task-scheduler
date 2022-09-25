@@ -100,7 +100,7 @@ const Signup = () => {
       )}
       <KeyboardAvoidingViewWrapper>
         <SafeAreaView style={styles.container}>
-          <StatusBar barStyle="light-content" backgroundColor="#407BFF" />
+          <StatusBar barStyle="dark-content" backgroundColor="#407BFF" />
           <>
             <Formik
               validationSchema={SignupSchema}
@@ -138,9 +138,7 @@ const Signup = () => {
                 >
                   <>
                     <View style={[styles.upperView, {}]}>
-                      <Text
-                        style={[styles.title, { color: colors.primaryColor }]}
-                      >
+                      <Text style={[styles.title, { color: "white" }]}>
                         Welcome to Taskify!
                       </Text>
                       <Text

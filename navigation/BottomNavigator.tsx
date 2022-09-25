@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef } from "react";
-import { Ionicons, Feather, FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons, Feather, FontAwesome5, Entypo } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/home/HomeScreen";
 import Settings from "../screens/settings/index";
@@ -115,7 +115,7 @@ const yieldIcon = (color: string, route: string): React.ReactNode => {
     },
     {
       route: "Notifications",
-      icon: <Ionicons name="notifications-outline" color={color} size={30} />,
+      icon: <Entypo name="bar-graph" color={color} size={30} />,
     },
   ];
 

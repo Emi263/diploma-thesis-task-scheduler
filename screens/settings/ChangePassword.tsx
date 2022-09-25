@@ -58,6 +58,8 @@ export default function ChangePassword() {
           }
         })
         .catch((e) => {
+          console.log(e);
+
           setLoading(false);
           Alert.alert("Error", "Something went wrong! Try again!");
         });

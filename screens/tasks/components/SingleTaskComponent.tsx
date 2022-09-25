@@ -80,7 +80,13 @@ const SingleTask: React.FunctionComponent<SingleTaskProps> = (props) => {
                   >
                     {formatDate(date)}
                   </Text>
-                  <Text style={{ fontSize: 12, fontFamily: "poppinsBold" }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontFamily: "poppinsBold",
+                      paddingVertical: 5,
+                    }}
+                  >
                     {getTime(date)}
                   </Text>
                 </View>

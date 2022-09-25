@@ -30,7 +30,7 @@ const IntroTwo = () => {
           paddingBottom: 20,
           paddingLeft: 20,
           position: "absolute",
-          top: Platform.OS === "ios" ? 60 : 20,
+          top: Platform.OS === "ios" ? 60 : 50,
         }}
       >
         <Feather
@@ -67,9 +67,9 @@ const IntroTwo = () => {
       </Text>
       <View style={styles.footer}>
         <View style={styles.pagination}>
-          <Text style={styles.dot}></Text>
-          <Text style={styles.dot}></Text>
-          <Text style={[styles.dot, { backgroundColor: "#d9dbde" }]}></Text>
+          <View style={styles.dot}></View>
+          <View style={[styles.dot]}></View>
+          <View style={[styles.dot, { backgroundColor: "#d9dbde" }]}></View>
         </View>
         <View style={styles.icon}>
           <Feather

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StatusBar, Text, View } from "react-native";
+import { StatusBar, Text, View, Modal } from "react-native";
 import { clearAuthData } from "../../utils/tokenMgmt";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -15,14 +15,13 @@ import { TouchableRipple } from "react-native-paper";
 import useTheme from "../../common/hooks/useTheme";
 
 import ChangePassword from "../settings/ChangePassword";
-import Notication from "../../common/Notifications";
+import Notifications from "../../common/Notifications";
 import CreateTaskComponent from "./CreateTask";
 
 const HomeScreen = () => {
   const { colors } = useTheme();
 
   const { setUserToken, user } = useContext(AuthContext);
-  const route = useRoute();
 
   //local state
   const [showModal, setShowModal] = useState(false);
@@ -32,23 +31,23 @@ const HomeScreen = () => {
 
     const checkUserLoggedIn = async () => {
       const isLoggedIn = await isSessionActive();
-      console.log(isLoggedIn);
 
       if (!isLoggedIn) {
         await clearAuthData();
         if (isMounted) setUserToken(undefined);
       }
     };
-    checkUserLoggedIn();
+    checkUserLoggedIn().then(() => {});
     //cleanup
     return () => {
       isMounted = false;
     };
   }, []);
 
+  const show = user?.shouldChangePassword || false;
   return (
     <>
-      <Notication />
+      <Notifications />
       <StatusBar backgroundColor={"#fff"} barStyle="dark-content" />
       <View
         style={[
@@ -60,22 +59,24 @@ const HomeScreen = () => {
         <CreateTaskComponent />
         <TopTasks />
 
-        <ModalComponent visible={user?.shouldChangePassword || false}>
-          <View style={{ padding: 30 }}>
-            <Text
-              style={{
-                paddingVertical: 30,
-                fontWeight: "600",
-                textTransform: "uppercase",
-                textAlign: "center",
-                marginBottom: 40,
-              }}
-            >
-              Please, change your password
-            </Text>
-            <ChangePassword />
-          </View>
-        </ModalComponent>
+        {user?.shouldChangePassword && (
+          <Modal style={{ flex: 1, paddingVertical: 30 }} visible>
+            <View style={{ flex: 1, marginTop: 100 }}>
+              <Text
+                style={{
+                  paddingVertical: 30,
+                  fontWeight: "600",
+                  textTransform: "uppercase",
+                  textAlign: "center",
+                  marginBottom: 40,
+                }}
+              >
+                Please, change your password
+              </Text>
+              <ChangePassword />
+            </View>
+          </Modal>
+        )}
       </View>
     </>
   );

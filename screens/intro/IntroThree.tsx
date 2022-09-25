@@ -39,7 +39,7 @@ const IntroThree = () => {
           paddingBottom: 20,
           paddingLeft: 20,
           position: "absolute",
-          top: Platform.OS === "ios" ? 60 : 20,
+          top: Platform.OS === "ios" ? 60 : 50,
         }}
       >
         <Feather
@@ -72,9 +72,9 @@ const IntroThree = () => {
 
       <View style={styles.footer}>
         <View style={styles.pagination}>
-          <Text style={styles.dot}></Text>
-          <Text style={styles.dot}></Text>
-          <Text style={styles.dot}></Text>
+          <View style={styles.dot}></View>
+          <View style={[styles.dot]}></View>
+          <View style={[styles.dot]}></View>
         </View>
         <TouchableRipple
           onPress={handleOnPressButton}

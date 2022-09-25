@@ -76,7 +76,8 @@ export default function App() {
         if (isMounted) setUserToken(undefined);
       }
     };
-    checkUserLoggedIn();
+    // checkUserLoggedIn();
+    clearAuthData();
     //cleanup
     return () => {
       isMounted = false;

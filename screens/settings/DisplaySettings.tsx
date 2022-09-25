@@ -18,7 +18,6 @@ const DisplaySettings = () => {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.primaryBg }]}>
-      <StatusBar barStyle={"dark-content"} backgroundColor="white" />
       <Text
         style={[
           styles.title,

@@ -52,7 +52,7 @@ const GraphicalValues = () => {
         style={{
           backgroundColor: colors.primaryBg,
           paddingVertical: 0,
-          marginTop: 100,
+          paddingTop: 100,
           flex: 1,
         }}
       >
@@ -91,7 +91,7 @@ const GraphicalValues = () => {
                 style={{
                   data: { fill: "#407BFF", background: colors.primaryBg },
                   labels: {
-                    fill: colors.primaryColor,
+                    fill: "white",
                   },
                 }}
                 data={values?.map((val) => {
@@ -146,7 +146,7 @@ const GraphicalValues = () => {
               You have created
               <Text style={{ color: colors.primaryColor }}>
                 {" "}
-                {lastWeekTasks?.length} task/s{" "}
+                {lastWeekTasks?.length} tasks{" "}
               </Text>
               in the past week!
             </Text>

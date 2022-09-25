@@ -29,7 +29,7 @@ const Index = () => {
         style={{
           backgroundColor: "#407BFF",
           borderRadius: 10,
-          marginTop: Platform.OS === "ios" ? 60 : 0,
+          marginTop: Platform.OS === "ios" ? 60 : 40,
           alignSelf: "flex-end",
         }}
         mode="contained"
